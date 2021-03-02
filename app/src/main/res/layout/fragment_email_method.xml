@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.forgotpass.EmailMethod">
+
+    <LinearLayout
+        android:id="@+id/linerlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_baseline_mail_outline_24"
+            app:tint="@color/primaryColor"
+            android:layout_gravity="center">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/reset_pass_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:text="Masukkan Email dari akun yang terdaftar"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="@color/primaryColor"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username_form"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Email"
+            app:errorEnabled="true"
+            app:startIconTint="@color/outlined_color_tint"
+            app:startIconDrawable="@drawable/ic_baseline_mail_outline_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username_text_field"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/reset_email_button"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="70dp"
+            android:text="Reset password"
+            app:iconGravity="textStart"
+            app:icon="@drawable/ic_baseline_mail_outline_24"
+            app:strokeColor="@color/primaryColor" />
+
+    </LinearLayout>
+
+</FrameLayout>

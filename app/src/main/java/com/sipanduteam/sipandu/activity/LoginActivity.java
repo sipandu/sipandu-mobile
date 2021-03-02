@@ -1,9 +1,12 @@
 package com.sipanduteam.sipandu.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,9 +17,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.sipanduteam.sipandu.R;
 
 public class LoginActivity extends AppCompatActivity {
+
+    TextInputLayout usernameForm;
+    TextInputLayout passwordForm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,22 +38,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }, 1000);
 
-        // login role dropdown
-        String[] loginRole = new String[] {("kohi wangy wangy"), ("kano wangy wangy"), ("parerun wangy wangy")};
-        ArrayAdapter adapter = new ArrayAdapter<>(this, R.layout.login_role_dropdown_menu_item, loginRole);
-        AutoCompleteTextView loginRoleDropdown = findViewById(R.id.login_role_dropdown);
-        loginRoleDropdown.setAdapter(adapter);
-        loginRoleDropdown.setInputType(0);
-
-        // TODO biar ga bisa ke tulis manual di role select nya
-        loginRoleDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                in.hideSoftInputFromWindow(arg1.getApplicationWindowToken(), 0);
-            }
-        });
-
         //login button
         Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -57,5 +48,28 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        //register button
+        Button registerButton = findViewById(R.id.reg_button);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent registerActivity = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(registerActivity);
+            }
+        });
+
+        //forgot pass button
+        Button forgotPassButton = findViewById(R.id.forgot_pass_button);
+        forgotPassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent forgotPassActivity = new Intent(getApplicationContext(), ForgotpassActivity.class);
+                startActivity(forgotPassActivity);
+            }
+        });
+
+        usernameForm = findViewById(R.id.username_form);
+        passwordForm = findViewById(R.id.password_form);
     }
 }

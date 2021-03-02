@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.forgotpass.ForgotMethod">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/reset_pass_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:text="Pilih cara untuk reset password"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="@color/primaryLightColor"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/reset_telegram_button"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Via Telegram"
+            app:icon="@drawable/ic_telegram_logo"
+            android:layout_above="@+id/reg_button"
+            app:strokeColor="@color/primaryColor" />
+
+        <Button
+            android:id="@+id/reset_email_button"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="80dp"
+            android:text="Via Email"
+            app:icon="@drawable/ic_baseline_mail_outline_24"
+            android:layout_above="@+id/reg_button"
+            app:strokeColor="@color/primaryColor" />
+    </LinearLayout>
+
+</FrameLayout>

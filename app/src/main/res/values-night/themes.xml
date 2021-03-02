@@ -29,4 +29,10 @@
         <item name="android:navigationBarColor" tools:targetApi="l">@color/dark</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+
+    </style>
+
+
 </resources>
