@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sipanduteam.sipandu">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,15 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Sipandu">
+        android:theme="@style/Theme.Sipandu"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.posyandu.PosyanduJadwalActivity"></activity>
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.posyandu.KonsultasiTelegramActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity android:name=".activity.informasi.InformasiDetailActivity" />
+        <activity
+            android:name=".activity.posyandu.PosyanduMapActivity"
+            android:label="Peta penyebaran posyandu"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.ForgotpassActivity"
-            android:theme="@style/Theme.Sipandu.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.HomeActivity"
-            android:theme="@style/Theme.Sipandu.NoActionBar"></activity>
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity android:name=".activity.AboutActivity" />
         <activity
             android:name=".activity.RegisterActivity"
@@ -35,8 +49,8 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sipandu.NoActionBar"></activity>
-        <activity android:name=".MainActivity"></activity>
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

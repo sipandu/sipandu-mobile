@@ -6,9 +6,11 @@
     <color name="secondaryColor">#ff4081</color>
     <color name="secondaryLightColor">#ff79b0</color>
     <color name="secondaryDarkColor">#c60055</color>
+    <color name="secondaryDarkColorTranslucent">#2FC60055</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
     <color name="dark">#121212</color>
     <color name="notThatDark">#1E1E1E</color>
     <color name="white">#FFFFFF</color>
+    <color name="green">#4CAF50</color>
 </resources>

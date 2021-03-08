@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.PagerAdapter;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +22,8 @@ import com.sipanduteam.sipandu.fragment.home.*;
 public class HomeActivity extends AppCompatActivity {
 
     private Toolbar homeToolbar;
+    boolean doubleBack = false;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         homeToolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(homeToolbar);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.home_bottom_nav);
+        bottomNavigationView = findViewById(R.id.home_bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, new BerandaFragment()).commit();
 
@@ -45,6 +50,21 @@ public class HomeActivity extends AppCompatActivity {
         snackbar.setAnchorView(bottomNavigationView);
         snackbar.show();
 
+        homeToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.home_app_bar_notification) {
+                    Intent notification = new Intent(getApplicationContext(), NotificationActivity.class);
+                    startActivity(notification);
+                }
+
+                else if (id == R.id.home_app_bar_logout) {
+                    finish();
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -54,7 +74,28 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
+    @Override
+    public void onBackPressed() {
+        if (doubleBack) {
+            super.onBackPressed();
+            this.finish();
+        }
+
+        else {
+            this.doubleBack = true;
+            Snackbar snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"Tekan sekali lagi untuk keluar",Snackbar.LENGTH_SHORT);
+            snackbar.setAnchorView(bottomNavigationView);
+            snackbar.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBack=false;
+                }
+            }, 1500);
+        }
+    }
+
+    private final BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
