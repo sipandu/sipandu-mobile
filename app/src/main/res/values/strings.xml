@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sipandu</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">Sipandu 5.0</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="version_string">Pre pre pre alpha</string>
 </resources>

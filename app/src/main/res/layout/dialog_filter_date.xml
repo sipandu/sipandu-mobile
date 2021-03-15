@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="12dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:weightSum="4">
+
+        <Button
+            android:id="@+id/start_date_button"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginEnd="6dp"
+            android:text="Mulai dari"
+            app:iconGravity="textStart"
+            android:layout_weight="2"
+            app:strokeColor="@color/primaryColor" />
+
+        <Button
+            android:id="@+id/end_date_button"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="Sampai"
+            app:iconGravity="textStart"
+            android:padding="12dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="2"
+            app:iconTint="@color/secondaryLightColor"
+            android:textColor="@color/secondaryLightColor"
+            app:rippleColor="@color/secondaryDarkColorTranslucent"
+            app:strokeColor="@color/secondaryLightColor" />
+    </LinearLayout>
+
+</LinearLayout>

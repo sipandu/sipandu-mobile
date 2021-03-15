@@ -48,44 +48,109 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Balita lagi login"
+                                android:text="Anak Agung Bagus Placeholder"
+                                android:layout_marginBottom="12dp"
+                                android:layout_gravity="center"
                                 android:textAppearance="?attr/textAppearanceHeadline6" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <View style="@style/Divider"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:src="@drawable/ic_baseline_schedule_24"
+                                    app:tint="@color/primaryLightColor" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Kunjungan terakhir"
+                                        android:textStyle="bold"
+                                        android:textAppearance="?attr/textAppearanceBody2"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_marginBottom="4dp"
+                                        android:text="19/02/2021"
+                                        android:textAppearance="?attr/textAppearanceBody2"
+                                        android:textColor="?android:attr/textColorSecondary"
+                                        />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_marginTop="8dp"
-                                android:text="Kunjungan terakhir: 19/02/2021"
-                                android:textAppearance="?attr/textAppearanceBody2"
-                                android:textColor="?android:attr/textColorSecondary" />
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:text="konten 2"
-                                android:textAppearance="?attr/textAppearanceBody2"
-                                android:textColor="?android:attr/textColorSecondary" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="8dp"
+                                    android:src="@drawable/ic_baseline_people_24"
+                                    app:tint="@color/primaryLightColor" />
 
-                        </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.button.MaterialButton
-                                style="?attr/borderlessButtonStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Detail" />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Status keluarga"
+                                        android:textStyle="bold"
+                                        android:textAppearance="?attr/textAppearanceBody2"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_marginBottom="4dp"
+                                        android:text="Anak"
+                                        android:textAppearance="?attr/textAppearanceBody2"
+                                        android:textColor="?android:attr/textColorSecondary"
+                                        />
+                                </LinearLayout>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
-
             </FrameLayout>
 
+            <Button
+                android:id="@+id/jadwal_posyandu_button"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lihat riwayat kungjungan"
+                android:layout_margin="12dp"
+                app:icon="@drawable/ic_baseline_history_24"
+                app:iconGravity="textStart"
+                android:layout_above="@+id/reg_button"
+                app:strokeColor="@color/primaryColor" />
+
+            <View style="@style/Divider"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
 
 <!--            lansia start here-->
 

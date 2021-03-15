@@ -20,7 +20,13 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sipanduteam.sipandu.R;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class LoginActivity extends AppCompatActivity {
+
+    //TODO untuk loginnya tolong di catet juga nanti role nya, pake sharedpref aja, biar nanti gampang untuk nentuin setiap viewnya yg mana,
+    // catet juga informasi penting usernya kek nama, rolenya,dll di sharedpref nya nanti
 
     TextInputLayout usernameForm;
     TextInputLayout passwordForm;

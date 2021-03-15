@@ -14,7 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sipandu"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.posyandu.PosyanduJadwalActivity"></activity>
+        <activity android:name=".activity.pengumuman.PengumumanActivity"></activity>
+        <activity
+            android:name=".activity.informasi.InformasiActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar"/>
+        <activity android:name=".activity.anak.RiwayatKunjunganAnakActivity" />
+        <activity
+            android:name=".activity.posyandu.PosyanduJadwalActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.NotificationActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
@@ -32,7 +39,9 @@
         <activity
             android:name=".activity.HomeActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
-        <activity android:name=".activity.AboutActivity" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.RegisterActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />

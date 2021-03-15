@@ -60,6 +60,6 @@ public class PosyanduMapActivity extends AppCompatActivity {
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.loadUrl("http://192.168.1.103:8000/");
+        webView.loadUrl("http://192.168.1.8:8000/");
     }
 }

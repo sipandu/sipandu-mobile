@@ -336,7 +336,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <Button
-                android:id="@+id/jadwal_posyandu_button"
+                android:id="@+id/show_all_informasi_button"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -346,7 +346,6 @@
                 android:layout_marginRight="12dp"
                 app:icon="@drawable/ic_baseline_arrow_forward_24"
                 app:iconGravity="end"
-                android:layout_above="@+id/reg_button"
                 app:strokeColor="@color/primaryColor" />
 
         </LinearLayout>

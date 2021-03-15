@@ -1,9 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="18dp"
     tools:context=".activity.AboutActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/about_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="Tentang Sipandu 5.0"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@color/primaryColor"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/app_icon_about"
+        app:layout_constraintStart_toStartOf="@+id/app_icon_about"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/app_icon_about"
+        android:layout_width="270dp"
+        android:layout_height="288dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/about_title"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/abouticon" />
+
+    <TextView
+        android:id="@+id/nama_aplikasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/app_icon_about"
+        app:layout_constraintStart_toStartOf="@+id/app_icon_about"
+        app:layout_constraintTop_toBottomOf="@+id/app_icon_about" />
+
+    <TextView
+        android:id="@+id/version_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/version_string"
+        app:layout_constraintEnd_toEndOf="@+id/app_icon_about"
+        app:layout_constraintStart_toStartOf="@+id/app_icon_about"
+        app:layout_constraintTop_toBottomOf="@+id/nama_aplikasi" />
+
+    <TextView
+        android:id="@+id/developer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:gravity="center"
+        android:minLines="2"
+        android:text="Proudly presented by Sipandu 5.0 team"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/app_icon_about"
+        app:layout_constraintStart_toStartOf="@+id/app_icon_about"
+        app:layout_constraintTop_toBottomOf="@+id/version_number" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minLines="2"
+        android:text="Topi Khusus Manajement Data dan Integrasi\nTeknologi Informasi 2018 - Universitas Udayana"
+        app:layout_constraintEnd_toEndOf="@+id/app_icon_about"
+        app:layout_constraintStart_toStartOf="@+id/app_icon_about"
+        app:layout_constraintTop_toBottomOf="@+id/version_number" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text=""
+        android:minLines="2"
+        app:layout_constraintEnd_toEndOf="@+id/app_icon_about"
+        app:layout_constraintStart_toStartOf="@+id/app_icon_about"
+        app:layout_constraintTop_toBottomOf="@+id/version_number" />
+
+</LinearLayout>

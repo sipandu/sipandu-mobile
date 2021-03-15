@@ -157,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginEnd="6dp"
-                    android:text="Buka jadwal posyandu"
+                    android:text="Buka agenda posyandu"
                     app:icon="@drawable/ic_baseline_calendar_today_24"
                     app:iconGravity="textStart"
                     android:layout_weight="2"
@@ -168,7 +168,7 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:text="Lokasi posyandu pada Google Maps"
+                    android:text="Lihat lokasi posyandu"
                     app:icon="@drawable/ic_baseline_location_on_24"
                     app:iconGravity="textStart"
                     android:padding="12dp"
@@ -236,6 +236,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
+                            android:textStyle="bold"
                             android:text="Konsultasi via telegram"
                             app:icon="@drawable/ic_telegram_logo"
                             app:iconGravity="textStart"
@@ -290,7 +291,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="10"
-                            android:text="Peta penyebaran posyandu"
+                            android:text="Peta persebaran posyandu"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:textColor="@color/white"
                             app:rippleColor="@color/white"
@@ -336,6 +337,7 @@
                 app:icon="@drawable/ic_baseline_call_24"
                 app:iconGravity="textStart"
                 app:strokeColor="@color/green"
+                app:rippleColor="@color/greenTranslucent"
                 app:iconTint="@color/green"
                 android:textColor="@color/green"/>
 
@@ -351,8 +353,6 @@
                 app:icon="@drawable/ic_telegram_logo"
                 app:strokeColor="@color/primaryColor"
                 app:iconGravity="textStart" />
-
-
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.sipanduteam.sipandu.R;
+import com.sipanduteam.sipandu.activity.informasi.InformasiActivity;
 
 import static java.lang.Integer.valueOf;
 
@@ -53,6 +54,15 @@ public class BerandaFragment extends Fragment {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
+            }
+        });
+
+        Button showAllInformasiButton = v.findViewById(R.id.show_all_informasi_button);
+        showAllInformasiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent showAllInformasi = new Intent(getActivity(), InformasiActivity.class);
+                startActivity(showAllInformasi);
             }
         });
 

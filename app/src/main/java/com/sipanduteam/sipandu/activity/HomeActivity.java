@@ -16,7 +16,11 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
+import com.sipanduteam.sipandu.activity.posyandu.PosyanduMapActivity;
 import com.sipanduteam.sipandu.fragment.home.*;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -24,6 +28,12 @@ public class HomeActivity extends AppCompatActivity {
     private Toolbar homeToolbar;
     boolean doubleBack = false;
     BottomNavigationView bottomNavigationView;
+
+    Fragment berandaFragment;
+    Fragment keluargaFragment;
+    Fragment posyanduFragment;
+    Fragment profileFragment;
+    FragmentTransaction ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +49,37 @@ public class HomeActivity extends AppCompatActivity {
 //            }
 //        }, 1000);
 
+
+        //get local time for appbar title
+        //TODO set username greeting from sharedpref
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        String greeting;
+
+        if (hour>= 12 && hour < 17) {
+            greeting = "Selamat siang, bagushikano!";
+        } else if (hour >= 17 && hour < 21) {
+            greeting = "Selamat sore, bagushikano!";
+        } else if (hour >= 21 && hour < 24) {
+            greeting = "Selamat malam, bagushikano!";
+        } else {
+            greeting = "Selamat pagi, bagushikano!";
+        }
+
+        berandaFragment = new BerandaFragment();
+        keluargaFragment = new KeluargaFragment();
+        posyanduFragment = new PosyanduFragment();
+        profileFragment = new ProfileFragment();
+
         homeToolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(homeToolbar);
+        homeToolbar.setTitle(greeting);
 
         bottomNavigationView = findViewById(R.id.home_bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, new BerandaFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, berandaFragment).commit();
 
         Snackbar snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"Login berhasil! Selamat datang X",Snackbar.LENGTH_SHORT);
         snackbar.setAnchorView(bottomNavigationView);
@@ -57,6 +92,11 @@ public class HomeActivity extends AppCompatActivity {
                 if (id == R.id.home_app_bar_notification) {
                     Intent notification = new Intent(getApplicationContext(), NotificationActivity.class);
                     startActivity(notification);
+                }
+
+                else if (id == R.id.home_app_bar_about) {
+                    Intent about = new Intent(getApplicationContext(), AboutActivity.class);
+                    startActivity(about);
                 }
 
                 else if (id == R.id.home_app_bar_logout) {
@@ -80,7 +120,6 @@ public class HomeActivity extends AppCompatActivity {
             super.onBackPressed();
             this.finish();
         }
-
         else {
             this.doubleBack = true;
             Snackbar snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"Tekan sekali lagi untuk keluar",Snackbar.LENGTH_SHORT);
@@ -101,18 +140,19 @@ public class HomeActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
                     if (item.getItemId() == R.id.nav_home) {
-                        selectedFragment = new BerandaFragment();
+                        selectedFragment = berandaFragment;
                     } else if (item.getItemId() == R.id.nav_keluargaku) {
-                        selectedFragment = new KeluargaFragment();
+                        selectedFragment = keluargaFragment;
                     } else if (item.getItemId() == R.id.nav_posyandu) {
-                        selectedFragment = new PosyanduFragment();
+                        selectedFragment = posyanduFragment;
                     } else if (item.getItemId() == R.id.nav_myprofile) {
-                        selectedFragment = new ProfileFragment();
+                        selectedFragment = profileFragment;
                     }
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft = getSupportFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast);
                     ft.replace(R.id.home_fragment_container, selectedFragment);
                     ft.commit();
+                    ft.addToBackStack(null);
                     return true;
                 }
             };

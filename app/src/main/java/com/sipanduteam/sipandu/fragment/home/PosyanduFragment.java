@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.ForgotpassActivity;
 import com.sipanduteam.sipandu.activity.posyandu.KonsultasiTelegramActivity;
+import com.sipanduteam.sipandu.activity.posyandu.PosyanduJadwalActivity;
 import com.sipanduteam.sipandu.activity.posyandu.PosyanduMapActivity;
 
 public class PosyanduFragment extends Fragment {
@@ -39,6 +40,15 @@ public class PosyanduFragment extends Fragment {
             public void onClick(View view) {
                 Intent openPosyanduMap = new Intent(getActivity(), PosyanduMapActivity.class);
                 startActivity(openPosyanduMap);
+            }
+        });
+
+        Button openPosyanduScheduleButton = v.findViewById(R.id.jadwal_posyandu_button);
+        openPosyanduScheduleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openPosyanduSchedule = new Intent(getActivity(), PosyanduJadwalActivity.class);
+                startActivity(openPosyanduSchedule);
             }
         });
 
