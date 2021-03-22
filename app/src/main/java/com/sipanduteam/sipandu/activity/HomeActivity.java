@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -49,6 +51,10 @@ public class HomeActivity extends AppCompatActivity {
 //            }
 //        }, 1000);
 
+        SharedPreferences userPreferences;
+        userPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        String email = userPreferences.getString("email", "empty");
+
 
         //get local time for appbar title
         //TODO set username greeting from sharedpref
@@ -59,14 +65,16 @@ public class HomeActivity extends AppCompatActivity {
         String greeting;
 
         if (hour>= 12 && hour < 17) {
-            greeting = "Selamat siang, bagushikano!";
+            greeting = "Selamat siang, ";
         } else if (hour >= 17 && hour < 21) {
-            greeting = "Selamat sore, bagushikano!";
+            greeting = "Selamat sore, ";
         } else if (hour >= 21 && hour < 24) {
-            greeting = "Selamat malam, bagushikano!";
+            greeting = "Selamat malam, ";
         } else {
-            greeting = "Selamat pagi, bagushikano!";
+            greeting = "Selamat pagi, ";
         }
+
+        greeting = greeting + email +"!";
 
         berandaFragment = new BerandaFragment();
         keluargaFragment = new KeluargaFragment();
@@ -81,9 +89,15 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, berandaFragment).commit();
 
-        Snackbar snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"Login berhasil! Selamat datang X",Snackbar.LENGTH_SHORT);
-        snackbar.setAnchorView(bottomNavigationView);
-        snackbar.show();
+        // handler for snackbar
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"Login berhasil! Selamat datang " + email,Snackbar.LENGTH_SHORT);
+                snackbar.setAnchorView(bottomNavigationView);
+                snackbar.show();
+            }
+        }, 1000);
 
         homeToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
