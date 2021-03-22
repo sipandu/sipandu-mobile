@@ -3,12 +3,16 @@ package com.sipanduteam.sipandu.activity.informasi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -140,6 +144,15 @@ public class InformasiActivity extends AppCompatActivity {
                     }
                 });
                 barangDialog.show();
+            }
+        });
+
+        ImageButton likeButtonEx = findViewById(R.id.informasi_like_button);
+        TextView likeCountEx = findViewById(R.id.informasi_like_count);
+        likeButtonEx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                likeButtonEx.setBackgroundTintList(getResources().getColorStateList(R.color.secondaryDarkColor));
             }
         });
     }
