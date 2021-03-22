@@ -14,10 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sipandu"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.pengumuman.PengumumanActivity"></activity>
+        <activity
+            android:name=".activity.RegisterContinueActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity android:name=".activity.pengumuman.PengumumanActivity" />
         <activity
             android:name=".activity.informasi.InformasiActivity"
-            android:theme="@style/Theme.Sipandu.NoActionBar"/>
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity android:name=".activity.anak.RiwayatKunjunganAnakActivity" />
         <activity
             android:name=".activity.posyandu.PosyanduJadwalActivity"
