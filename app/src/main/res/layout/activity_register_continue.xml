@@ -18,46 +18,270 @@
             android:gravity="center"
             android:layout_above="@+id/back_login_button">
 
-            <TextView
-                android:id="@+id/reset_pass_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="8dp"
 
-                android:layout_gravity="center"
-                android:text="Masukkan NIK terlebih dahulu untuk melanjutkan"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/primaryColor"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reg_username_form"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="NIK"
-                app:errorEnabled="true">
+                android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/username_text_field"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:inputType="textVisiblePassword" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <Button
-                android:id="@+id/register_button"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Berikutnya"
-                app:icon="@drawable/ic_baseline_arrow_forward_24"
-                app:iconGravity="textEnd"
-                app:strokeColor="@color/primaryColor" />
+                    <TextView
+                        android:id="@+id/upload_kk_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_gravity="start|center"
+                        android:text="Silahkan upload file kartu keluarga"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="@color/primaryColor"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/kartu_keluarga_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Pilih file kartu keluarga"
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/kartu_keluarga_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:focusable="true"
+                            android:cursorVisible="false"
+                            android:focusableInTouchMode="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View style="@style/Divider"/>
+
+                    <TextView
+                        android:id="@+id/data_diri_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_gravity="start|center"
+                        android:text="Silahkan lengkapi data berikut"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="@color/primaryColor"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_nama_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nama"
+                        app:errorEnabled="true"
+                        app:startIconTint="@color/outlined_color_tint"
+                        app:startIconDrawable="@drawable/ic_baseline_person_24"
+                        app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_nama_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_email_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="E-Mail"
+                        app:errorEnabled="true"
+                        app:startIconTint="@color/outlined_color_tint"
+                        app:startIconDrawable="@drawable/ic_baseline_mail_outline_24"
+                        app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_email_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="textEmailAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_password_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Password"
+                        app:endIconMode="password_toggle"
+                        app:startIconDrawable="@drawable/ic_baseline_vpn_key_24"
+                        app:startIconTint="@color/outlined_color_tint"
+                        app:endIconTint="@color/outlined_color_tint"
+                        app:errorEnabled="true" >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_password_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_password_confirm_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Konfirmasi password"
+                        app:endIconMode="password_toggle"
+                        app:startIconDrawable="@drawable/ic_baseline_vpn_key_24"
+                        app:startIconTint="@color/outlined_color_tint"
+                        app:endIconTint="@color/outlined_color_tint"
+                        app:errorEnabled="true" >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_password_confirm_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View style="@style/Divider"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_gravity="start|center"
+                        android:text="Isi data berikut berdasarkan lokasi posyandu"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="@color/primaryColor"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_gravity="start|center"
+                        android:text="Kabupaten"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_kabupaten_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Pilih kabupaten"
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/reg_kabupaten_field"
+                            android:cursorVisible="false"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_gravity="start|center"
+                        android:text="Kecamatan"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_kecamatan_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:enabled="false"
+                        android:layout_height="wrap_content"
+                        android:hint="Pilih kabupaten terlebih dahulu"
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/reg_kecamatan_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_gravity="start|center"
+                        android:text="Desa/Kelurahan"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textStyle="bold" />
 
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_desa_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Pilih kecamatan terlebih dahulu"
+                        android:enabled="false"
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/reg_desa_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_gravity="start|center"
+                        android:text="Banjar"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textStyle="bold" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_banjar_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Pilih desa/kelurahan terlebih dahulu"
+                        android:enabled="false"
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/reg_banjar_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/register_submit_button"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Berikutnya"
+                        app:icon="@drawable/ic_baseline_arrow_forward_24"
+                        app:iconGravity="textEnd"
+                        app:strokeColor="@color/primaryColor" />
+
+
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
         <Button
             android:id="@+id/back_login_button"

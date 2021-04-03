@@ -4,6 +4,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
@@ -19,8 +23,11 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.sipanduteam.sipandu.R;
+import com.sipanduteam.sipandu.activity.adapter.BlogListAdapter;
+import com.sipanduteam.sipandu.model.Blog;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -32,6 +39,16 @@ public class InformasiActivity extends AppCompatActivity {
     Button filterStartFrom, filterEndFrom;
     String filterStart, filterEnd;
     private Toolbar homeToolbar;
+
+
+    private ArrayList<Blog> blogArrayList;
+
+    private BlogListAdapter blogListAdapter;
+    private RecyclerView recyclerView;
+    private GridLayoutManager gridLayoutManager;
+    private StaggeredGridLayoutManager staggeredGridLayoutManager;
+    private LinearLayoutManager linearLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +63,18 @@ public class InformasiActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        blogArrayList = new ArrayList<>();
+        for (int i = 0 ; i<10 ; i++) {
+            blogArrayList.add(new Blog("Judul misalnya " + i, "Sub judul misalnya adalah konten dimana konten lorem ipsum coba aja dulu blablabla" +i));
+        }
+        recyclerView = findViewById(R.id.blog_list_view);
+        blogListAdapter = new BlogListAdapter(this, blogArrayList);
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        linearLayoutManager = new LinearLayoutManager(this);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(blogListAdapter);
 
 
         // date picker builder
@@ -147,13 +176,13 @@ public class InformasiActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton likeButtonEx = findViewById(R.id.informasi_like_button);
-        TextView likeCountEx = findViewById(R.id.informasi_like_count);
-        likeButtonEx.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                likeButtonEx.setBackgroundTintList(getResources().getColorStateList(R.color.secondaryDarkColor));
-            }
-        });
+//        ImageButton likeButtonEx = findViewById(R.id.informasi_like_button);
+//        TextView likeCountEx = findViewById(R.id.informasi_like_count);
+//        likeButtonEx.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                likeButtonEx.setBackgroundTintList(getResources().getColorStateList(R.color.secondaryDarkColor));
+//            }
+//        });
     }
 }

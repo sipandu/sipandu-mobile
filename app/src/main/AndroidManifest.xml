@@ -14,8 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sipandu"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.WaitForVerifiedActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar"></activity>
         <activity
-            android:name=".activity.RegisterContinueActivity"
+            android:name=".activity.register.RegisterDataComplete"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.register.RegisterDataLansiaActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.register.RegisterDataIbuActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.register.RegisterDataAnakActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.register.RegisterComplete"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.register.RegisterContinueActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity android:name=".activity.pengumuman.PengumumanActivity" />
         <activity
@@ -46,7 +63,7 @@
             android:name=".activity.AboutActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activity.register.RegisterActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.SplashActivity"
@@ -61,7 +78,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sipandu.NoActionBar" />
+            android:theme="@style/Theme.Sipandu.NoActionBar.TransparentNavBar" />
         <activity android:name=".MainActivity" />
     </application>
 

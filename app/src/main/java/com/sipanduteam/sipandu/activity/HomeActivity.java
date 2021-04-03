@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,11 +33,13 @@ public class HomeActivity extends AppCompatActivity {
     boolean doubleBack = false;
     BottomNavigationView bottomNavigationView;
 
-    Fragment berandaFragment;
-    Fragment keluargaFragment;
-    Fragment posyanduFragment;
-    Fragment profileFragment;
-    FragmentTransaction ft;
+    final Fragment berandaFragment = new BerandaFragment();
+    final Fragment keluargaFragment = new KeluargaFragment();
+    final Fragment posyanduFragment = new PosyanduFragment();
+    final Fragment profileFragment = new ProfileFragment();
+    final FragmentManager fm = getSupportFragmentManager();
+    SharedPreferences userPreferences, loginPreferences;
+    Fragment selectedFragment = berandaFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
 //            }
 //        }, 1000);
 
-        SharedPreferences userPreferences;
+
         userPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         String email = userPreferences.getString("email", "empty");
 
@@ -76,10 +80,10 @@ public class HomeActivity extends AppCompatActivity {
 
         greeting = greeting + email +"!";
 
-        berandaFragment = new BerandaFragment();
-        keluargaFragment = new KeluargaFragment();
-        posyanduFragment = new PosyanduFragment();
-        profileFragment = new ProfileFragment();
+//        berandaFragment = new BerandaFragment();
+//        keluargaFragment = new KeluargaFragment();
+//        posyanduFragment = new PosyanduFragment();
+//        profileFragment = new ProfileFragment();
 
         homeToolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(homeToolbar);
@@ -87,7 +91,10 @@ public class HomeActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.home_bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, berandaFragment).commit();
+        fm.beginTransaction().add(R.id.home_fragment_container, profileFragment, "4").hide(profileFragment).commit();
+        fm.beginTransaction().add(R.id.home_fragment_container, posyanduFragment, "3").hide(posyanduFragment).commit();
+        fm.beginTransaction().add(R.id.home_fragment_container, keluargaFragment, "2").hide(keluargaFragment).commit();
+        fm.beginTransaction().add(R.id.home_fragment_container, berandaFragment, "1").commit();
 
         // handler for snackbar
         new Handler().postDelayed(new Runnable() {
@@ -114,7 +121,18 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 else if (id == R.id.home_app_bar_logout) {
-                    finish();
+                    loginPreferences = getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
+
+                    if (loginPreferences.getInt("login_status", 0) != 0) {
+                        SharedPreferences.Editor editor = loginPreferences.edit();
+                        editor.putInt("login_status", 0);
+                        editor.putString("token", "empty");
+                        editor.apply();
+                    }
+                    Toast.makeText(getApplicationContext(), "Logout berhasil", Toast.LENGTH_SHORT).show();
+                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(login);
+                    finishAffinity();
                 }
                 return true;
             }
@@ -152,21 +170,24 @@ public class HomeActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
                     if (item.getItemId() == R.id.nav_home) {
+                        fm.beginTransaction().hide(selectedFragment).show(berandaFragment).commit();
                         selectedFragment = berandaFragment;
                     } else if (item.getItemId() == R.id.nav_keluargaku) {
+                        fm.beginTransaction().hide(selectedFragment).show(keluargaFragment).commit();
                         selectedFragment = keluargaFragment;
                     } else if (item.getItemId() == R.id.nav_posyandu) {
+                        fm.beginTransaction().hide(selectedFragment).show(posyanduFragment).commit();
                         selectedFragment = posyanduFragment;
                     } else if (item.getItemId() == R.id.nav_myprofile) {
+                        fm.beginTransaction().hide(selectedFragment).show(profileFragment).commit();
                         selectedFragment = profileFragment;
                     }
-                    ft = getSupportFragmentManager().beginTransaction();
-                    ft.setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast);
-                    ft.replace(R.id.home_fragment_container, selectedFragment);
-                    ft.commit();
-                    ft.addToBackStack(null);
+//                    ft.beginTransaction();
+//                    ft.setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast);
+//                    ft.replace(R.id.home_fragment_container, selectedFragment);
+//                    ft.addToBackStack(null);
+//                    ft.commit();
                     return true;
                 }
             };

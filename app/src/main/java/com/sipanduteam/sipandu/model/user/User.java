@@ -10,6 +10,9 @@ public class User {
     @SerializedName("id_kk")
     @Expose
     private Integer idKk;
+    @SerializedName("role")
+    @Expose
+    private String role;
     @SerializedName("id_chat_tele")
     @Expose
     private String idChatTele;
@@ -124,5 +127,13 @@ public class User {
 
     public void setKeterangan(Object keterangan) {
         this.keterangan = keterangan;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

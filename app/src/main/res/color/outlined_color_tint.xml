@@ -12,7 +12,7 @@
      limitations under the License.
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/primaryColor" android:state_focused="true"/>
+    <item android:color="@color/white" android:state_focused="true"/>
     <item android:alpha="0.38" android:color="?attr/colorOnSurface" android:state_enabled="false"/>
     <item android:alpha="0.6" android:color="?attr/colorOnSurface"/>
 </selector>
