@@ -3,7 +3,7 @@ package com.sipanduteam.sipandu.api;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String baseURL = "http://192.168.1.101:8000/api/mobileuser/";
+    private static final String baseURL = "https://sipandu-test-web.herokuapp.com/api/mobileuser/";
     private static retrofit2.Retrofit retrofit;
 
     public static retrofit2.Retrofit buildRetrofit() {
