@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import androidx.annotation.Nullable;
+import androidx.documentfile.provider.DocumentFile;
+import androidx.loader.content.CursorLoader;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import android.app.ProgressDialog;
@@ -12,10 +14,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,12 +53,25 @@ import com.sipanduteam.sipandu.model.Posyandu;
 import com.sipanduteam.sipandu.model.register.RegistDataPosyanduResponse;
 import com.sipanduteam.sipandu.model.register.RegisterResponse;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 public class RegisterContinueActivity extends AppCompatActivity {
 
@@ -59,7 +81,7 @@ public class RegisterContinueActivity extends AppCompatActivity {
     private TextInputEditText kartuKeluargaForm, namaField, emailField, passwordField, passwordConfirmField;
     private AutoCompleteTextView kabupatenField, kecamatanField, desaField, posyanduField;
     private Button backToLogin;
-    private String idKKKEY = "IDKKKEY", roleKey = "ROLEKEY";
+    private String idKKKEY = "IDKKKEY", roleKey = "ROLEKEY", kkKey = "KKKEY";
     private int idKK;
     private ProgressDialog dialog;
     private Button registerSubmitButton;
@@ -73,11 +95,18 @@ public class RegisterContinueActivity extends AppCompatActivity {
     private Desa desa;
     private Posyandu posyandu;
     Bundle extras;
-    AlertDialog registerCompleteDialog;
-    View registerCompleteView;
-    AnimatedVectorDrawable registerCompleteAnimation;
-    Drawable registerComplteDrawable;
-    ImageView registerCompleteIcon;
+
+//    AlertDialog registerCompleteDialog;
+//    View registerCompleteView;
+
+    private boolean fileSelected = false, kabupatenSelected = false,
+            kecamatanSelected = false, desaSelected = false, posyanduSelected = false, namaCorrect = false,
+            emailCorrect = false, passwordCorrect = false, isPasswordCorrect = false;
+
+    Uri uriFile;
+    String srcFile;
+    String tempFolder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +126,130 @@ public class RegisterContinueActivity extends AppCompatActivity {
         posyanduField = findViewById(R.id.reg_banjar_field);
         posyanduLayout = findViewById(R.id.reg_banjar_form);
         registerSubmitButton = findViewById(R.id.register_submit_button);
+        namaLayout = findViewById(R.id.reg_nama_form);
+        emailLayout = findViewById(R.id.reg_email_form);
+        passwordLayout = findViewById(R.id.reg_password_form);
+        passwordConfirmLayout = findViewById(R.id.reg_password_confirm_form);
         namaField = findViewById(R.id.reg_nama_field);
         emailField = findViewById(R.id.reg_email_field);
         passwordField = findViewById(R.id.reg_password_field);
         passwordConfirmField = findViewById(R.id.reg_password_confirm_field);
 
         extras = getIntent().getExtras();
+        String role = extras.getString(roleKey).toLowerCase();
+
+        namaField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(namaField.getText().toString().length() == 0) {
+                    namaLayout.setError("Nama " + role + " tidak boleh kosong");
+                    namaCorrect = false;
+                }
+                else {
+                    if (namaField.getText().toString().length() > 50) {
+                        namaLayout.setError("Nama " + role + " tidak boleh lebih dari 50 karakter");
+                        namaCorrect = false;
+                    }
+                    else if (namaField.getText().toString().length() < 2) {
+                        namaLayout.setError("Nama " + role + " tidak boleh kurang dari 2 karakter");
+                        namaCorrect = false;
+                    }
+                    else {
+                        if ( isNameValid(namaField.getText().toString()) ) {
+                            namaLayout.setError(null);
+                            namaCorrect = true;
+                        }
+                        else {
+                            namaLayout.setError("Periksa kembali nama yang di inputkan");
+                            namaCorrect = false;
+                        }
+                    }
+                }
+            }
+        });
+
+        emailField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(!isEmailValid(emailField.getText().toString())) {
+                    emailLayout.setError("Email tidak valid");
+                    emailCorrect = false;
+                }
+                else {
+                    emailLayout.setError(null);
+                    emailCorrect = true;
+                }
+            }
+        });
+
+        passwordField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(passwordField.getText().toString().length() > 50) {
+                    passwordLayout.setError("Password tidak boleh lebih dari 50 karakter");
+                    passwordCorrect = false;
+                }
+                else if(passwordField.getText().toString().length() < 8) {
+                    passwordLayout.setError("Password tidak boleh kurang dari 8 karakter");
+                    passwordCorrect = false;
+                }
+                else {
+                    passwordLayout.setError(null);
+                    passwordCorrect = true;
+                }
+            }
+        });
+
+        passwordConfirmField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(!(passwordField.getText().toString().equals(passwordConfirmField.getText().toString()))) {
+                    passwordConfirmLayout.setError("Password tidak cocok");
+                    isPasswordCorrect = false;
+                }
+                else {
+                    passwordConfirmLayout.setError(null);
+                    isPasswordCorrect = true;
+                }
+            }
+        });
+
+
+        tempFolder = getApplicationContext().getCacheDir().getAbsolutePath();
 
         if (extras.containsKey(idKKKEY)) {
             kartuKeluargaLayout.setEnabled(false);
@@ -124,60 +271,157 @@ public class RegisterContinueActivity extends AppCompatActivity {
         desaField.setAdapter(desaRegisterSelectionAdapter);
         posyanduField.setAdapter(posyanduRegisterSelectionAdapter);
         kabupatenField.setThreshold(100);
-        kabupatenField.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                kabupatenField.showDropDown();
-                kecamatanLayout.setEnabled(false);
-                kecamatanLayout.setHint("Pilih kabupaten terlebih dahulu");
+        kecamatanField.setThreshold(100);
+        desaField.setThreshold(100);
+        posyanduField.setThreshold(100);
+//        kabupatenField.setKeyListener(null);
+//        kecamatanField.setKeyListener(null);
+//        desaField.setKeyListener(null);
+//        posyanduField.setKeyListener(null);
 
-                desaLayout.setHint("Pilih kecamatan terlebih dahulu");
-                desaLayout.setEnabled(false);
+//        kabupatenField.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                kabupatenField.showDropDown();
+////                kecamatanField.setText(null);
+////
+////                desaLayout.setHint("Pilih kecamatan terlebih dahulu");
+////                desaLayout.setEnabled(false);
+////                desaField.setText(null);
+////
+////                posyanduLayout.setHint("Pilih desa/kelurahan");
+//                posyanduLayout.setEnabled(false);
+////                posyanduField.setText(null);
+//            }
+//        });
 
-                posyanduLayout.setHint("Pilih desa/kelurahan");
-                posyanduLayout.setEnabled(false);
+//        kabupatenLayout.setEndIconOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                kabupatenField.showDropDown();
+//                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                if (in.isActive()) {
+//                    in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+//                }
+//            }
+//        });
 
-                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
-
-            }
-        });
 
         kabupatenField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 kabupaten = (Kabupaten) adapterView.getItemAtPosition(i);
                 kabupatenField.setText(kabupaten.getNamaKabupaten());
-                kecamatans.clear();
+                if (!kecamatans.isEmpty()) {
+                    kecamatans.clear();
+                }
+
+                kabupatenSelected = true;
+                kecamatanSelected = false;
+                desaSelected = false;
+                posyanduSelected = false;
+
                 kecamatans.addAll(kabupaten.getKecamatan());
                 kecamatanRegisterSelectionAdapter.notifyDataSetChanged();
                 kecamatanLayout.setHint("Pilih kecamatan");
                 kecamatanLayout.setEnabled(true);
+                kecamatanField.setText("");
+
+                desaLayout.setHint("Pilih kecamatan terlebih dahulu");
+                desaLayout.setEnabled(false);
+                desaField.setText("");
+
+                posyanduLayout.setHint("Pilih desa/kelurahan terlebih dahulu");
+                posyanduLayout.setEnabled(false);
+                posyanduField.setText("");
             }
         });
+
+//        kecamatanField.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                kecamatanField.showDropDown();
+//            }
+//        });
+//
+//        kecamatanLayout.setEndIconOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                kecamatanField.showDropDown();
+////                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+////                if (in.isActive()) {
+////                    in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+////                }
+//            }
+//        });
 
         kecamatanField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 kecamatan = (Kecamatan) adapterView.getItemAtPosition(i);
                 kecamatanField.setText(kecamatan.getNamaKecamatan());
-                desas.clear();
+                if (!desas.isEmpty()) {
+                    desas.clear();
+                }
+
+                kecamatanSelected = true;
+                desaSelected = false;
+                posyanduSelected = false;
+
                 desas.addAll(kecamatan.getDesa());
                 desaRegisterSelectionAdapter.notifyDataSetChanged();
                 desaLayout.setHint("Pilih desa");
                 desaLayout.setEnabled(true);
+                desaField.setText("");
+                posyanduField.setText("");
+                posyanduLayout.setHint("Pilih desa/kelurahan terlebih dahulu");
+                posyanduLayout.setEnabled(false);
             }
         });
+
+//        desaField.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                desaField.showDropDown();
+//            }
+//        });
+//
+//        desaLayout.setEndIconOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                desaField.showDropDown();
+////                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+////                if (in.isActive()) {
+////                    in.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+////                }
+//            }
+//        });
+
+
 
         desaField.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 desa = (Desa) adapterView.getItemAtPosition(i);
                 desaField.setText(desa.getNamaDesa());
+                if (!posyandus.isEmpty()) {
+                    posyandus.clear();
+                }
+
+                desaSelected = true;
+                posyanduSelected = false;
+
+                posyanduField.setText("");
                 posyandus.addAll(desa.getPosyandu());
                 posyanduRegisterSelectionAdapter.notifyDataSetChanged();
-                posyanduLayout.setHint("Pilih banjar");
-                posyanduLayout.setEnabled(true);
+                if (posyandus.size() == 0) {
+                    posyanduLayout.setHint("Tidak ada posyandu");
+                    posyanduLayout.setEnabled(false);
+                }
+                else {
+                    posyanduLayout.setHint("Pilih banjar");
+                    posyanduLayout.setEnabled(true);
+                }
             }
         });
 
@@ -186,6 +430,7 @@ public class RegisterContinueActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 posyandu = (Posyandu) adapterView.getItemAtPosition(i);
                 posyanduField.setText(posyandu.getBanjar());
+                posyanduSelected = true;
             }
         });
 
@@ -215,36 +460,62 @@ public class RegisterContinueActivity extends AppCompatActivity {
         registerSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                register();
+                if( !(fileSelected && kabupatenSelected
+                        && kecamatanSelected && desaSelected
+                        && posyanduSelected && namaCorrect && emailCorrect
+                        && passwordCorrect && isPasswordCorrect)) {
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Periksa kembali data yang di inputkan", Snackbar.LENGTH_SHORT).show();
+                }
+                else {
+                    register();
+                }
             }
         });
 
-        registerCompleteView = LayoutInflater.from(this).inflate(R.layout.dialog_register_success, null, false);
-
-        registerCompleteDialog = new MaterialAlertDialogBuilder(this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar)
-                .setView(registerCompleteView)
-                .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                }).create();
+//        registerCompleteView = LayoutInflater.from(this).inflate(R.layout.dialog_register_success, null, false);
+//
+//        registerCompleteDialog = new MaterialAlertDialogBuilder(this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar)
+//                .setView(registerCompleteView)
+//                .setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        finish();
+//                    }
+//                }).create();
     }
 
     public void pickFile() {
         Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-        chooseFile.setType("image/*");
+        String [] mimeTypes = {"image/png", "image/jpg","image/jpeg"};
+        chooseFile.setType("*/*");
+        chooseFile.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         chooseFile = Intent.createChooser(chooseFile, "Choose a file");
         startActivityForResult(chooseFile, 1);
+
+//        Intent chooseFile = new Intent(Intent.ACTION_PICK);
+//        chooseFile.setType("image/*");
+//        chooseFile = Intent.createChooser(chooseFile, "Pilih file kartu keluarga");
+//        startActivityForResult(chooseFile, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 1) {
-            Uri uri = data.getData();
-            String src = uri.getPath();
-            Toast.makeText(getApplicationContext(), "test pick file, data loc:" + src, Toast.LENGTH_SHORT).show();
+            uriFile = data.getData();
+            srcFile = uriFile.getPath();
+            kartuKeluargaForm.setText("");
+            fileSelected = false;
+            if (DocumentFile.fromSingleUri(this, uriFile).length() > 5000000) {
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Berkas terlalu besar", Snackbar.LENGTH_SHORT).show();
+                kartuKeluargaLayout.setError("Berkas terlalu besar");
+            }
+            else {
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Berkas kartu keluarga berhasil di pilih", Snackbar.LENGTH_SHORT).show();
+                kartuKeluargaForm.setText(DocumentFile.fromSingleUri(this, uriFile).getName());
+                fileSelected = true;
+                kartuKeluargaLayout.setError(null);
+            }
         }
     }
 
@@ -269,7 +540,7 @@ public class RegisterContinueActivity extends AppCompatActivity {
                 if (dialog.isShowing()){
                     dialog.dismiss();
                 }
-                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Something went duar meledak yey api nya meledak", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -277,18 +548,79 @@ public class RegisterContinueActivity extends AppCompatActivity {
     public void register() {
         dialog.setMessage("Mohon tunggu...");
         dialog.show();
+
+        RequestBody emailData, passwordData, posyanduData, namaData, kkData, noKK;
         Call<RegisterResponse> registerResponseCall = null;
-        if (extras.getString(roleKey).equals("Anak")) {
-            registerResponseCall = retro.registerAnak(extras.getInt(idKKKEY), emailField.getText().toString(),
-                    passwordField.getText().toString(), posyandu.getId(), namaField.getText().toString());
+
+        emailData = RequestBody.create(MediaType.parse("text/plain"), emailField.getText().toString());
+        passwordData = RequestBody.create(MediaType.parse("text/plain"), passwordField.getText().toString());
+        posyanduData = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(posyandu.getId()));
+        namaData = RequestBody.create(MediaType.parse("text/plain"), namaField.getText().toString());
+
+        if (extras.containsKey(kkKey) && extras.getString(kkKey).length() != 0) {
+            noKK = RequestBody.create(MediaType.parse("text/plain"), extras.getString(kkKey));
+            MultipartBody.Part kkFile;
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            File filesDir = getFilesDir();
+            File imageFile = new File(filesDir, extras.getString(kkKey) + ".jpg");
+            OutputStream os;
+            try {
+                os = new FileOutputStream(imageFile);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                os.flush();
+                os.close();
+            } catch (Exception e) {
+                Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+            }
+            kkData = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
+            kkFile = MultipartBody.Part.createFormData("file", imageFile.getName(), kkData);
+
+            if (extras.getString(roleKey).equals("Anak")) {
+                registerResponseCall = retro.registerAnakWithKK(
+                        emailData,
+                        passwordData,
+                        posyanduData,
+                        namaData,
+                        noKK,
+                        kkFile);
+            }
+            else if (extras.getString(roleKey).equals("Ibu hamil")) {
+                registerResponseCall = retro.registerBumilWithKK(
+                        emailData,
+                        passwordData,
+                        posyanduData,
+                        namaData,
+                        noKK,
+                        kkFile);
+            }
+            else if (extras.getString(roleKey).equals("Lansia")) {
+                registerResponseCall = retro.registerLansiaWithKK(
+                        emailData,
+                        passwordData,
+                        posyanduData,
+                        namaData,
+                        noKK,
+                        kkFile);
+            }
         }
-        else if (extras.getString(roleKey).equals("Ibu hamil")) {
-            registerResponseCall = retro.registerBumil(extras.getInt(idKKKEY), emailField.getText().toString(),
-                    passwordField.getText().toString(), posyandu.getId(), namaField.getText().toString());
-        }
-        else if (extras.getString(roleKey).equals("Lansia")) {
-            registerResponseCall = retro.registerLansia(extras.getInt(idKKKEY), emailField.getText().toString(),
-                    passwordField.getText().toString(), posyandu.getId(), namaField.getText().toString());
+        else {
+            if (extras.getString(roleKey).equals("Anak")) {
+                registerResponseCall = retro.registerAnak(extras.getInt(idKKKEY), emailField.getText().toString(),
+                        passwordField.getText().toString(), posyandu.getId(), namaField.getText().toString());
+            }
+            else if (extras.getString(roleKey).equals("Ibu hamil")) {
+                registerResponseCall = retro.registerBumil(extras.getInt(idKKKEY), emailField.getText().toString(),
+                        passwordField.getText().toString(), posyandu.getId(), namaField.getText().toString());
+            }
+            else if (extras.getString(roleKey).equals("Lansia")) {
+                registerResponseCall = retro.registerLansia(extras.getInt(idKKKEY), emailField.getText().toString(),
+                        passwordField.getText().toString(), posyandu.getId(), namaField.getText().toString());
+            }
         }
         registerResponseCall.enqueue(new Callback<RegisterResponse>() {
             @Override
@@ -296,7 +628,6 @@ public class RegisterContinueActivity extends AppCompatActivity {
                 if (dialog.isShowing()){
                     dialog.dismiss();
                 }
-                Log.d("tolong", String.valueOf(response.code()));
                 if(response.body().getStatusRegister().equals("email sama")) {
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Email sudah di gunakan, silahkan gunakan email yang lain", Snackbar.LENGTH_SHORT).show();
                 }
@@ -312,8 +643,16 @@ public class RegisterContinueActivity extends AppCompatActivity {
                 if (dialog.isShowing()){
                     dialog.dismiss();
                 }
-                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Something went duar meledak yey api nya meledak", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    public boolean isNameValid(String text){
+        return text.matches("^([A-Za-z]+)(\\s[A-Za-z]+)*\\s?$");
     }
 }

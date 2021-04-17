@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="12dp">
+    android:layout_marginBottom="12dp"
+    android:layout_height="wrap_content">
 
     <FrameLayout
         android:id="@+id/frame_container"
@@ -14,13 +14,50 @@
         android:orientation="vertical">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/blog_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/gambarvirus"
+            app:srcCompat="@drawable/sipandu_logo"
             android:scaleType="centerCrop"
             app:tintMode="src_atop"
             app:tint="#90121212" />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/informasi_failed_image_load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_outline_warning_amber_24"
+                app:tint="@color/secondaryDarkColor">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gambar gagal di muat"
+                android:layout_gravity="center"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:visibility="gone"
+            android:id="@+id/informasi_image_progress"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent">
@@ -40,7 +77,7 @@
 
                    <!-- Title, secondary and supporting text -->
                    <TextView
-                       android:id="@+id/blog_title"
+                       android:id="@+id/informasi_title"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="INFORMASI!!!1111111!"
@@ -49,31 +86,19 @@
                        android:textStyle="bold" />
 
                    <TextView
+                       android:id="@+id/informasi_date"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:layout_marginTop="8dp"
-                       android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
                        android:drawablePadding="4dp"
-                       android:drawableTint="@color/white"
-                       android:text="01/02/2021"
+                       android:text="date"
                        android:textAppearance="?attr/textAppearanceBody2"
                        android:textColor="@color/white"
-                       android:textStyle="bold" />
-
-                   <TextView
-                       android:id="@+id/blog_keterangan"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginTop="16dp"
-                       android:text="Saya adalah INFORMASI. Saya mmbeirkan orang INFORMASI penting dan berguna."
-                       android:textAppearance="?attr/textAppearanceBody2"
-                       android:textColor="@color/white" />
-
+                       android:textStyle="bold"
+                       app:drawableTint="@color/white"
+                       app:drawableLeftCompat="@drawable/ic_outline_calendar_today_24" />
                </LinearLayout>
            </LinearLayout>
-
-
        </RelativeLayout>
-
     </FrameLayout>
 </com.google.android.material.card.MaterialCardView>

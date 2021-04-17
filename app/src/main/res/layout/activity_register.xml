@@ -20,23 +20,26 @@
 
             <TextView
                 android:id="@+id/reset_pass_text"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="viewStart"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="8dp"
                 android:layout_gravity="center"
-                android:text="Masukkan NIK terlebih dahulu untuk melanjutkan"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/primaryColor"
-                android:textStyle="bold" />
+                android:text="Masukkan nomor kartu keluarga untuk melanjutkan"
+                android:textAllCaps="true"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="@color/primaryColor" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/reg_nik_form"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="NIK"
+                android:hint="No. KK"
                 android:layout_marginBottom="4dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="16"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -60,6 +63,7 @@
                     android:id="@+id/reg_role_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     android:background="@null" />
             </com.google.android.material.textfield.TextInputLayout>
 

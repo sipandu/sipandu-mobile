@@ -33,8 +33,18 @@ public class KecamatanRegisterSelectionAdapter extends ArrayAdapter<Kecamatan> {
                     R.layout.login_role_dropdown_menu_item, parent, false
             );
         }
-        TextView kabupatenName = convertView.findViewById(R.id.auto_complete_text);
-        kabupatenName.setText(kecamatanList.get(position).getNamaKecamatan());
+        TextView kecamatanName = convertView.findViewById(R.id.auto_complete_text);
+        kecamatanName.setText(kecamatanList.get(position).getNamaKecamatan());
         return convertView;
+    }
+    @Override
+    public int getCount() {
+        return kecamatanList.size();
+    }
+
+    @Nullable
+    @Override
+    public Kecamatan getItem(int position) {
+        return kecamatanList.get(position);
     }
 }

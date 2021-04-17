@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -23,18 +28,29 @@ import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.AnakDataResponse;
 import com.sipanduteam.sipandu.model.user.UserRegisterFirstResponse;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.view.View.GONE;
+
 
 public class ProfileFragment extends Fragment {
 
-    TextView nama, namaCard, nik, email, jk, alamat, ttl, noTelp, anakKe, ayah, ibu;
+    TextView nama, namaCard, nik, email, jk, alamat, ttl, noTelp, anakKe, ayah, ibu, umur;
     View v;
     SharedPreferences userPreferences;
     private ProgressDialog dialog;
-    ShimmerFrameLayout shimmerFrameLayout;
+    LinearLayout loadingContainer, failedContainer;
+    ScrollView profileContainer;
+    Button refreshProfile;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -60,7 +76,18 @@ public class ProfileFragment extends Fragment {
         anakKe = v.findViewById(R.id.profile_anakke_text_card);
         ayah = v.findViewById(R.id.profile_ayah_text_card);
         ibu = v.findViewById(R.id.profile_ibu_text_card);
-        shimmerFrameLayout = (ShimmerFrameLayout) v.findViewById(R.id.profile_shimmer_container);
+        umur = v.findViewById(R.id.profile_umur_text_card);
+
+        refreshProfile = v.findViewById(R.id.profile_refresh);
+        refreshProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getData();
+            }
+        });
+        loadingContainer = v.findViewById(R.id.profile_loading_container);
+        profileContainer = v.findViewById(R.id.profile_layout_container);
+        failedContainer = v.findViewById(R.id.profile_failed_container);
         userPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
         dialog = new ProgressDialog(getActivity());
         getData();
@@ -69,21 +96,22 @@ public class ProfileFragment extends Fragment {
     }
 
     public void getData() {
+        setLoadingContainerVisible();
         BaseApi getData = RetrofitClient.buildRetrofit().create(BaseApi.class);
         Call<AnakDataResponse> anakDataResponseCall = getData.anakData(userPreferences.getString("email", "empty"));
 //        dialog.setMessage("Mohon tunggu...");
 //        dialog.show();
-        shimmerFrameLayout.startShimmer();
+//        shimmerFrameLayout.startShimmer();
         anakDataResponseCall.enqueue(new Callback<AnakDataResponse>() {
             @Override
             public void onResponse(Call<AnakDataResponse> call, Response<AnakDataResponse> response) {
 //                if (dialog.isShowing()){
 //                    dialog.dismiss();
 //                }
-                if(shimmerFrameLayout.isShimmerStarted()) {
-                    shimmerFrameLayout.stopShimmer();
-                    shimmerFrameLayout.hideShimmer();
-                }
+//                if(shimmerFrameLayout.isShimmerStarted()) {
+//                    shimmerFrameLayout.stopShimmer();
+//                    shimmerFrameLayout.hideShimmer();
+//                }
                 Log.d("duar", String.valueOf(response.code()));
                 if (response.code() == 200 && response.body().getStatusCode() == 200) {
                     nama.setText(response.body().getAnak().getNamaAnak());
@@ -97,9 +125,28 @@ public class ProfileFragment extends Fragment {
                     anakKe.setText(response.body().getAnak().getAnakKe());
                     ayah.setText(response.body().getAnak().getNamaAyah());
                     ibu.setText(response.body().getAnak().getNamaIbu());
+
+                    SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                    Date date = new Date();
+
+                    try {
+                        date = simpleFormat.parse(response.body().getAnak().getTanggalLahir().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Date currentTime = Calendar.getInstance().getTime();
+                    Calendar startCalendar = new GregorianCalendar();
+                    startCalendar.setTime(currentTime);
+                    Calendar endCalendar = new GregorianCalendar();
+                    endCalendar.setTime(date);
+
+                    int diffMonth = startCalendar.get(Calendar.YEAR) - endCalendar.get(Calendar.YEAR);
+                    umur.setText(diffMonth + " tahun");
+                    setProfileContainerVisible();
                 }
                 else {
-                    Snackbar.make(v, "Something went duar meledak yey api nya meledak", Snackbar.LENGTH_SHORT).show();
+                    setFailedContainerVisible();
+                    Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
                 }
             }
 
@@ -108,12 +155,27 @@ public class ProfileFragment extends Fragment {
 //                if (dialog.isShowing()){
 //                    dialog.dismiss();
 //                }
-                if(shimmerFrameLayout.isShimmerStarted()) {
-                    shimmerFrameLayout.stopShimmer();
-                    shimmerFrameLayout.hideShimmer();
-                }
-                Snackbar.make(v, "Something went duar meledak yey api nya meledak", Snackbar.LENGTH_SHORT).show();
+                setFailedContainerVisible();
+                Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void setFailedContainerVisible() {
+        loadingContainer.setVisibility(GONE);
+        failedContainer.setVisibility(View.VISIBLE);
+        profileContainer.setVisibility(GONE);
+    }
+
+    public void setLoadingContainerVisible() {
+        loadingContainer.setVisibility(View.VISIBLE);
+        failedContainer.setVisibility(GONE);
+        profileContainer.setVisibility(GONE);
+    }
+
+    public void setProfileContainerVisible() {
+        loadingContainer.setVisibility(GONE);
+        failedContainer.setVisibility(GONE);
+        profileContainer.setVisibility(View.VISIBLE);
     }
 }

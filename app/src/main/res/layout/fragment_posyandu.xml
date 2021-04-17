@@ -4,12 +4,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:animateLayoutChanges="true"
     tools:context=".fragment.home.PosyanduFragment">
 
+
+    <LinearLayout
+        android:foregroundGravity="center"
+        android:id="@+id/posyandu_loading_container"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.Large.DoubleBounce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            app:SpinKit_Color="@color/primaryColor" />
+
+        <TextView
+            android:padding="12dp"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mohon tunggu..."
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:foregroundGravity="center"
+        android:id="@+id/posyandu_failed_container"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:padding="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/failed_drawable">
+        </ImageView>
+
+        <TextView
+            android:padding="12dp"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Terjadi kesalahan. Silahkan klik refresh atau coba lagi nanti"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+        <Button
+            android:id="@+id/posyandu_refresh"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Refresh"
+            app:icon="@drawable/ic_outline_refresh_24"
+            app:iconGravity="textStart"
+            android:textColor="@color/primaryLightColor"
+            app:iconTint="@color/primaryLightColor"
+            app:strokeColor="@color/primaryLightColor" />
+    </LinearLayout>
+
+
+
     <ScrollView
+        android:id="@+id/posyandu_layout_container"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,9 +123,10 @@
 
                                 <!-- Title, secondary and supporting text -->
                                 <TextView
+                                    android:id="@+id/posyandu_name_text"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Posyandu Banjar Delod Tukad"
+                                    android:text="Posyandu"
                                     android:layout_marginBottom="12dp"
                                     android:layout_gravity="center"
                                     android:textAppearance="?attr/textAppearanceHeadline6"
@@ -62,41 +135,42 @@
                                 <View style="@style/Divider"/>
 
                                 <LinearLayout
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content">
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
 
-                                   <ImageView
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_gravity="center"
-                                       android:layout_marginEnd="8dp"
-                                       android:src="@drawable/ic_baseline_map_24"
-                                       app:tint="@color/primaryLightColor" />
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginEnd="8dp"
+                                        android:src="@drawable/ic_outline_map_24"
+                                        app:tint="@color/primaryLightColor" />
 
-                                   <LinearLayout
-                                       android:layout_width="match_parent"
-                                       android:layout_height="wrap_content"
-                                       android:orientation="vertical">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
 
-                                       <TextView
-                                           android:layout_width="wrap_content"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="4dp"
-                                           android:text="Alamat"
-                                           android:textStyle="bold"
-                                           android:textAppearance="?attr/textAppearanceBody2"
-                                           />
-                                       <TextView
-                                           android:layout_width="wrap_content"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="4dp"
-                                           android:layout_marginBottom="4dp"
-                                           android:text="Jalan Anuan dije to Desa Ten uning tiang No. 2 Kecamatan Nah dini gen dadi"
-                                           android:textAppearance="?attr/textAppearanceBody2"
-                                           android:textColor="?android:attr/textColorSecondary"
-                                           />
-                                   </LinearLayout>
-                               </LinearLayout>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="4dp"
+                                            android:text="Alamat"
+                                            android:textStyle="bold"
+                                            android:textAppearance="?attr/textAppearanceBody2"
+                                            />
+                                        <TextView
+                                            android:id="@+id/posyandu_alamat_text"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="4dp"
+                                            android:layout_marginBottom="4dp"
+                                            android:text="Alamat posyandu"
+                                            android:textAppearance="?attr/textAppearanceBody2"
+                                            android:textColor="?android:attr/textColorSecondary"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_marginTop="8dp"
@@ -110,7 +184,7 @@
                                         android:layout_gravity="center"
                                         android:layout_weight="1"
                                         android:layout_marginEnd="8dp"
-                                        android:src="@drawable/ic_baseline_house_24"
+                                        android:src="@drawable/ic_outline_home_24"
                                         app:tint="@color/primaryLightColor" />
 
                                     <LinearLayout
@@ -128,10 +202,11 @@
                                             />
 
                                         <TextView
+                                            android:id="@+id/posyandu_banjar_text"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="4dp"
-                                            android:text="Banjar delod tukad"
+                                            android:text="Banjar posyandu"
                                             android:textAppearance="?attr/textAppearanceBody2"
                                             android:textColor="?android:attr/textColorSecondary"
                                             />
@@ -180,16 +255,34 @@
                     app:strokeColor="@color/secondaryLightColor" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Konsultasi"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/primaryColor"
-                android:textStyle="bold" />
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Konsultasi"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="@color/primaryColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card10"
@@ -247,16 +340,33 @@
             </com.google.android.material.card.MaterialCardView>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="8dp"
-                android:text="Penyebaran posyandu"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/primaryColor"
-                android:textStyle="bold" />
+                android:layout_marginEnd="12dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Penyebaran posyandu"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="@color/primaryColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/open_posyandu_map_card"
@@ -283,7 +393,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_weight="3"
                             android:layout_marginEnd="4dp"
-                            android:src="@drawable/ic_baseline_map_24"
+                            android:src="@drawable/ic_outline_map_24"
                             app:tint="@color/white" />
 
                         <TextView
@@ -314,15 +424,33 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:text="Butuh bantuan?"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/primaryColor"
-                android:textStyle="bold" />
+                android:layout_marginEnd="12dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Butuh bantuan?"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="@color/primaryColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/call_posyandu_button"
@@ -333,9 +461,9 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="4dp"
-                android:text="Hubungi Posyandu Banjar Delod Tukad di 089121142434343"
+                android:text="Hubungi Posyandu"
                 app:icon="@drawable/ic_baseline_call_24"
-                app:iconGravity="textStart"
+                app:iconGravity="start"
                 app:strokeColor="@color/green"
                 app:rippleColor="@color/greenTranslucent"
                 app:iconTint="@color/green"
@@ -348,11 +476,24 @@
                 android:layout_height="70dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginBottom="12dp"
-                android:text="Gabung grup Telegram Posyandu Banjar Delod Tukad"
+                android:layout_marginBottom="4dp"
+                app:iconGravity="start"
+                android:text="Gabung grup Telegram posyandu"
                 app:icon="@drawable/ic_telegram_logo"
-                app:strokeColor="@color/primaryColor"
-                app:iconGravity="textStart" />
+                app:strokeColor="@color/primaryColor" />
+
+            <Button
+                android:id="@+id/posyandu_telegram_bot_button"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                app:iconGravity="start"
+                android:text="Tambahkan bot Telegram Smart Posyandu"
+                app:icon="@drawable/ic_outline_smart_toy_24"
+                app:strokeColor="@color/primaryColor" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

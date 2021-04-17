@@ -33,10 +33,10 @@ public class HomeActivity extends AppCompatActivity {
     boolean doubleBack = false;
     BottomNavigationView bottomNavigationView;
 
-    final Fragment berandaFragment = new BerandaFragment();
-    final Fragment keluargaFragment = new KeluargaFragment();
-    final Fragment posyanduFragment = new PosyanduFragment();
-    final Fragment profileFragment = new ProfileFragment();
+    private Fragment berandaFragment = new BerandaFragment();
+    private Fragment keluargaFragment;
+    private Fragment posyanduFragment;
+    private Fragment profileFragment;
     final FragmentManager fm = getSupportFragmentManager();
     SharedPreferences userPreferences, loginPreferences;
     Fragment selectedFragment = berandaFragment;
@@ -58,10 +58,11 @@ public class HomeActivity extends AppCompatActivity {
 
         userPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         String email = userPreferences.getString("email", "empty");
+        String namaUser = userPreferences.getString("nama_user", "empty");
 
+        String[] arrayString = namaUser.split(" ");
 
         //get local time for appbar title
-        //TODO set username greeting from sharedpref
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -78,7 +79,7 @@ public class HomeActivity extends AppCompatActivity {
             greeting = "Selamat pagi, ";
         }
 
-        greeting = greeting + email +"!";
+        greeting = greeting + arrayString[arrayString.length-1] +"!";
 
 //        berandaFragment = new BerandaFragment();
 //        keluargaFragment = new KeluargaFragment();
@@ -89,18 +90,19 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(homeToolbar);
         homeToolbar.setTitle(greeting);
 
+        //TODO repair fragment creation biar nggak di create bareng bareng
+
         bottomNavigationView = findViewById(R.id.home_bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        fm.beginTransaction().add(R.id.home_fragment_container, profileFragment, "4").hide(profileFragment).commit();
-        fm.beginTransaction().add(R.id.home_fragment_container, posyanduFragment, "3").hide(posyanduFragment).commit();
-        fm.beginTransaction().add(R.id.home_fragment_container, keluargaFragment, "2").hide(keluargaFragment).commit();
         fm.beginTransaction().add(R.id.home_fragment_container, berandaFragment, "1").commit();
 
         // handler for snackbar
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Snackbar snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"Login berhasil! Selamat datang " + email,Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = Snackbar.make(
+                        getWindow().getDecorView().findViewById(android.R.id.content),
+                        "Login berhasil! Selamat datang " + arrayString[arrayString.length-1] + "!",Snackbar.LENGTH_SHORT);
                 snackbar.setAnchorView(bottomNavigationView);
                 snackbar.show();
             }
@@ -122,7 +124,6 @@ public class HomeActivity extends AppCompatActivity {
 
                 else if (id == R.id.home_app_bar_logout) {
                     loginPreferences = getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
-
                     if (loginPreferences.getInt("login_status", 0) != 0) {
                         SharedPreferences.Editor editor = loginPreferences.edit();
                         editor.putInt("login_status", 0);
@@ -171,24 +172,51 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     if (item.getItemId() == R.id.nav_home) {
-                        fm.beginTransaction().hide(selectedFragment).show(berandaFragment).commit();
+                        if (berandaFragment == null) {
+                            berandaFragment = new BerandaFragment();
+                        }
+                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(berandaFragment).commit();
                         selectedFragment = berandaFragment;
+                        return true;
                     } else if (item.getItemId() == R.id.nav_keluargaku) {
-                        fm.beginTransaction().hide(selectedFragment).show(keluargaFragment).commit();
+                        if (keluargaFragment == null) {
+                            keluargaFragment = new KeluargaFragment();
+                            fm.beginTransaction().add(R.id.home_fragment_container, keluargaFragment, "2").hide(keluargaFragment).commit();
+                        }
+                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(keluargaFragment).commit();
                         selectedFragment = keluargaFragment;
+                        return true;
                     } else if (item.getItemId() == R.id.nav_posyandu) {
-                        fm.beginTransaction().hide(selectedFragment).show(posyanduFragment).commit();
+                        if (posyanduFragment == null) {
+                            posyanduFragment = new PosyanduFragment();
+                            fm.beginTransaction().add(R.id.home_fragment_container, posyanduFragment, "3").hide(posyanduFragment).commit();
+                        }
+                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(posyanduFragment).commit();
                         selectedFragment = posyanduFragment;
+                        return true;
                     } else if (item.getItemId() == R.id.nav_myprofile) {
-                        fm.beginTransaction().hide(selectedFragment).show(profileFragment).commit();
+                        if (profileFragment == null) {
+                            profileFragment = new ProfileFragment();
+                            fm.beginTransaction().add(R.id.home_fragment_container, profileFragment, "4").hide(profileFragment).commit();
+                        }
+                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(profileFragment).commit();
                         selectedFragment = profileFragment;
+                        return true;
                     }
-//                    ft.beginTransaction();
-//                    ft.setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast);
+//                    fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).replace(R.id.home_fragment_container, selectedFragment).addToBackStack(null).commit();
+//                    fm.beginTransaction();
+//                    fm.setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast);
 //                    ft.replace(R.id.home_fragment_container, selectedFragment);
 //                    ft.addToBackStack(null);
 //                    ft.commit();
-                    return true;
+                    return false;
                 }
             };
+
+    private void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.home_fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

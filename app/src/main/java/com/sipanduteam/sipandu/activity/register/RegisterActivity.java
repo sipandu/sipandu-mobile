@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -27,12 +28,12 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputLayout roleLayout, nikLayout;
-    private TextInputEditText nikField;
+    private TextInputEditText noKkField;
     private AutoCompleteTextView registerRoleDropdown;
     private Button backToLogin, continueRegister;
     int flagError=0;
     private ProgressDialog dialog;
-    private String idKKKEY = "IDKKKEY", roleKey = "ROLEKEY";
+    private String idKKKEY = "IDKKKEY", roleKey = "ROLEKEY", kkKey = "KKKEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         backToLogin = findViewById(R.id.back_login_button);
         continueRegister = findViewById(R.id.register_continue_button);
         roleLayout = findViewById(R.id.reg_role_form);
-        nikField = findViewById(R.id.reg_nik_text_field);
+        noKkField = findViewById(R.id.reg_nik_text_field);
         nikLayout = findViewById(R.id.reg_nik_form);
 
         dialog = new ProgressDialog(this);
@@ -61,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        nikField.addTextChangedListener(new TextWatcher() {
+        noKkField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -74,12 +75,12 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(nikField.getText().toString().length() == 0) {
-                    nikLayout.setError("NIK tidak boleh kosong");
+                if(noKkField.getText().toString().length() == 0) {
+                    nikLayout.setError("No. KK tidak boleh kosong");
                 }
                 else {
-                    if (nikField.getText().toString().length() != 16) {
-                        nikLayout.setError("NIK harus berjumlah 16 digit");
+                    if (noKkField.getText().toString().length() != 16) {
+                        nikLayout.setError("No. KK harus berjumlah 16 digit");
                     } else {
                         nikLayout.setError(null);
                     }
@@ -87,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        nikField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        noKkField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(!b) {
@@ -101,6 +102,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        registerRoleDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                roleLayout.setError(null);
+            }
+        });
+
 
 
 
@@ -108,13 +116,13 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 flagError = 0;
-                if(nikField.getText().toString().length() == 0) {
+                if(noKkField.getText().toString().length() == 0) {
                     nikLayout.setError("NIK tidak boleh kosong");
                     flagError++;
                 }
                 //TODO sistem flag nya masih error, jad isemisal form di bawahnya udah isi, dia lolos
                 else {
-                    if(nikField.getText().toString().length() != 16 ) {
+                    if(noKkField.getText().toString().length() != 16 ) {
                         nikLayout.setError("NIK harus berjumlah 16 digit");
                         flagError++;
                     }
@@ -134,7 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
                     dialog.setMessage("Mohon tunggu...");
                     dialog.show();
                     BaseApi registApi = RetrofitClient.buildRetrofit().create(BaseApi.class);
-                    Call<UserRegisterFirstResponse> userRegisterFirstResponseCall = registApi.registerUser(nikField.getText().toString());
+                    Call<UserRegisterFirstResponse> userRegisterFirstResponseCall = registApi.registerUser(noKkField.getText().toString());
                     userRegisterFirstResponseCall.enqueue(new Callback<UserRegisterFirstResponse>() {
                         @Override
                         public void onResponse(Call<UserRegisterFirstResponse> call, Response<UserRegisterFirstResponse> response) {
@@ -145,6 +153,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 Intent registerContinue = new Intent(getApplicationContext(), RegisterContinueActivity.class);
                                 if (response.body().getIdKK() != null) {
                                     registerContinue.putExtra(idKKKEY, response.body().getIdKK());
+                                }
+                                else {
+                                    registerContinue.putExtra(kkKey, noKkField.getText().toString());
                                 }
                                 registerContinue.putExtra(roleKey, registerRoleDropdown.getText().toString());
                                 startActivity(registerContinue);

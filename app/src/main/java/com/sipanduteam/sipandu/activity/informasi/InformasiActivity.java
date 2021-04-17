@@ -1,30 +1,24 @@
 package com.sipanduteam.sipandu.activity.informasi;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.DialogInterface;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.activity.adapter.BlogListAdapter;
+import com.sipanduteam.sipandu.activity.adapter.InformasiListAdapter;
 import com.sipanduteam.sipandu.model.Blog;
+import com.sipanduteam.sipandu.model.Informasi;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,9 +35,9 @@ public class InformasiActivity extends AppCompatActivity {
     private Toolbar homeToolbar;
 
 
-    private ArrayList<Blog> blogArrayList;
+    private ArrayList<Informasi> informasiArrayList;
 
-    private BlogListAdapter blogListAdapter;
+    private InformasiListAdapter informasiListAdapter;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
@@ -64,17 +58,17 @@ public class InformasiActivity extends AppCompatActivity {
             }
         });
 
-        blogArrayList = new ArrayList<>();
-        for (int i = 0 ; i<10 ; i++) {
-            blogArrayList.add(new Blog("Judul misalnya " + i, "Sub judul misalnya adalah konten dimana konten lorem ipsum coba aja dulu blablabla" +i));
-        }
+        informasiArrayList = new ArrayList<>();
+//        for (int i = 0 ; i<10 ; i++) {
+//            blogArrayList.add(new Blog("Judul misalnya " + i, "Sub judul misalnya adalah konten dimana konten lorem ipsum coba aja dulu blablabla" +i));
+//        }
         recyclerView = findViewById(R.id.blog_list_view);
-        blogListAdapter = new BlogListAdapter(this, blogArrayList);
+        informasiListAdapter = new InformasiListAdapter(this, informasiArrayList);
         gridLayoutManager = new GridLayoutManager(this, 2);
         linearLayoutManager = new LinearLayoutManager(this);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(blogListAdapter);
+        recyclerView.setAdapter(informasiListAdapter);
 
 
         // date picker builder

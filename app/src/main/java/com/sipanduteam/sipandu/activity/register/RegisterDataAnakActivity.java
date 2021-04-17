@@ -109,7 +109,7 @@ public class RegisterDataAnakActivity extends AppCompatActivity {
         alamatField = findViewById(R.id.reg_anak_alamat_field);
         anakKeField = findViewById(R.id.reg_anak_anakke_field);
 
-        String[] loginRole = new String[] {"laki-laki", "perumpuan"};
+        String[] loginRole = new String[] {"laki-laki", "perempuan"};
         ArrayAdapter adapter = new ArrayAdapter<>(this, R.layout.login_role_dropdown_menu_item, loginRole);
         jkAutoComplete = findViewById(R.id.reg_anak_jk_field);
         jkAutoComplete.setAdapter(adapter);

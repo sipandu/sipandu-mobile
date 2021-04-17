@@ -10,6 +10,9 @@ public class UserRegisterFirstResponse {
     @SerializedName("idKK")
     @Expose
     private Integer idKK;
+    @SerializedName("noKK")
+    @Expose
+    private String noKK;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -25,5 +28,13 @@ public class UserRegisterFirstResponse {
 
     public void setIdKK(Integer idKK) {
         this.idKK = idKK;
+    }
+
+    public String getNoKK() {
+        return noKK;
+    }
+
+    public void setNoKK(String noKK) {
+        this.noKK = noKK;
     }
 }

@@ -33,8 +33,18 @@ public class DesaRegisterSelectionAdapter extends ArrayAdapter<Desa> {
                     R.layout.login_role_dropdown_menu_item, parent, false
             );
         }
-        TextView kabupatenName = convertView.findViewById(R.id.auto_complete_text);
-        kabupatenName.setText(desaList.get(position).getNamaDesa());
+        TextView desaName = convertView.findViewById(R.id.auto_complete_text);
+        desaName.setText(desaList.get(position).getNamaDesa());
         return convertView;
+    }
+    @Override
+    public int getCount() {
+        return desaList.size();
+    }
+
+    @Nullable
+    @Override
+    public Desa getItem(int position) {
+        return desaList.get(position);
     }
 }

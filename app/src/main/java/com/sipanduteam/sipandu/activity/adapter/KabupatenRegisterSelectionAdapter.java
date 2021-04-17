@@ -37,4 +37,14 @@ public class KabupatenRegisterSelectionAdapter extends ArrayAdapter<Kabupaten> {
         kabupatenName.setText(kabupatenList.get(position).getNamaKabupaten());
         return convertView;
     }
+    @Override
+    public int getCount() {
+        return kabupatenList.size();
+    }
+
+    @Nullable
+    @Override
+    public Kabupaten getItem(int position) {
+        return kabupatenList.get(position);
+    }
 }

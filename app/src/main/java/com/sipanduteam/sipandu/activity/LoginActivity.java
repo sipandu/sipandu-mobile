@@ -2,25 +2,21 @@ package com.sipanduteam.sipandu.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -49,20 +45,22 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton, registerButton, forgotPassButton;
     SharedPreferences loginPreferences, userPreferences;
     private String token;
-    private ProgressDialog dialog;
+    private Dialog dialog;
     private int loginStatus;
-    VideoView loginBg;
+//    VideoView loginBg;
     boolean doubleBack = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+//        Window w = getWindow();
+//        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         Window w = getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
 
         //inflate everything
         loginButton = findViewById(R.id.login_button);
@@ -73,48 +71,50 @@ public class LoginActivity extends AppCompatActivity {
         usernameForm = findViewById(R.id.username_text_field);
         passwordForm = findViewById(R.id.password_text_field);
 
-        dialog = new ProgressDialog(this);
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.progress_dialog_layout);
+        ProgressBar prog = (ProgressBar) dialog.findViewById(R.id.spin_kit);
 
         loginPreferences = getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
         userPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         loginStatus = loginPreferences.getInt("login_status", 0);
 
 
-        loginBg = (VideoView) findViewById(R.id.login_bg_video);
+//        loginBg = (VideoView) findViewById(R.id.login_bg_video);
 
-        loginBg.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.login_bg));
-        loginBg.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-                float videoProportion =  (float) mp.getVideoHeight() / mp.getVideoWidth();
-
-                WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-                Point size = new Point();
-                wm.getDefaultDisplay().getRealSize(size);
-                final int width = size.x, height = size.y;
-
-
-//                int screenWidth = getResources().getDisplayMetrics().widthPixels;
-//                int screenHeight = getResources().getDisplayMetrics().heightPixels;
-
-                int screenWidth = width;
-                int screenHeight = height;
-
-                float screenProportion = (float) screenHeight / (float) screenWidth;
-                android.view.ViewGroup.LayoutParams lp = loginBg.getLayoutParams();
-
-                if (videoProportion < screenProportion) {
-                    lp.height= screenHeight;
-                    lp.width = (int) ((float) screenHeight / videoProportion);
-                } else {
-                    lp.width = screenWidth;
-                    lp.height = (int) ((float) screenWidth * videoProportion);
-                }
-                loginBg.setLayoutParams(lp);
-            }
-        });
-        loginBg.start();
+//        loginBg.setVideoPath("http://192.168.1.103:8000/video/1.mp4");
+//        loginBg.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                mp.setLooping(true);
+//                float videoProportion =  (float) mp.getVideoHeight() / mp.getVideoWidth();
+//
+//                WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+//                Point size = new Point();
+//                wm.getDefaultDisplay().getRealSize(size);
+//                final int width = size.x, height = size.y;
+//
+//
+////                int screenWidth = getResources().getDisplayMetrics().widthPixels;
+////                int screenHeight = getResources().getDisplayMetrics().heightPixels;
+//
+//                int screenWidth = width;
+//                int screenHeight = height;
+//
+//                float screenProportion = (float) screenHeight / (float) screenWidth;
+//                android.view.ViewGroup.LayoutParams lp = loginBg.getLayoutParams();
+//
+//                if (videoProportion < screenProportion) {
+//                    lp.height= screenHeight;
+//                    lp.width = (int) ((float) screenHeight / videoProportion);
+//                } else {
+//                    lp.width = screenWidth;
+//                    lp.height = (int) ((float) screenWidth * videoProportion);
+//                }
+//                loginBg.setLayoutParams(lp);
+//            }
+//        });
+//        loginBg.start();
 
         if (loginStatus == 1) { //if logged in, proceed to app
             Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
@@ -169,17 +169,16 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loginBg.start();
+//        loginBg.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        loginBg.stopPlayback();
+//        loginBg.stopPlayback();
     }
 
     public void login() {
-        dialog.setMessage("Mohon tunggu...");
         dialog.show();
         BaseApi loginApi = RetrofitClient.buildRetrofit().create(BaseApi.class);
         Call<UserLoginResponse> userLoginResponseCall = loginApi.loginUser(usernameForm.getText().toString(), passwordForm.getText().toString());
@@ -189,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (dialog.isShowing()){
                     dialog.dismiss();
                 }
-
+                // TODO implement cek semisal pass/email salah
                 int roleUser = Integer.parseInt(response.body().getUser().getRole());
                 Log.d("verif", response.body().getUser().getIsVerified());
                 if(Integer.parseInt(response.body().getUser().getIsVerified()) == 0) {
@@ -206,13 +205,13 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else if (roleUser == 1) {
                             Intent registerDataIbu = new Intent(getApplicationContext(), RegisterDataIbuActivity.class);
+                            registerDataIbu.putExtra("EMAILUSER", response.body().getUser().getEmail());
                             startActivity(registerDataIbu);
-                            finish();
                         }
                         else if (roleUser == 2) {
                             Intent registerDataLansia = new Intent(getApplicationContext(), RegisterDataLansiaActivity.class);
+                            registerDataLansia.putExtra("EMAILUSER", response.body().getUser().getEmail());
                             startActivity(registerDataLansia);
-                            finish();
                         }
                     }
                     else {
@@ -223,6 +222,7 @@ public class LoginActivity extends AppCompatActivity {
                         loginPrefEditor.apply();
 
                         userPrefEditor.putString("email", response.body().getUser().getEmail());
+                        userPrefEditor.putString("nama_user", response.body().getNama());
                         userPrefEditor.putInt("role", roleUser);
                         userPrefEditor.apply();
 

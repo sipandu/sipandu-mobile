@@ -36,4 +36,16 @@ public class PosyanduRegisterSelectionAdapter extends ArrayAdapter<Posyandu> {
         posyanduName.setText(posyanduList.get(position).getBanjar() + " (" + posyanduList.get(position).getNamaPosyandu() + ")");
         return convertView;
     }
+
+
+    @Override
+    public int getCount() {
+        return posyanduList.size();
+    }
+
+    @Nullable
+    @Override
+    public Posyandu getItem(int position) {
+        return posyanduList.get(position);
+    }
 }

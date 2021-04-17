@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,8 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sipandu"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.WaitForVerifiedActivity"
-            android:theme="@style/Theme.Sipandu.NoActionBar"></activity>
+        <activity
+            android:name=".activity.informasi.InformasiShowActivity"
+            android:label="Peta penyebaran posyandu"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity android:name=".activity.AnggotaKeluargaActivity" />
+        <activity
+            android:name=".activity.WaitForVerifiedActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.register.RegisterDataComplete"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
@@ -78,7 +85,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sipandu.NoActionBar.TransparentNavBar" />
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity android:name=".MainActivity" />
     </application>
 

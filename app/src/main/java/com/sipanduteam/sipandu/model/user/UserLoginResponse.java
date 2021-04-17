@@ -22,6 +22,9 @@ public class UserLoginResponse {
     @SerializedName("flag_complete")
     @Expose
     private Integer flagComplete;
+    @SerializedName("nama")
+    @Expose
+    private String nama;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -69,5 +72,13 @@ public class UserLoginResponse {
 
     public void setFlagComplete(Integer flagComplete) {
         this.flagComplete = flagComplete;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 }
