@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,20 +20,22 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.register.RegisterContinueActivity;
 import com.sipanduteam.sipandu.api.BaseApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.AnakDataResponse;
+import com.sipanduteam.sipandu.model.Informasi;
 import com.sipanduteam.sipandu.model.user.UserRegisterFirstResponse;
+import com.sipanduteam.sipandu.viewmodel.ProfileAnakViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -51,6 +54,7 @@ public class ProfileFragment extends Fragment {
     LinearLayout loadingContainer, failedContainer;
     ScrollView profileContainer;
     Button refreshProfile;
+    ProfileAnakViewModel profileAnakViewModel;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -59,6 +63,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        profileAnakViewModel = ViewModelProviders.of(getActivity()).get(ProfileAnakViewModel.class);
     }
 
     @Override
@@ -96,70 +101,103 @@ public class ProfileFragment extends Fragment {
     }
 
     public void getData() {
+        profileAnakViewModel.init(userPreferences.getString("email", "empty"));
         setLoadingContainerVisible();
-        BaseApi getData = RetrofitClient.buildRetrofit().create(BaseApi.class);
-        Call<AnakDataResponse> anakDataResponseCall = getData.anakData(userPreferences.getString("email", "empty"));
-//        dialog.setMessage("Mohon tunggu...");
-//        dialog.show();
-//        shimmerFrameLayout.startShimmer();
-        anakDataResponseCall.enqueue(new Callback<AnakDataResponse>() {
-            @Override
-            public void onResponse(Call<AnakDataResponse> call, Response<AnakDataResponse> response) {
-//                if (dialog.isShowing()){
-//                    dialog.dismiss();
-//                }
-//                if(shimmerFrameLayout.isShimmerStarted()) {
-//                    shimmerFrameLayout.stopShimmer();
-//                    shimmerFrameLayout.hideShimmer();
-//                }
-                Log.d("duar", String.valueOf(response.code()));
-                if (response.code() == 200 && response.body().getStatusCode() == 200) {
-                    nama.setText(response.body().getAnak().getNamaAnak());
-                    namaCard.setText(response.body().getAnak().getNamaAnak());
-                    nik.setText(response.body().getAnak().getNik());
-                    email.setText(response.body().getUser().getEmail());
-                    jk.setText(response.body().getAnak().getJenisKelamin());
-                    alamat.setText(response.body().getAnak().getAlamat());
-                    ttl.setText(response.body().getAnak().getTempatLahir() + ", " + response.body().getAnak().getTanggalLahir());
-                    noTelp.setText(response.body().getAnak().getNomorTelepon());
-                    anakKe.setText(response.body().getAnak().getAnakKe());
-                    ayah.setText(response.body().getAnak().getNamaAyah());
-                    ibu.setText(response.body().getAnak().getNamaIbu());
-
-                    SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                    Date date = new Date();
-
-                    try {
-                        date = simpleFormat.parse(response.body().getAnak().getTanggalLahir().toString());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    Date currentTime = Calendar.getInstance().getTime();
-                    Calendar startCalendar = new GregorianCalendar();
-                    startCalendar.setTime(currentTime);
-                    Calendar endCalendar = new GregorianCalendar();
-                    endCalendar.setTime(date);
-
-                    int diffMonth = startCalendar.get(Calendar.YEAR) - endCalendar.get(Calendar.YEAR);
-                    umur.setText(diffMonth + " tahun");
-                    setProfileContainerVisible();
-                }
-                else {
-                    setFailedContainerVisible();
-                    Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
-                }
+        profileAnakViewModel.getProfileAnakRepository().observe(getViewLifecycleOwner(), anakDataResponse -> {
+            nama.setText(anakDataResponse.getAnak().getNamaAnak());
+            namaCard.setText(anakDataResponse.getAnak().getNamaAnak());
+            nik.setText(anakDataResponse.getAnak().getNik());
+            email.setText(anakDataResponse.getUser().getEmail());
+            jk.setText(anakDataResponse.getAnak().getJenisKelamin());
+            alamat.setText(anakDataResponse.getAnak().getAlamat());
+            ttl.setText(anakDataResponse.getAnak().getTempatLahir() + ", " + anakDataResponse.getAnak().getTanggalLahir());
+            noTelp.setText(anakDataResponse.getAnak().getNomorTelepon());
+            anakKe.setText(anakDataResponse.getAnak().getAnakKe());
+            ayah.setText(anakDataResponse.getAnak().getNamaAyah());
+            ibu.setText(anakDataResponse.getAnak().getNamaIbu());
+            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            Date date = new Date();
+            try {
+                date = simpleFormat.parse(anakDataResponse.getAnak().getTanggalLahir().toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-
-            @Override
-            public void onFailure(Call<AnakDataResponse> call, Throwable t) {
-//                if (dialog.isShowing()){
-//                    dialog.dismiss();
-//                }
-                setFailedContainerVisible();
-                Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
-            }
+            Date currentTime = Calendar.getInstance().getTime();
+            Calendar startCalendar = new GregorianCalendar();
+            startCalendar.setTime(currentTime);
+            Calendar endCalendar = new GregorianCalendar();
+            endCalendar.setTime(date);
+            int diffMonth = startCalendar.get(Calendar.YEAR) - endCalendar.get(Calendar.YEAR);
+            umur.setText(diffMonth + " tahun");
+            setProfileContainerVisible();
         });
     }
+
+//    public void getData() {
+//        setLoadingContainerVisible();
+//        BaseApi getData = RetrofitClient.buildRetrofit().create(BaseApi.class);
+//        Call<AnakDataResponse> anakDataResponseCall = getData.anakData(userPreferences.getString("email", "empty"));
+////        dialog.setMessage("Mohon tunggu...");
+////        dialog.show();
+////        shimmerFrameLayout.startShimmer();
+//        anakDataResponseCall.enqueue(new Callback<AnakDataResponse>() {
+//            @Override
+//            public void onResponse(Call<AnakDataResponse> call, Response<AnakDataResponse> response) {
+////                if (dialog.isShowing()){
+////                    dialog.dismiss();
+////                }
+////                if(shimmerFrameLayout.isShimmerStarted()) {
+////                    shimmerFrameLayout.stopShimmer();
+////                    shimmerFrameLayout.hideShimmer();
+////                }
+//                Log.d("duar", String.valueOf(response.code()));
+//                if (response.code() == 200 && response.body().getStatusCode() == 200) {
+//                    nama.setText(response.body().getAnak().getNamaAnak());
+//                    namaCard.setText(response.body().getAnak().getNamaAnak());
+//                    nik.setText(response.body().getAnak().getNik());
+//                    email.setText(response.body().getUser().getEmail());
+//                    jk.setText(response.body().getAnak().getJenisKelamin());
+//                    alamat.setText(response.body().getAnak().getAlamat());
+//                    ttl.setText(response.body().getAnak().getTempatLahir() + ", " + response.body().getAnak().getTanggalLahir());
+//                    noTelp.setText(response.body().getAnak().getNomorTelepon());
+//                    anakKe.setText(response.body().getAnak().getAnakKe());
+//                    ayah.setText(response.body().getAnak().getNamaAyah());
+//                    ibu.setText(response.body().getAnak().getNamaIbu());
+//
+//                    SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+//                    Date date = new Date();
+//
+//                    try {
+//                        date = simpleFormat.parse(response.body().getAnak().getTanggalLahir().toString());
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Date currentTime = Calendar.getInstance().getTime();
+//                    Calendar startCalendar = new GregorianCalendar();
+//                    startCalendar.setTime(currentTime);
+//                    Calendar endCalendar = new GregorianCalendar();
+//                    endCalendar.setTime(date);
+//
+//                    int diffMonth = startCalendar.get(Calendar.YEAR) - endCalendar.get(Calendar.YEAR);
+//                    umur.setText(diffMonth + " tahun");
+//                    setProfileContainerVisible();
+//                }
+//                else {
+//                    setFailedContainerVisible();
+//                    Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AnakDataResponse> call, Throwable t) {
+////                if (dialog.isShowing()){
+////                    dialog.dismiss();
+////                }
+//                setFailedContainerVisible();
+//                Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     public void setFailedContainerVisible() {
         loadingContainer.setVisibility(GONE);

@@ -1,4 +1,4 @@
-package com.sipanduteam.sipandu.activity.adapter;
+package com.sipanduteam.sipandu.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.model.Desa;
-import com.sipanduteam.sipandu.model.Kabupaten;
 
 import java.util.ArrayList;
 import java.util.List;

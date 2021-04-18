@@ -16,8 +16,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.activity.adapter.InformasiListAdapter;
-import com.sipanduteam.sipandu.model.Blog;
+import com.sipanduteam.sipandu.adapter.InformasiListAdapter;
 import com.sipanduteam.sipandu.model.Informasi;
 
 import java.text.SimpleDateFormat;

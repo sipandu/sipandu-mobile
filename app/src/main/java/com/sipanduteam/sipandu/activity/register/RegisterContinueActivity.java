@@ -1,49 +1,34 @@
 package com.sipanduteam.sipandu.activity.register;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import androidx.annotation.Nullable;
 import androidx.documentfile.provider.DocumentFile;
-import androidx.loader.content.CursorLoader;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.activity.adapter.DesaRegisterSelectionAdapter;
-import com.sipanduteam.sipandu.activity.adapter.KabupatenRegisterSelectionAdapter;
-import com.sipanduteam.sipandu.activity.adapter.KecamatanRegisterSelectionAdapter;
-import com.sipanduteam.sipandu.activity.adapter.PosyanduRegisterSelectionAdapter;
+import com.sipanduteam.sipandu.adapter.DesaRegisterSelectionAdapter;
+import com.sipanduteam.sipandu.adapter.KabupatenRegisterSelectionAdapter;
+import com.sipanduteam.sipandu.adapter.KecamatanRegisterSelectionAdapter;
+import com.sipanduteam.sipandu.adapter.PosyanduRegisterSelectionAdapter;
 import com.sipanduteam.sipandu.api.BaseApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.Desa;
@@ -54,14 +39,9 @@ import com.sipanduteam.sipandu.model.register.RegistDataPosyanduResponse;
 import com.sipanduteam.sipandu.model.register.RegisterResponse;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +51,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
 
 public class RegisterContinueActivity extends AppCompatActivity {
 

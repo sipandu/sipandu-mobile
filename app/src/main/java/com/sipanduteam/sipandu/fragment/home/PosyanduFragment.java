@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.ForgotpassActivity;
@@ -60,8 +59,6 @@ public class PosyanduFragment extends Fragment {
     LinearLayout loadingContainer, failedContainer;
     ScrollView posyanduContainer;
     Button refreshProfile;
-
-    ShimmerFrameLayout shimmerFrameLayout;
 
     View v;
 

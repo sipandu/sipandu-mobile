@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,6 +27,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.posyandu.PosyanduMapActivity;
 import com.sipanduteam.sipandu.fragment.home.*;
+import com.sipanduteam.sipandu.viewmodel.InformasiBerandaViewModel;
+import com.sipanduteam.sipandu.viewmodel.ProfileAnakViewModel;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +39,9 @@ public class HomeActivity extends AppCompatActivity {
     private Toolbar homeToolbar;
     boolean doubleBack = false;
     BottomNavigationView bottomNavigationView;
+
+    InformasiBerandaViewModel informasiBerandaViewModel;
+    ProfileAnakViewModel profileAnakViewModel;
 
 //    private Fragment berandaFragment = new BerandaFragment();
 //    private Fragment keluargaFragment;
@@ -104,9 +110,12 @@ public class HomeActivity extends AppCompatActivity {
                 R.id.navigation_beranda, R.id.navigation_keluarga, R.id.navigation_posyandu, R.id.navigation_profile)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_home_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+
+
+        informasiBerandaViewModel = ViewModelProviders.of(this).get(InformasiBerandaViewModel.class);
+        profileAnakViewModel = ViewModelProviders.of(this).get(ProfileAnakViewModel.class);
 
 
         // handler for snackbar
