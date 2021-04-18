@@ -6,6 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.PagerAdapter;
 
 import android.content.Context;
@@ -33,13 +37,13 @@ public class HomeActivity extends AppCompatActivity {
     boolean doubleBack = false;
     BottomNavigationView bottomNavigationView;
 
-    private Fragment berandaFragment = new BerandaFragment();
-    private Fragment keluargaFragment;
-    private Fragment posyanduFragment;
-    private Fragment profileFragment;
+//    private Fragment berandaFragment = new BerandaFragment();
+//    private Fragment keluargaFragment;
+//    private Fragment posyanduFragment;
+//    private Fragment profileFragment;
     final FragmentManager fm = getSupportFragmentManager();
     SharedPreferences userPreferences, loginPreferences;
-    Fragment selectedFragment = berandaFragment;
+//    Fragment selectedFragment = berandaFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +97,17 @@ public class HomeActivity extends AppCompatActivity {
         //TODO repair fragment creation biar nggak di create bareng bareng
 
         bottomNavigationView = findViewById(R.id.home_bottom_nav);
-        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        fm.beginTransaction().add(R.id.home_fragment_container, berandaFragment, "1").commit();
+//        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+//        fm.beginTransaction().add(R.id.home_fragment_container, berandaFragment, "1").commit();
+
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_beranda, R.id.navigation_keluarga, R.id.navigation_posyandu, R.id.navigation_profile)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_home_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+
 
         // handler for snackbar
         new Handler().postDelayed(new Runnable() {
@@ -167,51 +180,51 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    if (item.getItemId() == R.id.nav_home) {
-                        if (berandaFragment == null) {
-                            berandaFragment = new BerandaFragment();
-                        }
-                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(berandaFragment).commit();
-                        selectedFragment = berandaFragment;
-                        return true;
-                    } else if (item.getItemId() == R.id.nav_keluargaku) {
-                        if (keluargaFragment == null) {
-                            keluargaFragment = new KeluargaFragment();
-                            fm.beginTransaction().add(R.id.home_fragment_container, keluargaFragment, "2").hide(keluargaFragment).commit();
-                        }
-                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(keluargaFragment).commit();
-                        selectedFragment = keluargaFragment;
-                        return true;
-                    } else if (item.getItemId() == R.id.nav_posyandu) {
-                        if (posyanduFragment == null) {
-                            posyanduFragment = new PosyanduFragment();
-                            fm.beginTransaction().add(R.id.home_fragment_container, posyanduFragment, "3").hide(posyanduFragment).commit();
-                        }
-                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(posyanduFragment).commit();
-                        selectedFragment = posyanduFragment;
-                        return true;
-                    } else if (item.getItemId() == R.id.nav_myprofile) {
-                        if (profileFragment == null) {
-                            profileFragment = new ProfileFragment();
-                            fm.beginTransaction().add(R.id.home_fragment_container, profileFragment, "4").hide(profileFragment).commit();
-                        }
-                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(profileFragment).commit();
-                        selectedFragment = profileFragment;
-                        return true;
-                    }
-//                    fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).replace(R.id.home_fragment_container, selectedFragment).addToBackStack(null).commit();
-//                    fm.beginTransaction();
-//                    fm.setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast);
-//                    ft.replace(R.id.home_fragment_container, selectedFragment);
-//                    ft.addToBackStack(null);
-//                    ft.commit();
-                    return false;
-                }
-            };
+//    private final BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
+//            new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                @Override
+//                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                    if (item.getItemId() == R.id.nav_home) {
+//                        if (berandaFragment == null) {
+//                            berandaFragment = new BerandaFragment();
+//                        }
+//                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(berandaFragment).commit();
+//                        selectedFragment = berandaFragment;
+//                        return true;
+//                    } else if (item.getItemId() == R.id.nav_keluargaku) {
+//                        if (keluargaFragment == null) {
+//                            keluargaFragment = new KeluargaFragment();
+//                            fm.beginTransaction().add(R.id.home_fragment_container, keluargaFragment, "2").hide(keluargaFragment).commit();
+//                        }
+//                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(keluargaFragment).commit();
+//                        selectedFragment = keluargaFragment;
+//                        return true;
+//                    } else if (item.getItemId() == R.id.nav_posyandu) {
+//                        if (posyanduFragment == null) {
+//                            posyanduFragment = new PosyanduFragment();
+//                            fm.beginTransaction().add(R.id.home_fragment_container, posyanduFragment, "3").hide(posyanduFragment).commit();
+//                        }
+//                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(posyanduFragment).commit();
+//                        selectedFragment = posyanduFragment;
+//                        return true;
+//                    } else if (item.getItemId() == R.id.nav_myprofile) {
+//                        if (profileFragment == null) {
+//                            profileFragment = new ProfileFragment();
+//                            fm.beginTransaction().add(R.id.home_fragment_container, profileFragment, "4").hide(profileFragment).commit();
+//                        }
+//                        fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).hide(selectedFragment).show(profileFragment).commit();
+//                        selectedFragment = profileFragment;
+//                        return true;
+//                    }
+////                    fm.beginTransaction().setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast).replace(R.id.home_fragment_container, selectedFragment).addToBackStack(null).commit();
+////                    fm.beginTransaction();
+////                    fm.setCustomAnimations(R.anim.fade_in_fast, R.anim.fade_out_fast);
+////                    ft.replace(R.id.home_fragment_container, selectedFragment);
+////                    ft.addToBackStack(null);
+////                    ft.commit();
+//                    return false;
+//                }
+//            };
 
     private void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
