@@ -64,6 +64,7 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
                 });
         holder.informasiTitle.setText(informasiArrayList.get(position).getJudulInformasi());
         holder.informasiDate.setText(informasiArrayList.get(position).getTanggal());
+        holder.informasiViewCount.setText((informasiArrayList.get(position).getDilihat().toString()));
     }
 
     @Override
@@ -77,6 +78,7 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
         private final ImageView informasiImage;
         private final CircularProgressIndicator circularProgressIndicator;
         private final LinearLayout imageFailedLoad;
+        private final AppCompatTextView informasiViewCount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +87,7 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
             informasiImage = itemView.findViewById(R.id.blog_image);
             circularProgressIndicator = itemView.findViewById(R.id.informasi_image_progress);
             imageFailedLoad = itemView.findViewById(R.id.informasi_failed_image_load);
+            informasiViewCount = itemView.findViewById(R.id.informasi_view_count);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
