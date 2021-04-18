@@ -28,6 +28,7 @@ import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.posyandu.PosyanduMapActivity;
 import com.sipanduteam.sipandu.fragment.home.*;
 import com.sipanduteam.sipandu.viewmodel.InformasiBerandaViewModel;
+import com.sipanduteam.sipandu.viewmodel.PosyanduViewModel;
 import com.sipanduteam.sipandu.viewmodel.ProfileAnakViewModel;
 
 import java.util.Calendar;
@@ -42,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 
     InformasiBerandaViewModel informasiBerandaViewModel;
     ProfileAnakViewModel profileAnakViewModel;
+    PosyanduViewModel posyanduViewModel;
 
 //    private Fragment berandaFragment = new BerandaFragment();
 //    private Fragment keluargaFragment;
@@ -112,11 +114,9 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_home_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-
-
         informasiBerandaViewModel = ViewModelProviders.of(this).get(InformasiBerandaViewModel.class);
         profileAnakViewModel = ViewModelProviders.of(this).get(ProfileAnakViewModel.class);
-
+        posyanduViewModel = ViewModelProviders.of(this).get(PosyanduViewModel.class);
 
         // handler for snackbar
         new Handler().postDelayed(new Runnable() {
