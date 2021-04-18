@@ -1,4 +1,4 @@
-package com.sipanduteam.sipandu.activity.adapter;
+package com.sipanduteam.sipandu.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.informasi.InformasiShowActivity;
-import com.sipanduteam.sipandu.model.Blog;
 import com.sipanduteam.sipandu.model.Informasi;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -96,15 +94,15 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
                     position = getAdapterPosition();
                     Informasi informasi = informasiArrayList.get(position);
 
-//                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-//                    builder.setToolbarColor(mContext.getResources().getColor(R.color.primaryColor));
-//                    CustomTabsIntent customTabsIntent = builder.build();
-//                    customTabsIntent.launchUrl(mContext, Uri.parse("https://sipandu-test-web.herokuapp.com/blog/detail/" + informasi.getSlug()));
-
-                    Intent informasiShow = new Intent(mContext, InformasiShowActivity.class);
-                    informasiShow.putExtra(informasiKey, informasi.getSlug());
-                    informasiShow.putExtra(informasiTitleKey, informasi.getJudulInformasi());
-                    mContext.startActivity(informasiShow);
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    builder.setToolbarColor(mContext.getResources().getColor(R.color.primaryColor));
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(mContext, Uri.parse("https://sipandu-test-web.herokuapp.com/blog/detail/" + informasi.getSlug()));
+//
+//                    Intent informasiShow = new Intent(mContext, InformasiShowActivity.class);
+//                    informasiShow.putExtra(informasiKey, informasi.getSlug());
+//                    informasiShow.putExtra(informasiTitleKey, informasi.getJudulInformasi());
+//                    mContext.startActivity(informasiShow);
                 }
             });
         }

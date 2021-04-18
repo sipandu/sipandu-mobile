@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.ForgotpassActivity;
@@ -28,6 +28,8 @@ import com.sipanduteam.sipandu.api.BaseApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.AnakDataResponse;
 import com.sipanduteam.sipandu.model.PosyanduUserResponse;
+import com.sipanduteam.sipandu.viewmodel.PosyanduViewModel;
+import com.sipanduteam.sipandu.viewmodel.ProfileAnakViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,9 +63,9 @@ public class PosyanduFragment extends Fragment {
     ScrollView posyanduContainer;
     Button refreshProfile;
 
-    ShimmerFrameLayout shimmerFrameLayout;
-
     View v;
+
+    PosyanduViewModel posyanduViewModel;
 
     public PosyanduFragment() {
         // Required empty public constructor
@@ -73,7 +75,7 @@ public class PosyanduFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        posyanduViewModel = ViewModelProviders.of(getActivity()).get(PosyanduViewModel.class);
     }
 
     @Override
@@ -106,7 +108,6 @@ public class PosyanduFragment extends Fragment {
         namaPosyandu = v.findViewById(R.id.posyandu_name_text);
         alamatPosyandu = v.findViewById(R.id.posyandu_alamat_text);
         banjarPosyandu = v.findViewById(R.id.posyandu_banjar_text);
-        getData();
 
         openPosyanduMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,58 +140,68 @@ public class PosyanduFragment extends Fragment {
             }
         });
 
-
         posyanduCallButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(posyanduCall);
             }
         });
+        getData();
         return v;
     }
 
     public void getData() {
         setLoadingContainerVisible();
-        BaseApi getData = RetrofitClient.buildRetrofit().create(BaseApi.class);
-        Call<PosyanduUserResponse> posyanduUserResponseCall = getData.posyanduUserData(email, role);
-//        dialog.setMessage("Mohon tunggu...");
-//        dialog.show();
-        posyanduUserResponseCall.enqueue(new Callback<PosyanduUserResponse>() {
-            @Override
-            public void onResponse(Call<PosyanduUserResponse> call, Response<PosyanduUserResponse> response) {
-//                if (dialog.isShowing()){
-//                    dialog.dismiss();
-//                }
-                Log.d("duar", String.valueOf(response.code()));
-                if (response.code() == 200 && response.body().getStatusCode() == 200) {
-                    Log.d("sini bre", String.valueOf(response.body().getStatusCode()));
-                    namaPosyandu.setText(response.body().getPosyandu().getNamaPosyandu());
-                    alamatPosyandu.setText(response.body().getPosyandu().getAlamat());
-                    banjarPosyandu.setText(response.body().getPosyandu().getBanjar());
-                    posyanduCall.setData(Uri.parse("tel:" + response.body().getPosyandu().getNomorTelepon()));
-                    posyanduJoinTelegramGroupButton.setText("Gabung grup telegram " + namaPosyandu.getText().toString());
-                    posyanduCallButton.setText("Hubungi posyandu "
-                            + namaPosyandu.getText().toString()
-                            + " di "
-                            + response.body().getPosyandu().getNomorTelepon());
-                    setPosyanduContainerVisible();
-                }
-                else {
-                    setFailedContainerVisible();
-                    Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PosyanduUserResponse> call, Throwable t) {
-//                if (dialog.isShowing()){
-//                    dialog.dismiss();
-//                }
-                setFailedContainerVisible();
-                Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
-            }
+        posyanduViewModel.init(email, role);
+        posyanduViewModel.getUserPosyandu().observe(getViewLifecycleOwner(), posyanduUserResponse -> {
+            namaPosyandu.setText(posyanduUserResponse.getPosyandu().getNamaPosyandu());
+            alamatPosyandu.setText(posyanduUserResponse.getPosyandu().getAlamat());
+            banjarPosyandu.setText(posyanduUserResponse.getPosyandu().getBanjar());
+            posyanduCall.setData(Uri.parse("tel:" + posyanduUserResponse.getPosyandu().getNomorTelepon()));
+            posyanduJoinTelegramGroupButton.setText("Gabung grup telegram " + namaPosyandu.getText().toString());
+            posyanduCallButton.setText("Hubungi posyandu "
+                    + namaPosyandu.getText().toString()
+                    + " di "
+                    + posyanduUserResponse.getPosyandu().getNomorTelepon());
+            setPosyanduContainerVisible();
         });
     }
+
+//    public void getData() {
+//        setLoadingContainerVisible();
+//        BaseApi getData = RetrofitClient.buildRetrofit().create(BaseApi.class);
+//        Call<PosyanduUserResponse> posyanduUserResponseCall = getData.posyanduUserData(email, role);
+//        posyanduUserResponseCall.enqueue(new Callback<PosyanduUserResponse>() {
+//            @Override
+//            public void onResponse(Call<PosyanduUserResponse> call, Response<PosyanduUserResponse> response) {
+//                Log.d("duar", String.valueOf(response.code()));
+//                if (response.code() == 200 && response.body().getStatusCode() == 200) {
+//                    Log.d("sini bre", String.valueOf(response.body().getStatusCode()));
+//                    namaPosyandu.setText(response.body().getPosyandu().getNamaPosyandu());
+//                    alamatPosyandu.setText(response.body().getPosyandu().getAlamat());
+//                    banjarPosyandu.setText(response.body().getPosyandu().getBanjar());
+//                    posyanduCall.setData(Uri.parse("tel:" + response.body().getPosyandu().getNomorTelepon()));
+//                    posyanduJoinTelegramGroupButton.setText("Gabung grup telegram " + namaPosyandu.getText().toString());
+//                    posyanduCallButton.setText("Hubungi posyandu "
+//                            + namaPosyandu.getText().toString()
+//                            + " di "
+//                            + response.body().getPosyandu().getNomorTelepon());
+//                    setPosyanduContainerVisible();
+//                }
+//                else {
+//                    setFailedContainerVisible();
+//                    Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<PosyanduUserResponse> call, Throwable t) {
+//                setFailedContainerVisible();
+//                Snackbar.make(v, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
     public void setFailedContainerVisible() {
         loadingContainer.setVisibility(GONE);
         failedContainer.setVisibility(View.VISIBLE);

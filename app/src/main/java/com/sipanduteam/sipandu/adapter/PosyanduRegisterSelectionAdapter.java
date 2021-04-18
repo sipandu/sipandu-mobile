@@ -1,28 +1,27 @@
-package com.sipanduteam.sipandu.activity.adapter;
+package com.sipanduteam.sipandu.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.model.Kabupaten;
+import com.sipanduteam.sipandu.model.Posyandu;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class KabupatenRegisterSelectionAdapter extends ArrayAdapter<Kabupaten> {
-    private List<Kabupaten> kabupatenList = new ArrayList<Kabupaten>();
+public class PosyanduRegisterSelectionAdapter extends ArrayAdapter<Posyandu> {
+    private List<Posyandu> posyanduList = new ArrayList<Posyandu>();
 
-    public KabupatenRegisterSelectionAdapter(@NonNull Context context, @NonNull List<Kabupaten> kabupatenList) {
-        super(context, 0, kabupatenList);
-        this.kabupatenList = kabupatenList;
+    public PosyanduRegisterSelectionAdapter(@NonNull Context context, @NonNull List<Posyandu> posyanduList) {
+        super(context, 0, posyanduList);
+        this.posyanduList = posyanduList;
     }
 
     @NonNull
@@ -33,18 +32,20 @@ public class KabupatenRegisterSelectionAdapter extends ArrayAdapter<Kabupaten> {
                     R.layout.login_role_dropdown_menu_item, parent, false
             );
         }
-        TextView kabupatenName = convertView.findViewById(R.id.auto_complete_text);
-        kabupatenName.setText(kabupatenList.get(position).getNamaKabupaten());
+        TextView posyanduName = convertView.findViewById(R.id.auto_complete_text);
+        posyanduName.setText(posyanduList.get(position).getBanjar() + " (" + posyanduList.get(position).getNamaPosyandu() + ")");
         return convertView;
     }
+
+
     @Override
     public int getCount() {
-        return kabupatenList.size();
+        return posyanduList.size();
     }
 
     @Nullable
     @Override
-    public Kabupaten getItem(int position) {
-        return kabupatenList.get(position);
+    public Posyandu getItem(int position) {
+        return posyanduList.get(position);
     }
 }

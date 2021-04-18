@@ -1,4 +1,4 @@
-package com.sipanduteam.sipandu.activity.adapter;
+package com.sipanduteam.sipandu.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,17 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.model.Posyandu;
+import com.sipanduteam.sipandu.model.Kabupaten;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PosyanduRegisterSelectionAdapter extends ArrayAdapter<Posyandu> {
-    private List<Posyandu> posyanduList = new ArrayList<Posyandu>();
+public class KabupatenRegisterSelectionAdapter extends ArrayAdapter<Kabupaten> {
+    private List<Kabupaten> kabupatenList = new ArrayList<Kabupaten>();
 
-    public PosyanduRegisterSelectionAdapter(@NonNull Context context, @NonNull List<Posyandu> posyanduList) {
-        super(context, 0, posyanduList);
-        this.posyanduList = posyanduList;
+    public KabupatenRegisterSelectionAdapter(@NonNull Context context, @NonNull List<Kabupaten> kabupatenList) {
+        super(context, 0, kabupatenList);
+        this.kabupatenList = kabupatenList;
     }
 
     @NonNull
@@ -32,20 +32,18 @@ public class PosyanduRegisterSelectionAdapter extends ArrayAdapter<Posyandu> {
                     R.layout.login_role_dropdown_menu_item, parent, false
             );
         }
-        TextView posyanduName = convertView.findViewById(R.id.auto_complete_text);
-        posyanduName.setText(posyanduList.get(position).getBanjar() + " (" + posyanduList.get(position).getNamaPosyandu() + ")");
+        TextView kabupatenName = convertView.findViewById(R.id.auto_complete_text);
+        kabupatenName.setText(kabupatenList.get(position).getNamaKabupaten());
         return convertView;
     }
-
-
     @Override
     public int getCount() {
-        return posyanduList.size();
+        return kabupatenList.size();
     }
 
     @Nullable
     @Override
-    public Posyandu getItem(int position) {
-        return posyanduList.get(position);
+    public Kabupaten getItem(int position) {
+        return kabupatenList.get(position);
     }
 }
