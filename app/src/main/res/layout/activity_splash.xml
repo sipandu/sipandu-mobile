@@ -2,11 +2,11 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splash_motion_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/activity_splash_scene"
-    android:id="@+id/splash_motion_layout"
     android:animateLayoutChanges="true"
+    app:layoutDescription="@xml/activity_splash_scene"
     tools:context=".activity.SplashActivity">
 
 
@@ -33,9 +33,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/splash_image_bg"
             android:layout_width="230dp"
             android:layout_height="230dp"
+            android:transitionName="duar"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/circle_shape"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/splash_image_bg"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
             android:layout_gravity="center"
             android:transitionName="duar"
             app:srcCompat="@drawable/sipandu_logo" />

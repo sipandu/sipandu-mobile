@@ -2,45 +2,78 @@ package com.sipanduteam.sipandu.activity.informasi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
+import com.sipanduteam.sipandu.adapter.InformasiKaroselListAdapter;
 import com.sipanduteam.sipandu.adapter.InformasiListAdapter;
+import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.RetrofitClient;
+import com.sipanduteam.sipandu.fragment.widget.FilterInformasiFragment;
 import com.sipanduteam.sipandu.model.Informasi;
+import com.sipanduteam.sipandu.model.InformasiResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class InformasiActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.view.View.GONE;
+
+public class InformasiActivity extends AppCompatActivity implements FilterInformasiFragment.ItemClickListener {
 
     View barangDialogView;
     MaterialAlertDialogBuilder barangDialog;
     Button filterStartFrom, filterEndFrom;
     String filterStart, filterEnd;
     private Toolbar homeToolbar;
-
-
-    private ArrayList<Informasi> informasiArrayList;
-
+    private ArrayList<Informasi> informasiArrayList, informasiKaroselArrayList;
     private InformasiListAdapter informasiListAdapter;
-    private RecyclerView recyclerView;
+    InformasiKaroselListAdapter informasiKaroselListAdapter;
+    private RecyclerView recyclerView, recyclerViewKarosel;
     private GridLayoutManager gridLayoutManager;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
-    private LinearLayoutManager linearLayoutManager;
+    private LinearLayoutManager linearLayoutManager, linearLayoutManagerKarosel;
+    private ExtendedFloatingActionButton filterFab;
+    private NestedScrollView informasiScrollView;
+    private int flagFilter = 0;
+    private ViewPager.OnPageChangeListener pageListener;
+    int position = 0;
+    boolean end = false;
+    Timer timer;
+
+//    MaterialCardView infoFilterCard;
+//    TextView infoFilterCardText;
+
+    LinearLayout loadingContainer, failedContainer;
+    Button refreshInformasi;
 
 
     @Override
@@ -57,18 +90,67 @@ public class InformasiActivity extends AppCompatActivity {
             }
         });
 
-        informasiArrayList = new ArrayList<>();
-//        for (int i = 0 ; i<10 ; i++) {
-//            blogArrayList.add(new Blog("Judul misalnya " + i, "Sub judul misalnya adalah konten dimana konten lorem ipsum coba aja dulu blablabla" +i));
-//        }
-        recyclerView = findViewById(R.id.blog_list_view);
-        informasiListAdapter = new InformasiListAdapter(this, informasiArrayList);
-        gridLayoutManager = new GridLayoutManager(this, 2);
-        linearLayoutManager = new LinearLayoutManager(this);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(informasiListAdapter);
 
+        loadingContainer = findViewById(R.id.informasi_loading_container);
+        failedContainer = findViewById(R.id.informasi_failed_container);
+        informasiScrollView = findViewById(R.id.informasi_scroll_view);
+        filterFab = findViewById(R.id.informasi_filter_fab);
+//        infoFilterCard = findViewById(R.id.sorting_info_card);
+//        infoFilterCardText = findViewById(R.id.sorting_info_card_text);
+
+        informasiScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // the delay of the extension of the FAB is set for 12 items
+                if (scrollY > oldScrollY + 12 && filterFab.isExtended()) {
+                    filterFab.shrink();
+                }
+
+                // the delay of the extension of the FAB is set for 12 items
+                if (scrollY < oldScrollY - 12 && !filterFab.isExtended()) {
+                    filterFab.extend();
+                }
+
+                // if the nestedScrollView is at the first item of the list then the
+                // extended floating action should be in extended state
+                if (scrollY == 0) {
+                    filterFab.extend();
+                }
+            }
+        });
+
+
+        informasiArrayList = new ArrayList<>();
+        informasiKaroselArrayList = new ArrayList<>();
+        getData(flagFilter);
+
+        recyclerView = findViewById(R.id.blog_list_view);
+        recyclerViewKarosel = findViewById(R.id.blog_karosel_view);
+        informasiListAdapter = new InformasiListAdapter(this, informasiArrayList);
+        informasiKaroselListAdapter = new InformasiKaroselListAdapter(this, informasiKaroselArrayList);
+//        gridLayoutManager = new GridLayoutManager(this, 2);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManagerKarosel = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerViewKarosel.setLayoutManager(linearLayoutManagerKarosel);
+
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+//                linearLayoutManagerKarosel.getOrientation());
+//        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerViewKarosel);
+
+        filterFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FilterInformasiFragment filterInformasiFragment =
+                        FilterInformasiFragment.newInstance();
+                filterInformasiFragment.show(getSupportFragmentManager(),
+                        "add_photo_dialog_fragment");
+            }
+        });
 
         // date picker builder
         MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
@@ -155,19 +237,19 @@ public class InformasiActivity extends AppCompatActivity {
                     }
                 });
 
-        Button informasiFilterButton = findViewById(R.id.informasi_filter_button);
-        informasiFilterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                barangDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        informasiFilterButton.setText(filterStart + " - " + filterEnd);
-                    }
-                });
-                barangDialog.show();
-            }
-        });
+//        Button informasiFilterButton = findViewById(R.id.informasi_filter_button);
+//        informasiFilterButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                barangDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss(DialogInterface dialogInterface) {
+//                        informasiFilterButton.setText(filterStart + " - " + filterEnd);
+//                    }
+//                });
+//                barangDialog.show();
+//            }
+//        });
 
 //        ImageButton likeButtonEx = findViewById(R.id.informasi_like_button);
 //        TextView likeCountEx = findViewById(R.id.informasi_like_count);
@@ -177,5 +259,128 @@ public class InformasiActivity extends AppCompatActivity {
 //                likeButtonEx.setBackgroundTintList(getResources().getColorStateList(R.color.secondaryDarkColor));
 //            }
 //        });
+    }
+
+
+    public void getData(int flag) {
+        setLoadingContainerVisible();
+        BaseApi getData = RetrofitClient.buildRetrofit().create(BaseApi.class);
+        Call<InformasiResponse> informasiResponseCall = getData.getInformasi(flag);
+            informasiResponseCall.enqueue(new Callback<InformasiResponse>() {
+            @Override
+            public void onResponse(Call<InformasiResponse> call, Response<InformasiResponse> response) {
+                if (response.code() == 200 && response.body().getStatusCode() == 200) {
+                    recyclerView.setAdapter(informasiListAdapter);
+                    recyclerViewKarosel.setAdapter(informasiKaroselListAdapter);
+                    informasiKaroselArrayList.clear();
+                    informasiArrayList.clear();
+
+                    ArrayList<Informasi> tempList = new ArrayList<>(response.body().getInformasi());
+                    Collections.sort(tempList, new Comparator<Informasi>() {
+                        @Override
+                        public int compare(Informasi rhs, Informasi lhs) {
+                            return lhs.getDilihat().compareTo(rhs.getDilihat());
+                        }
+                    });
+
+                    int duar = tempList.size();
+
+                    for (int i=0; i<duar-1; i++) {
+                        if (i == 3) {
+                            break;
+                        }
+                        else {
+                            informasiKaroselArrayList.add(tempList.get(i));
+                        }
+                    }
+
+                    timer = new Timer();
+                    timer.scheduleAtFixedRate(new AutoScrollTask(), 2000, 5000);
+                    position = 0;
+                    end = false;
+
+                    informasiArrayList.addAll(response.body().getInformasi());
+                    informasiListAdapter.notifyDataSetChanged();
+                    informasiKaroselListAdapter.notifyDataSetChanged();
+                    setInformasiContainerVisible();
+                    if (flag == 0) {
+                        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Berhasil menampilkan informasi dari terbaru ke lama", Snackbar.LENGTH_SHORT).show();
+                    }
+                    else if (flag == 1) {
+                        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Berhasil menampilkan informasi dari lama ke terbaru", Snackbar.LENGTH_SHORT).show();
+                    }
+                    else if (flag == 2) {
+                        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Berhasil menampilkan informasi dari yang terpopuler", Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    setFailedContainerVisible();
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InformasiResponse> call, Throwable t) {
+                setFailedContainerVisible();
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void setFailedContainerVisible() {
+        filterFab.setVisibility(GONE);
+        loadingContainer.setVisibility(GONE);
+        failedContainer.setVisibility(View.VISIBLE);
+        informasiScrollView.setVisibility(GONE);
+    }
+
+    public void setLoadingContainerVisible() {
+        filterFab.setVisibility(GONE);
+        loadingContainer.setVisibility(View.VISIBLE);
+        failedContainer.setVisibility(GONE);
+        informasiScrollView.setVisibility(GONE);
+    }
+
+    public void setInformasiContainerVisible() {
+        filterFab.setVisibility(View.VISIBLE);
+        loadingContainer.setVisibility(GONE);
+        failedContainer.setVisibility(GONE);
+        informasiScrollView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onItemClick(String item) {
+        if (item.equals("Terpopuler")) {
+            getData(2);
+//            infoFilterCard.setVisibility(View.VISIBLE);
+//            infoFilterCardText.setText("Informasi di tampilkan berdasaran popularitas");
+        }
+        else if (item.equals("Terbaru ke lama")) {
+            getData(0);
+//            infoFilterCard.setVisibility(View.VISIBLE);
+//            infoFilterCardText.setText("Informasi di tampilkan berdasaran terbaru ke lama");
+        }
+        else if (item.equals("Lama ke terbaru")) {
+            getData(1);
+//            infoFilterCard.setVisibility(View.VISIBLE);
+//            infoFilterCardText.setText("Informasi di tampilkan berdasaran lama ke terbaru");
+        }
+    }
+
+    private class AutoScrollTask extends TimerTask {
+        @Override
+        public void run() {
+            if(position == informasiKaroselArrayList.size() -1){
+                end = true;
+            } else if (position == 0) {
+                end = false;
+            }
+            if(!end){
+                position++;
+            } else {
+                position--;
+            }
+            recyclerViewKarosel.smoothScrollToPosition(position);
+        }
     }
 }

@@ -78,12 +78,14 @@
 
 
     <ScrollView
+        android:animateLayoutChanges="true"
         android:id="@+id/home_layout_container"
         android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -106,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:textStyle="bold"
-                        android:text="Bot Telegram Sipandu"
+                        android:text="Bot Telegram Smart Posyandu"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="@color/white"
                         app:rippleColor="@color/white"
@@ -115,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Tambahkan bot Telegram Sipandu atau apalah ntar nama projectnya ke Telegram anda untuk mendapatkan update Informasi dan Pengumuman langsung di Telegram anda"
+                        android:text="Tambahkan bot Telegram Smart Posyandu ke Telegram anda untuk mendapatkan update Informasi dan Pengumuman langsung di Telegram anda"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="@color/white"
                         />
@@ -247,12 +249,17 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card4"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/primaryLightColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp">
+                android:focusable="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -262,63 +269,35 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:padding="16dp">
 
-                        <!-- Title, secondary and supporting text -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Pengumuman tanpa gambar"
-                            android:textAppearance="?attr/textAppearanceHeadline6"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="01/02/2021"
-                            android:textAppearance="?attr/textAppearanceBody2"
-                            android:textColor="?android:attr/textColorSecondary"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="Pengumuman adalah pemberitahuan atau informasi yang ditujukan kepada orang banyak dan bersifat umum."
-                            android:textAppearance="?attr/textAppearanceBody2"
-                            android:textColor="?android:attr/textColorSecondary"
-                            />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="horizontal">
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Detail"
-                            style="?attr/borderlessButtonStyle"
-                            />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Lihat selengkapnya"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                                android:textColor="@color/white"
+                                app:layout_constraintTop_toTopOf="parent" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/white" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-            <Button
-                android:id="@+id/jadwal_posyandu_button"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lihat selengkapnya"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                app:icon="@drawable/ic_baseline_arrow_forward_24"
-                app:iconGravity="end"
-                android:layout_above="@+id/reg_button"
-                app:strokeColor="@color/primaryColor" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -354,24 +333,61 @@
                 android:id="@+id/home_informasi_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
                 android:layout_marginTop="12dp">
             </androidx.recyclerview.widget.RecyclerView>
 
-            <Button
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/show_all_informasi_button"
-                style="?attr/materialButtonOutlinedStyle"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/primaryLightColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lihat selengkapnya"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                app:icon="@drawable/ic_baseline_arrow_forward_24"
-                app:iconGravity="end"
-                app:strokeColor="@color/primaryColor" />
+                android:focusable="true">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Lihat selengkapnya"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                                android:textColor="@color/white"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/white" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

@@ -14,7 +14,11 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sipandu"
+        android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activity.posyandu.KegiatanDetailActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.informasi.InformasiShowActivity"
             android:label="Peta penyebaran posyandu"

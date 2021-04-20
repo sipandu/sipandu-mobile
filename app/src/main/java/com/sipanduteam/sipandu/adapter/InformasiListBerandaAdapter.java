@@ -2,7 +2,6 @@ package com.sipanduteam.sipandu.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,29 +20,27 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdapter.ViewHolder> {
+public class InformasiListBerandaAdapter extends RecyclerView.Adapter<InformasiListBerandaAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<Informasi> informasiArrayList;
     private int position;
     String informasiKey = "INFORMASI_LINK", informasiTitleKey = "INFORMASI_TITLE";
-    String informasiSupporting;
-    String duar;
 
-    public InformasiListAdapter(Context context, ArrayList<Informasi> informasiArrayList) {
+    public InformasiListBerandaAdapter(Context context, ArrayList<Informasi> informasiArrayList) {
         mContext = context;
         this.informasiArrayList = informasiArrayList;
     }
 
     @NonNull
     @Override
-    public InformasiListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InformasiListBerandaAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.informasi_card_layout_simpler, parent, false);
-        return new InformasiListAdapter.ViewHolder(view);
+        View view = layoutInflater.inflate(R.layout.informasi_card_layout_simpler_beranda, parent, false);
+        return new InformasiListBerandaAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InformasiListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InformasiListBerandaAdapter.ViewHolder holder, int position) {
 //        holder.circularProgressIndicator.setVisibility(View.VISIBLE);
         holder.progressContainer.setVisibility(View.VISIBLE);
         Picasso.get()
@@ -66,14 +63,6 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
         holder.informasiTitle.setText(informasiArrayList.get(position).getJudulInformasi());
         holder.informasiDate.setText(informasiArrayList.get(position).getTanggal());
         holder.informasiViewCount.setText((informasiArrayList.get(position).getDilihat().toString()));
-
-        duar = Html.fromHtml(informasiArrayList.get(position).getInformasi()).toString();
-
-        if (informasiArrayList.get(position).getInformasi().length() > 80) {
-            holder.informasiSupportingText.setText(duar.substring(0, 80) + "...");
-        } else {
-            holder.informasiSupportingText.setText(informasiArrayList.get(position).getInformasi());
-        }
     }
 
     @Override
@@ -89,7 +78,6 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
         private final LinearLayout imageFailedLoad;
         private final AppCompatTextView informasiViewCount;
         private final LinearLayout progressContainer;
-        private final AppCompatTextView informasiSupportingText;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,7 +88,6 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
             progressContainer = itemView.findViewById(R.id.informasi_image_progress);
             imageFailedLoad = itemView.findViewById(R.id.informasi_failed_image_load);
             informasiViewCount = itemView.findViewById(R.id.informasi_view_count);
-            informasiSupportingText = itemView.findViewById(R.id.informasi_supporting_text);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

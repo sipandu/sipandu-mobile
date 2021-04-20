@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/filter_populer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Terpopuler"
+        android:textAlignment="viewStart"
+        android:layout_margin="8dp"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        />
+    <Button
+        android:id="@+id/filter_new_old"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
+        android:text="Terbaru ke lama"
+        android:layout_margin="8dp"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        />
+    <Button
+        android:id="@+id/filter_old_new"
+        android:textAlignment="viewStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lama ke terbaru"
+        android:layout_margin="8dp"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        />
+
+</LinearLayout>

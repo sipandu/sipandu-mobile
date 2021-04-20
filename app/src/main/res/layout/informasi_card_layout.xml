@@ -47,7 +47,6 @@
                 android:layout_gravity="center"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
         <com.google.android.material.progressindicator.CircularProgressIndicator

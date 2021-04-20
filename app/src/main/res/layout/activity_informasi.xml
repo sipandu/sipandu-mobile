@@ -1,71 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    tools:context=".activity.informasi.InformasiActivity"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context=".activity.informasi.InformasiActivity">
+
+
+    <LinearLayout
+        android:animateLayoutChanges="true"
+        android:id="@+id/informasi_loading_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.Large.DoubleBounce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            app:SpinKit_Color="@color/primaryColor" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="Mohon tunggu..."
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:animateLayoutChanges="true"
+        android:id="@+id/informasi_failed_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="12dp"
+            android:src="@drawable/failed_drawable" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="Terjadi kesalahan. Silahkan klik refresh atau coba lagi nanti"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+        <Button
+            android:id="@+id/informasi_refresh"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Refresh"
+            android:textColor="@color/primaryLightColor"
+            app:icon="@drawable/ic_outline_refresh_24"
+            app:iconGravity="textStart"
+            app:iconTint="@color/primaryLightColor"
+            app:strokeColor="@color/primaryLightColor" />
+    </LinearLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:animateLayoutChanges="true"
+        android:id="@+id/topbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".activity.HomeActivity"
-        android:id="@+id/topbar_layout">
+        android:layout_height="match_parent"
+        tools:context=".activity.HomeActivity">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
             android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/home_toolbar"
-                app:title="Blog"
-                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-                app:titleTextAppearance="@style/TextAppearance.App.AppBarTitle"
                 style="@style/Widget.App.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
-            </com.google.android.material.appbar.MaterialToolbar>
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+                app:title="Informasi"
+                app:titleTextAppearance="@style/TextAppearance.App.AppBarTitle" />
         </com.google.android.material.appbar.AppBarLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/topbar_layout">
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:animateLayoutChanges="true"
+            android:id="@+id/informasi_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="visible"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <Button
-                android:id="@+id/informasi_filter_button"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="12dp"
-                android:text="Filter informasi"
-                app:icon="@drawable/ic_baseline_filter_alt_24"
-                app:strokeColor="@color/primaryColor"
-                app:iconGravity="textStart" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/blog_list_view"
+
+
+
+            <LinearLayout
+                android:id="@+id/informasi_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="12dp" />
+                android:orientation="vertical">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/blog_karosel_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
 
 
 
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:visibility="visible"-->
+<!--                    android:id="@+id/sorting_info_card"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    app:cardCornerRadius="8dp"-->
+<!--                    app:strokeWidth="1dp"-->
+<!--                    app:cardElevation="0dp"-->
+<!--                    app:strokeColor="@color/card_stroke_color"-->
+<!--                    android:layout_marginTop="12dp"-->
+<!--                    android:layout_marginEnd="12dp"-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:layout_height="wrap_content">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:padding="8dp">-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/sorting_info_card_text"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="start|center"-->
+<!--                            android:layout_marginStart="4dp"-->
+<!--                            android:layout_marginEnd="4dp"-->
+<!--                            android:baselineAligned="false"-->
+<!--                            android:text="Informasi di urutkan"-->
+<!--                            android:textAppearance="?attr/textAppearanceBody1"-->
+<!--                            android:textColor="@color/primaryColor"-->
+<!--                            android:textStyle="bold" />-->
+<!--                    </LinearLayout>-->
+<!--                </com.google.android.material.card.MaterialCardView>-->
+
+
+                <!--                <Button-->
+                <!--                    android:id="@+id/informasi_filter_button"-->
+                <!--                    style="?attr/materialButtonOutlinedStyle"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="70dp"-->
+                <!--                    android:layout_marginTop="12dp"-->
+                <!--                    android:layout_marginStart="12dp"-->
+                <!--                    android:layout_marginEnd="12dp"-->
+                <!--                    android:layout_marginBottom="12dp"-->
+                <!--                    android:text="Filter informasi"-->
+                <!--                    app:icon="@drawable/ic_baseline_filter_alt_24"-->
+                <!--                    app:strokeColor="@color/primaryColor"-->
+                <!--                    app:iconGravity="textStart" />-->
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/blog_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/informasi_filter_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:text="Filter informasi"
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_outline_filter_alt_24"
+            app:iconTint="@color/white" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,8 @@ package com.sipanduteam.sipandu.api;
 import com.sipanduteam.sipandu.model.AnakDataResponse;
 import com.sipanduteam.sipandu.model.GenericApiResponse;
 import com.sipanduteam.sipandu.model.InformasiResponse;
+import com.sipanduteam.sipandu.model.Kegiatan;
+import com.sipanduteam.sipandu.model.KegiatanPosyanduResponse;
 import com.sipanduteam.sipandu.model.PosyanduUserResponse;
 import com.sipanduteam.sipandu.model.register.RegistDataPosyanduResponse;
 import com.sipanduteam.sipandu.model.register.RegisterResponse;
@@ -105,9 +107,6 @@ public interface BaseApi {
             @Part MultipartBody.Part file
     );
 
-
-
-
     @FormUrlEncoded
     @POST("register-data-anak")
     Call<GenericApiResponse> registerDataAnak(
@@ -156,8 +155,22 @@ public interface BaseApi {
     @GET("get-informasi-home")
     Call<InformasiResponse> getInformasiHome();
 
+    @FormUrlEncoded
+    @POST("get-informasi")
+    Call<InformasiResponse> getInformasi(
+            @Field("flag") int flag
+    );
+
 
     //posyandu  stuff
+
+    @FormUrlEncoded
+    @POST("get-posyandu-kegiatan")
+    Call<KegiatanPosyanduResponse> kegiatanPosyanduData(
+            @Field("email") String email,
+            @Field("role") int role
+    );
+
 
     // anak stuff
     @FormUrlEncoded
