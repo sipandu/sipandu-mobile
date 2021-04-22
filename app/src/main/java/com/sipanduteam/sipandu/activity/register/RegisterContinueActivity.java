@@ -29,7 +29,7 @@ import com.sipanduteam.sipandu.adapter.DesaRegisterSelectionAdapter;
 import com.sipanduteam.sipandu.adapter.KabupatenRegisterSelectionAdapter;
 import com.sipanduteam.sipandu.adapter.KecamatanRegisterSelectionAdapter;
 import com.sipanduteam.sipandu.adapter.PosyanduRegisterSelectionAdapter;
-import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.Desa;
 import com.sipanduteam.sipandu.model.Kabupaten;
@@ -64,7 +64,7 @@ public class RegisterContinueActivity extends AppCompatActivity {
     private int idKK;
     private ProgressDialog dialog;
     private Button registerSubmitButton;
-    BaseApi retro;
+    InterfaceApi retro;
     List<Kabupaten> kabupatens = new ArrayList<>();
     List<Kecamatan> kecamatans = new ArrayList<>();
     List<Desa> desas = new ArrayList<>();
@@ -235,7 +235,7 @@ public class RegisterContinueActivity extends AppCompatActivity {
             kartuKeluargaForm.setText("Kartu keluarga sudah terdaftar pada sistem");
         }
 
-        retro = RetrofitClient.buildRetrofit().create(BaseApi.class);
+        retro = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
         dialog = new ProgressDialog(this);
 
         getAllPosyandu();

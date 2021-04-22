@@ -34,6 +34,9 @@ public class Kegiatan {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("status")
+    @Expose
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -113,5 +116,13 @@ public class Kegiatan {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

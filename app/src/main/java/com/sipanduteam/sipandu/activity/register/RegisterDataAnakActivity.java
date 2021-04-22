@@ -18,10 +18,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.GenericApiResponse;
-import com.sipanduteam.sipandu.model.user.UserRegisterFirstResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -164,7 +163,7 @@ public class RegisterDataAnakActivity extends AppCompatActivity {
     public void submitData() {
         dialog.setMessage("Mohon tunggu...");
         dialog.show();
-        BaseApi submitData = RetrofitClient.buildRetrofit().create(BaseApi.class);
+        InterfaceApi submitData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
         Call<GenericApiResponse> genericApiResponseCall = submitData.registerDataAnak(telegramField.getText().toString(),
                 nikField.getText().toString(), namaAyahField.getText().toString(), namaIbuField.getText().toString(),
                 tempatLahirField.getText().toString(),tglLahirField.getText().toString(), jkAutoComplete.getText().toString(),

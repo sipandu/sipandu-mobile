@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.GenericApiResponse;
 
@@ -163,7 +163,7 @@ public class RegisterDataLansiaActivity extends AppCompatActivity {
     public void submitData() {
         dialog.setMessage("Mohon tunggu...");
         dialog.show();
-        BaseApi submitData = RetrofitClient.buildRetrofit().create(BaseApi.class);
+        InterfaceApi submitData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
         Call<GenericApiResponse> genericApiResponseCall = submitData.registerDataLansia(
                 telegramField.getText().toString(),
                 nikField.getText().toString(),

@@ -8,16 +8,16 @@ import com.sipanduteam.sipandu.model.InformasiResponse;
 import com.sipanduteam.sipandu.repository.InformasiBerandaRepository;
 import com.sipanduteam.sipandu.repository.InformasiRepository;
 
-public class InformasiBerandaViewModel extends ViewModel {
+public class InformasiViewModel extends ViewModel {
     private MutableLiveData<InformasiResponse> informasiResponseMutableLiveData;
     private InformasiRepository informasiRepository;
 
-    public void init(){
+    public void init(int flag){
         if (informasiResponseMutableLiveData != null){
             return;
         }
         informasiRepository = informasiRepository.getInstance();
-        informasiResponseMutableLiveData = informasiRepository.getInformasiHome();
+        informasiResponseMutableLiveData = informasiRepository.getInformasi(flag);
 
     }
 

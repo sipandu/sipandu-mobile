@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_beranda" />
 
     <fragment
+        android:id="@+id/navigation_informasi"
+        android:name="com.sipanduteam.sipandu.fragment.home.InformasiFragment"
+        android:label="Informasi"
+        tools:layout="@layout/fragment_informasi" />
+
+    <fragment
         android:id="@+id/navigation_keluarga"
         android:name="com.sipanduteam.sipandu.fragment.home.KeluargaFragment"
         android:label="Keluargaku"

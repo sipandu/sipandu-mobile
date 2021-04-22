@@ -2,9 +2,8 @@ package com.sipanduteam.sipandu.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
-import com.sipanduteam.sipandu.model.AnakDataResponse;
 import com.sipanduteam.sipandu.model.PosyanduUserResponse;
 
 import retrofit2.Call;
@@ -21,10 +20,10 @@ public class PosyanduRepository {
         return posyanduRepository;
     }
 
-    private BaseApi getData;
+    private InterfaceApi getData;
 
     public PosyanduRepository(){
-        getData = RetrofitClient.buildRetrofit().create(BaseApi.class);
+        getData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
     }
 
     public MutableLiveData<PosyanduUserResponse> getUserPosyandu(String email, int role){

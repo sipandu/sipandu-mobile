@@ -3,12 +3,9 @@ package com.sipanduteam.sipandu.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Point;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,7 +14,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.VideoView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -27,7 +23,7 @@ import com.sipanduteam.sipandu.activity.register.RegisterActivity;
 import com.sipanduteam.sipandu.activity.register.RegisterDataAnakActivity;
 import com.sipanduteam.sipandu.activity.register.RegisterDataIbuActivity;
 import com.sipanduteam.sipandu.activity.register.RegisterDataLansiaActivity;
-import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.user.UserLoginResponse;
 
@@ -180,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() {
         dialog.show();
-        BaseApi loginApi = RetrofitClient.buildRetrofit().create(BaseApi.class);
+        InterfaceApi loginApi = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
         Call<UserLoginResponse> userLoginResponseCall = loginApi.loginUser(usernameForm.getText().toString(), passwordForm.getText().toString());
         userLoginResponseCall.enqueue(new Callback<UserLoginResponse>() {
             @Override

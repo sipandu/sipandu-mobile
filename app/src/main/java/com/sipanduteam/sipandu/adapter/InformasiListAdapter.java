@@ -46,8 +46,8 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
     public void onBindViewHolder(@NonNull InformasiListAdapter.ViewHolder holder, int position) {
 //        holder.circularProgressIndicator.setVisibility(View.VISIBLE);
         holder.progressContainer.setVisibility(View.VISIBLE);
-        Picasso.get()
-                .load(informasiArrayList.get(position).getFoto().replaceAll("http://192.168.1.3:8000", "https://sipandu-test-web.herokuapp.com"))
+                Picasso.get()
+                .load("https://sipandu-test-web.herokuapp.com/admin/informasi-penting/get-img/" + informasiArrayList.get(position).getId())
                 .into(holder.informasiImage, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -63,6 +63,23 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
                         holder.imageFailedLoad.setVisibility(View.VISIBLE);
                     }
                 });
+//        Picasso.get()
+//                .load(informasiArrayList.get(position).getFoto().replaceAll("http://192.168.1.3:8000", "https://sipandu-test-web.herokuapp.com"))
+//                .into(holder.informasiImage, new Callback() {
+//                    @Override
+//                    public void onSuccess() {
+////                        holder.circularProgressIndicator.setVisibility(View.GONE);
+//                        holder.progressContainer.setVisibility(View.GONE);
+//                        holder.informasiImage.setVisibility(View.VISIBLE);
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        holder.progressContainer.setVisibility(View.GONE);
+////                        holder.circularProgressIndicator.setVisibility(View.GONE);
+//                        holder.imageFailedLoad.setVisibility(View.VISIBLE);
+//                    }
+//                });
         holder.informasiTitle.setText(informasiArrayList.get(position).getJudulInformasi());
         holder.informasiDate.setText(informasiArrayList.get(position).getTanggal());
         holder.informasiViewCount.setText((informasiArrayList.get(position).getDilihat().toString()));

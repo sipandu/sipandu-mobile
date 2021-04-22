@@ -47,7 +47,7 @@ public class InformasiKaroselListAdapter extends RecyclerView.Adapter<InformasiK
         holder.circularProgressIndicator.setVisibility(View.VISIBLE);
 //        holder.progressContainer.setVisibility(View.VISIBLE);
         Picasso.get()
-                .load(informasiArrayList.get(position).getFoto().replaceAll("http://192.168.1.3:8000", "https://sipandu-test-web.herokuapp.com"))
+                .load(informasiArrayList.get(position).getFoto().replaceAll("http://192.168.1.101:8000", "https://sipandu-test-web.herokuapp.com"))
                 .into(holder.informasiImage, new Callback() {
                     @Override
                     public void onSuccess() {

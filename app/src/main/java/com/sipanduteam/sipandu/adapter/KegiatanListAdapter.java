@@ -2,20 +2,24 @@ package com.sipanduteam.sipandu.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.Chip;
 import com.google.gson.Gson;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.posyandu.KegiatanDetailActivity;
@@ -57,29 +61,24 @@ public class KegiatanListAdapter extends RecyclerView.Adapter<KegiatanListAdapte
     public void onBindViewHolder(@NonNull KegiatanListAdapter.ViewHolder holder, int position) {
         holder.kegiatanTitle.setText(kegiatanArrayList.get(position).getNamaKegiatan());
         holder.kegiatanTempat.setText(kegiatanArrayList.get(position).getTempat());
-        try {
-            if (format.parse(kegiatanArrayList.get(position).getEndAt()).after(new Date())) {
-                if (format.parse(kegiatanArrayList.get(position).getStartAt()).after(new Date())) {
-                    holder.kegiatanStatusText.setText("Belum terlaksana");
-                    holder.kegiatanStatus.setCardBackgroundColor(
-                            mContext.getResources().getColor(R.color.secondaryColor));
-                }
-                else {
-                    holder.kegiatanStatusText.setText("Sedang berjalan");
-                    holder.kegiatanStatus.setCardBackgroundColor(
-                            mContext.getResources().getColor(R.color.primaryLightColor));
-                }
-            }
-            else {
-                holder.kegiatanStatusText.setText("Sudah selesai");
-                holder.kegiatanStatus.setCardBackgroundColor(
-                        mContext.getResources().getColor(R.color.green));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+        switch (kegiatanArrayList.get(position).getStatus()){
+            case 0:
+                holder.statusChip.setText("Belum terlaksana");
+                holder.statusChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.secondaryLightColorSemiTransparent)));
+                break;
+            case 1:
+                holder.statusChip.setText("Sedang berjalan");
+                holder.statusChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.primaryLightColorSemiTransparent)));
+                break;
+            case 2:
+                holder.statusChip.setText("Sudah selesai");
+                holder.statusChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.greenSemiTransparent)));
+                break;
         }
         holder.kegiatanWaktu.setText((kegiatanArrayList.get(position).getStartAt() + " hingga " + kegiatanArrayList.get(position).getEndAt()));
     }
+
 
     @Override
     public int getItemCount() {
@@ -87,18 +86,17 @@ public class KegiatanListAdapter extends RecyclerView.Adapter<KegiatanListAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final AppCompatTextView kegiatanTitle, kegiatanTempat, kegiatanStatusText, kegiatanWaktu;
+        private final AppCompatTextView kegiatanTitle, kegiatanTempat, kegiatanWaktu;
         private final Button kegiatanDetailButton;
-        private final MaterialCardView kegiatanStatus;
+        private final Chip statusChip;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             kegiatanTitle = itemView.findViewById(R.id.kegiatan_judul_text);
             kegiatanTempat = itemView.findViewById(R.id.kegiatan_lokasi_text);
-            kegiatanStatusText = itemView.findViewById(R.id.kegiatan_status_text);
             kegiatanWaktu = itemView.findViewById(R.id.kegiatan_waktu_text);
-            kegiatanStatus = itemView.findViewById(R.id.kegiatan_status);
             kegiatanDetailButton = itemView.findViewById(R.id.kegiatan_detail_button);
+            statusChip = itemView.findViewById(R.id.kegiatan_status1);
             kegiatanDetailButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

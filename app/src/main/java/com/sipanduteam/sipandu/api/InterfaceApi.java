@@ -5,6 +5,7 @@ import com.sipanduteam.sipandu.model.GenericApiResponse;
 import com.sipanduteam.sipandu.model.InformasiResponse;
 import com.sipanduteam.sipandu.model.Kegiatan;
 import com.sipanduteam.sipandu.model.KegiatanPosyanduResponse;
+import com.sipanduteam.sipandu.model.PegawaiResponse;
 import com.sipanduteam.sipandu.model.PosyanduUserResponse;
 import com.sipanduteam.sipandu.model.register.RegistDataPosyanduResponse;
 import com.sipanduteam.sipandu.model.register.RegisterResponse;
@@ -21,7 +22,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
-public interface BaseApi {
+public interface InterfaceApi {
 
     //auth stuff
 
@@ -170,6 +171,13 @@ public interface BaseApi {
             @Field("email") String email,
             @Field("role") int role
     );
+
+    @FormUrlEncoded
+    @POST("get-posyandu-nakes")
+    Call<PegawaiResponse> konsultasiNakes(
+            @Field("posyandu") int posyandu
+    );
+
 
 
     // anak stuff

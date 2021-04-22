@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.user.UserRegisterFirstResponse;
 
@@ -141,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (flagError == 0) {
                     dialog.setMessage("Mohon tunggu...");
                     dialog.show();
-                    BaseApi registApi = RetrofitClient.buildRetrofit().create(BaseApi.class);
+                    InterfaceApi registApi = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
                     Call<UserRegisterFirstResponse> userRegisterFirstResponseCall = registApi.registerUser(noKkField.getText().toString());
                     userRegisterFirstResponseCall.enqueue(new Callback<UserRegisterFirstResponse>() {
                         @Override

@@ -25,7 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.adapter.InformasiKaroselListAdapter;
 import com.sipanduteam.sipandu.adapter.InformasiListAdapter;
-import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.fragment.widget.FilterInformasiFragment;
 import com.sipanduteam.sipandu.model.Informasi;
@@ -264,7 +264,7 @@ public class InformasiActivity extends AppCompatActivity implements FilterInform
 
     public void getData(int flag) {
         setLoadingContainerVisible();
-        BaseApi getData = RetrofitClient.buildRetrofit().create(BaseApi.class);
+        InterfaceApi getData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
         Call<InformasiResponse> informasiResponseCall = getData.getInformasi(flag);
             informasiResponseCall.enqueue(new Callback<InformasiResponse>() {
             @Override

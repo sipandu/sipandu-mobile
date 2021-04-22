@@ -1,22 +1,10 @@
 package com.sipanduteam.sipandu.repository;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.AnakDataResponse;
-import com.sipanduteam.sipandu.model.InformasiResponse;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,10 +20,10 @@ public class ProfileAnakRepository {
         return profileAnakRepository;
     }
 
-    private BaseApi getData;
+    private InterfaceApi getData;
 
     public ProfileAnakRepository(){
-        getData = RetrofitClient.buildRetrofit().create(BaseApi.class);
+        getData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
     }
 
     public MutableLiveData<AnakDataResponse> getProfileAnak(String anak){

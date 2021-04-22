@@ -51,7 +51,7 @@
             android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity android:name=".activity.anak.RiwayatKunjunganAnakActivity" />
         <activity
-            android:name=".activity.posyandu.PosyanduJadwalActivity"
+            android:name=".activity.posyandu.PosyanduKegiatanActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.NotificationActivity"

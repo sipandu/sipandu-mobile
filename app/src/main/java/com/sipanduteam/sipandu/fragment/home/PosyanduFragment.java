@@ -9,7 +9,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,29 +18,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.activity.ForgotpassActivity;
 import com.sipanduteam.sipandu.activity.posyandu.KonsultasiTelegramActivity;
-import com.sipanduteam.sipandu.activity.posyandu.PosyanduJadwalActivity;
+import com.sipanduteam.sipandu.activity.posyandu.PosyanduKegiatanActivity;
 import com.sipanduteam.sipandu.activity.posyandu.PosyanduMapActivity;
-import com.sipanduteam.sipandu.api.BaseApi;
-import com.sipanduteam.sipandu.api.RetrofitClient;
-import com.sipanduteam.sipandu.model.AnakDataResponse;
-import com.sipanduteam.sipandu.model.PosyanduUserResponse;
 import com.sipanduteam.sipandu.viewmodel.PosyanduViewModel;
-import com.sipanduteam.sipandu.viewmodel.ProfileAnakViewModel;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.view.View.GONE;
 
@@ -64,9 +45,8 @@ public class PosyanduFragment extends Fragment {
     LinearLayout loadingContainer, failedContainer;
     ScrollView posyanduContainer;
     Button refreshProfile;
-
     View v;
-
+    Intent openKonsultasiTelegram;
     PosyanduViewModel posyanduViewModel;
 
     public PosyanduFragment() {
@@ -111,6 +91,8 @@ public class PosyanduFragment extends Fragment {
         alamatPosyandu = v.findViewById(R.id.posyandu_alamat_text);
         banjarPosyandu = v.findViewById(R.id.posyandu_banjar_text);
 
+        openKonsultasiTelegram = new Intent(getActivity(), KonsultasiTelegramActivity.class);
+
         openPosyanduMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,14 +103,13 @@ public class PosyanduFragment extends Fragment {
         openPosyanduScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent openPosyanduSchedule = new Intent(getActivity(), PosyanduJadwalActivity.class);
+                Intent openPosyanduSchedule = new Intent(getActivity(), PosyanduKegiatanActivity.class);
                 startActivity(openPosyanduSchedule);
             }
         });
         openKonsultasiTelegramButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent openKonsultasiTelegram = new Intent(getActivity(), KonsultasiTelegramActivity.class);
                 startActivity(openKonsultasiTelegram);
             }
         });
@@ -160,6 +141,7 @@ public class PosyanduFragment extends Fragment {
             alamatPosyandu.setText(posyanduUserResponse.getPosyandu().getAlamat());
             banjarPosyandu.setText(posyanduUserResponse.getPosyandu().getBanjar());
             posyanduCall.setData(Uri.parse("tel:" + posyanduUserResponse.getPosyandu().getNomorTelepon()));
+            openKonsultasiTelegram.putExtra("posyandu", posyanduUserResponse.getPosyandu().getId());
             posyanduJoinTelegramGroupButton.setText("Gabung grup telegram " + namaPosyandu.getText().toString());
             posyanduCallButton.setText("Hubungi posyandu "
                     + namaPosyandu.getText().toString()

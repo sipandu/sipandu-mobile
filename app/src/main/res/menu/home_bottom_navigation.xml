@@ -8,6 +8,11 @@
         android:title="Beranda" >
     </item>
     <item
+        android:id="@id/navigation_informasi"
+        android:icon="@drawable/ic_outline_feed_24"
+        android:title="Informasi" >
+    </item>
+    <item
         android:id="@id/navigation_keluarga"
         android:icon="@drawable/ic_outline_people_24"
         android:title="Keluargaku" >

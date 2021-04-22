@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -18,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.api.BaseApi;
+import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.GenericApiResponse;
 
@@ -149,7 +147,7 @@ public class RegisterDataIbuActivity extends AppCompatActivity {
     public void submitData() {
         dialog.setMessage("Mohon tunggu...");
         dialog.show();
-        BaseApi submitData = RetrofitClient.buildRetrofit().create(BaseApi.class);
+        InterfaceApi submitData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
         Call<GenericApiResponse> genericApiResponseCall = submitData.registerDataIbu(
                 telegramField.getText().toString(),
                 nikField.getText().toString(),

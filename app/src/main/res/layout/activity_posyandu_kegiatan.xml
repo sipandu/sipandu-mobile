@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    tools:context=".activity.posyandu.PosyanduJadwalActivity"
+    tools:context=".activity.posyandu.PosyanduKegiatanActivity"
     android:animateLayoutChanges="true"
     android:layout_height="match_parent">
 
@@ -99,17 +99,79 @@
         </com.google.android.material.appbar.AppBarLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <ScrollView
-        android:animateLayoutChanges="true"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/topbar_layout">
+        android:layout_below="@+id/topbar_layout"
+        android:animateLayoutChanges="true">
 
         <LinearLayout
             android:id="@+id/kegiatan_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <HorizontalScrollView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/kegiatan_filter_chip_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/kegiatan_unfinished_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@color/chip_red_state_list"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:text="Belum berjalan" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/kegiatan_ongoing_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@color/chip_blue_state_list"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:text="Sedang berjalan" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/kegiatan_finished_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@color/chip_green_state_list"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:text="Sudah selesai" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+
+            <LinearLayout
+                android:animateLayoutChanges="true"
+                android:id="@+id/kegiatan_empty_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/kegiatan_empty_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:text="Tidak ada kegiatan"
+                    android:textAlignment="center"
+                    android:textAppearance="?attr/textAppearanceSubtitle1" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/kegiatan_list"
@@ -119,5 +181,5 @@
                 android:layout_marginBottom="12dp"
                 android:visibility="visible" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

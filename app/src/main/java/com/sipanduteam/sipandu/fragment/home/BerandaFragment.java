@@ -7,12 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,23 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.adapter.InformasiListAdapter;
 import com.sipanduteam.sipandu.activity.informasi.InformasiActivity;
 import com.sipanduteam.sipandu.adapter.InformasiListBerandaAdapter;
-import com.sipanduteam.sipandu.api.BaseApi;
-import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.Informasi;
-import com.sipanduteam.sipandu.model.InformasiResponse;
 import com.sipanduteam.sipandu.viewmodel.InformasiBerandaViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.view.View.GONE;
 import static java.lang.Integer.valueOf;
@@ -140,14 +128,14 @@ public class BerandaFragment extends Fragment {
     }
 
     private void getData() {
-        informasiBerandaViewModel.init();
+//        informasiBerandaViewModel.init();
         setLoadingContainerVisible();
-        informasiBerandaViewModel.getInformasiRepository().observe(getViewLifecycleOwner(), informasiResponse -> {
-            List<Informasi> informasiList = informasiResponse.getInformasi();
-            informasiArrayList.addAll(informasiList);
-            informasiListBerandaAdapter.notifyDataSetChanged();
-            setHomeContainerVisible();
-        });
+//        informasiBerandaViewModel.getInformasiRepository().observe(getViewLifecycleOwner(), informasiResponse -> {
+//            List<Informasi> informasiList = informasiResponse.getInformasi();
+//            informasiArrayList.addAll(informasiList);
+//            informasiListBerandaAdapter.notifyDataSetChanged();
+//            setHomeContainerVisible();
+//        });
     }
 
 //    public void getData() {
