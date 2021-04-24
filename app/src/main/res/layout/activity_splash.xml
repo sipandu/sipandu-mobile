@@ -17,8 +17,6 @@
         android:transitionName="duar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/circle_shape"
         app:tint="@color/primaryColor" />
 
@@ -33,8 +31,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="230dp"
-            android:layout_height="230dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:transitionName="duar"
             android:layout_gravity="center"
             app:srcCompat="@drawable/circle_shape"

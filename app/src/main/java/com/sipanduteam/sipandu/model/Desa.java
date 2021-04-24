@@ -4,6 +4,7 @@ package com.sipanduteam.sipandu.model;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.sipanduteam.sipandu.model.posyandu.Posyandu;
 
 public class Desa {
     @SerializedName("id")

@@ -34,7 +34,7 @@ import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.Desa;
 import com.sipanduteam.sipandu.model.Kabupaten;
 import com.sipanduteam.sipandu.model.Kecamatan;
-import com.sipanduteam.sipandu.model.Posyandu;
+import com.sipanduteam.sipandu.model.posyandu.Posyandu;
 import com.sipanduteam.sipandu.model.register.RegistDataPosyanduResponse;
 import com.sipanduteam.sipandu.model.register.RegisterResponse;
 

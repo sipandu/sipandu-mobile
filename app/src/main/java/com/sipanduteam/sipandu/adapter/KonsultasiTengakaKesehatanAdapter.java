@@ -15,16 +15,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
-import com.google.gson.Gson;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.activity.posyandu.KegiatanDetailActivity;
-import com.sipanduteam.sipandu.model.Kegiatan;
-import com.sipanduteam.sipandu.model.Pegawai;
+import com.sipanduteam.sipandu.model.posyandu.Pegawai;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class KonsultasiTengakaKesehatanAdapter extends RecyclerView.Adapter<KonsultasiTengakaKesehatanAdapter.ViewHolder>{
     private Context mContext;

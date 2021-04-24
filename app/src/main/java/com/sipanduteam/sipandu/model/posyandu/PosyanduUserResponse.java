@@ -1,4 +1,4 @@
-package com.sipanduteam.sipandu.model;
+package com.sipanduteam.sipandu.model.posyandu;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

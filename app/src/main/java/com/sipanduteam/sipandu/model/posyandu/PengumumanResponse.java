@@ -1,17 +1,17 @@
-package com.sipanduteam.sipandu.model;
+package com.sipanduteam.sipandu.model.posyandu;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class PegawaiResponse {
+public class PengumumanResponse {
     @SerializedName("status_code")
     @Expose
     private Integer statusCode;
-    @SerializedName("pegawai")
+    @SerializedName("pengumuman")
     @Expose
-    private List<Pegawai> pegawai = null;
+    private List<Pengumuman> pengumuman = null;
     @SerializedName("message")
     @Expose
     private String message;
@@ -24,12 +24,12 @@ public class PegawaiResponse {
         this.statusCode = statusCode;
     }
 
-    public List<Pegawai> getPegawai() {
-        return pegawai;
+    public List<Pengumuman> getPengumuman() {
+        return pengumuman;
     }
 
-    public void setPegawai(List<Pegawai> pegawai) {
-        this.pegawai = pegawai;
+    public void setPengumuman(List<Pengumuman> pengumuman) {
+        this.pengumuman = pengumuman;
     }
 
     public String getMessage() {

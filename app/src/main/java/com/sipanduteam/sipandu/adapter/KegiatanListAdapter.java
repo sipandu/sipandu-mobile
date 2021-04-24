@@ -3,38 +3,25 @@ package com.sipanduteam.sipandu.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Filter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.gson.Gson;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.posyandu.KegiatanDetailActivity;
-import com.sipanduteam.sipandu.model.Informasi;
-import com.sipanduteam.sipandu.model.Kegiatan;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.sipanduteam.sipandu.model.posyandu.Kegiatan;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class KegiatanListAdapter extends RecyclerView.Adapter<KegiatanListAdapter.ViewHolder> {

@@ -23,10 +23,14 @@ import com.google.android.material.card.MaterialCardView;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.informasi.InformasiActivity;
 import com.sipanduteam.sipandu.adapter.InformasiListBerandaAdapter;
+import com.sipanduteam.sipandu.adapter.PengumumanListAdapter;
 import com.sipanduteam.sipandu.model.Informasi;
+import com.sipanduteam.sipandu.model.posyandu.Pengumuman;
 import com.sipanduteam.sipandu.viewmodel.InformasiBerandaViewModel;
+import com.sipanduteam.sipandu.viewmodel.PengumumanViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.view.View.GONE;
 import static java.lang.Integer.valueOf;
@@ -39,18 +43,21 @@ public class BerandaFragment extends Fragment {
     Button refreshHome;
 
     private ArrayList<Informasi> informasiArrayList;
+    private ArrayList<Pengumuman> pengumumanArrayList;
 
     private InformasiListBerandaAdapter informasiListBerandaAdapter;
+    private PengumumanListAdapter pengumumanListAdapter;
     private RecyclerView recyclerView;
+    private RecyclerView pengumumanRecycler;
     private LinearLayoutManager linearLayoutManager;
+    private LinearLayoutManager pengumumanLayoutManager;
 
     private ImageView failedImage;
     private AnimatedVectorDrawable failedAnim;
     Drawable d;
-
     View v;
-
     InformasiBerandaViewModel informasiBerandaViewModel;
+    PengumumanViewModel pengumumanViewModel;
 
     public BerandaFragment() {
         // Required empty public constructor
@@ -61,7 +68,9 @@ public class BerandaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         informasiArrayList = new ArrayList<>();
+        pengumumanArrayList = new ArrayList<>();
         informasiBerandaViewModel = ViewModelProviders.of(getActivity()).get(InformasiBerandaViewModel.class);
+        pengumumanViewModel = ViewModelProviders.of(getActivity()).get(PengumumanViewModel.class);
     }
 
     @Override
@@ -90,8 +99,13 @@ public class BerandaFragment extends Fragment {
             Button addTelegramBotButton = v.findViewById(R.id.telegram_bot_add_button);
 
             recyclerView = v.findViewById(R.id.home_informasi_list);
+            pengumumanRecycler = v.findViewById(R.id.home_pengumuman_list);
+            pengumumanListAdapter = new PengumumanListAdapter(getContext(), pengumumanArrayList);
             informasiListBerandaAdapter = new InformasiListBerandaAdapter(getContext(), informasiArrayList);
             linearLayoutManager = new LinearLayoutManager(getContext());
+            pengumumanLayoutManager = new LinearLayoutManager(getContext());
+            pengumumanRecycler.setLayoutManager(pengumumanLayoutManager);
+            pengumumanRecycler.setAdapter(pengumumanListAdapter);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(informasiListBerandaAdapter);
 
@@ -130,6 +144,14 @@ public class BerandaFragment extends Fragment {
     private void getData() {
 //        informasiBerandaViewModel.init();
         setLoadingContainerVisible();
+
+        pengumumanViewModel.getPengumuman().observe(getViewLifecycleOwner(), pengumumanResponse -> {
+            List<Pengumuman> pengumumanList = pengumumanResponse.getPengumuman();
+            pengumumanArrayList.addAll(pengumumanList);
+            pengumumanListAdapter.notifyDataSetChanged();
+            setHomeContainerVisible();
+        });
+
 //        informasiBerandaViewModel.getInformasiRepository().observe(getViewLifecycleOwner(), informasiResponse -> {
 //            List<Informasi> informasiList = informasiResponse.getInformasi();
 //            informasiArrayList.addAll(informasiList);

@@ -4,11 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.sipanduteam.sipandu.model.AnakDataResponse;
-import com.sipanduteam.sipandu.model.Posyandu;
-import com.sipanduteam.sipandu.model.PosyanduUserResponse;
+import com.sipanduteam.sipandu.model.posyandu.PosyanduUserResponse;
 import com.sipanduteam.sipandu.repository.PosyanduRepository;
-import com.sipanduteam.sipandu.repository.ProfileAnakRepository;
 
 public class PosyanduViewModel extends ViewModel {
     private MutableLiveData<PosyanduUserResponse> posyanduUserResponseMutableLiveData;

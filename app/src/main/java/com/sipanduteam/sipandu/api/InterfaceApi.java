@@ -3,10 +3,10 @@ package com.sipanduteam.sipandu.api;
 import com.sipanduteam.sipandu.model.AnakDataResponse;
 import com.sipanduteam.sipandu.model.GenericApiResponse;
 import com.sipanduteam.sipandu.model.InformasiResponse;
-import com.sipanduteam.sipandu.model.Kegiatan;
-import com.sipanduteam.sipandu.model.KegiatanPosyanduResponse;
-import com.sipanduteam.sipandu.model.PegawaiResponse;
-import com.sipanduteam.sipandu.model.PosyanduUserResponse;
+import com.sipanduteam.sipandu.model.posyandu.KegiatanPosyanduResponse;
+import com.sipanduteam.sipandu.model.posyandu.PegawaiResponse;
+import com.sipanduteam.sipandu.model.posyandu.PengumumanResponse;
+import com.sipanduteam.sipandu.model.posyandu.PosyanduUserResponse;
 import com.sipanduteam.sipandu.model.register.RegistDataPosyanduResponse;
 import com.sipanduteam.sipandu.model.register.RegisterResponse;
 import com.sipanduteam.sipandu.model.user.UserLoginResponse;
@@ -168,6 +168,13 @@ public interface InterfaceApi {
     @FormUrlEncoded
     @POST("get-posyandu-kegiatan")
     Call<KegiatanPosyanduResponse> kegiatanPosyanduData(
+            @Field("email") String email,
+            @Field("role") int role
+    );
+
+    @FormUrlEncoded
+    @POST("get-posyandu-pengumuman")
+    Call<PengumumanResponse> pengumumanPosyanduData(
             @Field("email") String email,
             @Field("role") int role
     );

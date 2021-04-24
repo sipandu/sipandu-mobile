@@ -1,4 +1,4 @@
-package com.sipanduteam.sipandu.model;
+package com.sipanduteam.sipandu.model.posyandu;
 
 
 import java.util.List;

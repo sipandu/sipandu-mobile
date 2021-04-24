@@ -1,19 +1,20 @@
 package com.sipanduteam.sipandu.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.motion.widget.MotionLayout;
-import androidx.core.app.ActivityCompat;
-
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sipanduteam.sipandu.MainActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+
 import com.sipanduteam.sipandu.R;
+
+import java.util.Random;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -24,8 +25,41 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 //        hideSystemUI();
-
         MotionLayout motionLayout = findViewById(R.id.splash_motion_layout);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(motionLayout);
+
+        int random;
+        Random rnd = new Random();
+        random = rnd.nextInt(3);
+        Log.d("random", String.valueOf(random));
+        constraintSet.clear(R.id.transition_view, ConstraintSet.BOTTOM);
+        constraintSet.clear(R.id.transition_view, ConstraintSet.END);
+
+        if (random == 0) {
+            constraintSet.connect(R.id.transition_view, ConstraintSet.BOTTOM, motionLayout.getId(), ConstraintSet.BOTTOM, 0);
+            constraintSet.connect(R.id.imageView,ConstraintSet.END, motionLayout.getId(),ConstraintSet.END,0);
+            constraintSet.applyTo(motionLayout);
+        }
+        else if (random == 1) {
+            constraintSet.connect(R.id.transition_view, ConstraintSet.TOP, motionLayout.getId(), ConstraintSet.TOP, 0);
+            constraintSet.connect(R.id.imageView,ConstraintSet.END, motionLayout.getId(),ConstraintSet.END,0);
+            constraintSet.applyTo(motionLayout);
+        }
+
+        else if (random == 2) {
+            constraintSet.connect(R.id.transition_view, ConstraintSet.TOP, motionLayout.getId(), ConstraintSet.TOP, 0);
+            constraintSet.connect(R.id.imageView,ConstraintSet.START, motionLayout.getId(),ConstraintSet.START,0);
+            constraintSet.applyTo(motionLayout);
+        }
+
+        else {
+            constraintSet.connect(R.id.transition_view, ConstraintSet.BOTTOM, motionLayout.getId(), ConstraintSet.BOTTOM, 0);
+            constraintSet.connect(R.id.imageView,ConstraintSet.START, motionLayout.getId(),ConstraintSet.START,0);
+            constraintSet.applyTo(motionLayout);
+        }
+
+
         posyanduText = findViewById(R.id.smart_posyandu_text);
 
         View decorView = getWindow().getDecorView();

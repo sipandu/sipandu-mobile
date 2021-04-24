@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.model.Posyandu;
+import com.sipanduteam.sipandu.model.posyandu.Posyandu;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.sipanduteam.sipandu.activity.posyandu;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
@@ -9,23 +8,16 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.gson.Gson;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.model.Kegiatan;
+import com.sipanduteam.sipandu.model.posyandu.Kegiatan;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class KegiatanDetailActivity extends AppCompatActivity {

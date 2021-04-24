@@ -5,25 +5,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.adapter.KegiatanListAdapter;
 import com.sipanduteam.sipandu.adapter.KonsultasiTengakaKesehatanAdapter;
 import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
-import com.sipanduteam.sipandu.model.Kegiatan;
-import com.sipanduteam.sipandu.model.KegiatanPosyanduResponse;
-import com.sipanduteam.sipandu.model.Pegawai;
-import com.sipanduteam.sipandu.model.PegawaiResponse;
+import com.sipanduteam.sipandu.model.posyandu.Pegawai;
+import com.sipanduteam.sipandu.model.posyandu.PegawaiResponse;
 
 import java.util.ArrayList;
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
-import com.sipanduteam.sipandu.model.PosyanduUserResponse;
+import com.sipanduteam.sipandu.model.posyandu.PosyanduUserResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

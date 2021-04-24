@@ -22,8 +22,8 @@ import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.adapter.KegiatanListAdapter;
 import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
-import com.sipanduteam.sipandu.model.Kegiatan;
-import com.sipanduteam.sipandu.model.KegiatanPosyanduResponse;
+import com.sipanduteam.sipandu.model.posyandu.Kegiatan;
+import com.sipanduteam.sipandu.model.posyandu.KegiatanPosyanduResponse;
 
 import java.util.ArrayList;
 

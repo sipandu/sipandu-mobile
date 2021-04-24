@@ -28,6 +28,7 @@ import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.posyandu.PosyanduMapActivity;
 import com.sipanduteam.sipandu.fragment.home.*;
 import com.sipanduteam.sipandu.viewmodel.InformasiBerandaViewModel;
+import com.sipanduteam.sipandu.viewmodel.PengumumanViewModel;
 import com.sipanduteam.sipandu.viewmodel.PosyanduViewModel;
 import com.sipanduteam.sipandu.viewmodel.ProfileAnakViewModel;
 
@@ -44,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     InformasiBerandaViewModel informasiBerandaViewModel;
     ProfileAnakViewModel profileAnakViewModel;
     PosyanduViewModel posyanduViewModel;
+    PengumumanViewModel pengumumanViewModel;
 
 //    private Fragment berandaFragment = new BerandaFragment();
 //    private Fragment keluargaFragment;
@@ -70,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
 
         userPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         String email = userPreferences.getString("email", "empty");
+        int role = userPreferences.getInt("role", 4);
         String namaUser = userPreferences.getString("nama_user", "empty");
 
         String[] arrayString = namaUser.split(" ");
@@ -117,6 +120,9 @@ public class HomeActivity extends AppCompatActivity {
         informasiBerandaViewModel = ViewModelProviders.of(this).get(InformasiBerandaViewModel.class);
         profileAnakViewModel = ViewModelProviders.of(this).get(ProfileAnakViewModel.class);
         posyanduViewModel = ViewModelProviders.of(this).get(PosyanduViewModel.class);
+        pengumumanViewModel = ViewModelProviders.of(this).get(PengumumanViewModel.class);
+        pengumumanViewModel.init(email, role);
+
 
         // handler for snackbar
         new Handler().postDelayed(new Runnable() {
