@@ -1,5 +1,6 @@
 package com.sipanduteam.sipandu.fragment.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.IdRes;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -63,7 +65,7 @@ public class InformasiFragment extends Fragment {
     LinearLayout loadingContainer, failedContainer;
     Button refreshInformasi;
     InformasiBerandaViewModel informasiBerandaViewModel;
-    ChipGroup kegiatanFilterChipGroup;
+
     Integer flagAnjay = null;
 
     public InformasiFragment() {
@@ -107,6 +109,8 @@ public class InformasiFragment extends Fragment {
         loadingContainer = view.findViewById(R.id.informasi_loading_container);
         failedContainer = view.findViewById(R.id.informasi_failed_container);
         informasiScrollView = view.findViewById(R.id.informasi_scroll_view);
+        refreshInformasi = view.findViewById(R.id.informasi_refresh);
+        MaterialCardView showAllInformasiButton = view.findViewById(R.id.show_all_informasi_button);
         recyclerView = view.findViewById(R.id.informasi_list_view);
         recyclerViewKarosel = view.findViewById(R.id.informasi_karosel_view);
         informasiListAdapter = new InformasiListAdapter(getContext(), informasiArrayList);
@@ -118,82 +122,67 @@ public class InformasiFragment extends Fragment {
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recyclerViewKarosel);
 
-        kegiatanFilterChipGroup = (ChipGroup) view.findViewById(R.id.informasi_sort_chip_group);
-        kegiatanFilterChipGroup.setSingleSelection(true);
-//        kegiatanFilterChipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(ChipGroup group, @IdRes int checkedId) {
-//                Log.d("duar masuk duar", "apaje");
-//                kegiatanArrayList.clear();
-//                if (checkedId == R.id.kegiatan_unfinished_chip) {
-//                    for (int i=0; i<kegiatanArrayListFilter.size(); i++) {
-//                        if (kegiatanArrayListFilter.get(i).getStatus() == 0) {
-//                            kegiatanArrayList.add(kegiatanArrayListFilter.get(i));
-//                        }
-//                    }
-//                }
-//                else if (checkedId == R.id.kegiatan_ongoing_chip) {
-//                    for (int i=0; i<kegiatanArrayListFilter.size(); i++) {
-//                        if (kegiatanArrayListFilter.get(i).getStatus() == 1) {
-//                            kegiatanArrayList.add(kegiatanArrayListFilter.get(i));
-//                        }
-//                    }
-//                }
-//
-//                else if (checkedId == R.id.kegiatan_finished_chip) {
-//                    for (int i=0; i<kegiatanArrayListFilter.size(); i++) {
-//                        if (kegiatanArrayListFilter.get(i).getStatus() == 2) {
-//                            kegiatanArrayList.add(kegiatanArrayListFilter.get(i));
-//                        }
-//                    }
-//                }
-//                else {
-//                    kegiatanArrayList.addAll(kegiatanArrayListFilter);
-//                    kegiatanEmptyText.setText("Tidak ada kegiatan");
-//                }
-//                kegiatanListAdapter.notifyDataSetChanged();
-//            }
-//        });
+        refreshInformasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                informasiBerandaViewModel.getData();
+                getData();
+            }
+        });
+        showAllInformasiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent showAllInformasi = new Intent(getActivity(), InformasiActivity.class);
+                startActivity(showAllInformasi);
+            }
+        });
 
 
-        getData(flagFilter);
+        getData();
     }
 
-    private void getData(int flag) {
+    private void getData() {
         informasiBerandaViewModel.init();
         setLoadingContainerVisible();
         informasiBerandaViewModel.getInformasiRepository().observe(getViewLifecycleOwner(), informasiResponse -> {
-            List<Informasi> informasiList = informasiResponse.getInformasi();
-            recyclerView.setAdapter(informasiListAdapter);
-            recyclerViewKarosel.setAdapter(informasiKaroselListAdapter);
-            informasiKaroselArrayList.clear();
-            informasiArrayList.clear();
+            if (informasiResponse != null) {
+                List<Informasi> informasiList = informasiResponse.getInformasi();
+                recyclerView.setAdapter(informasiListAdapter);
+                recyclerViewKarosel.setAdapter(informasiKaroselListAdapter);
+                informasiKaroselArrayList.clear();
+                informasiArrayList.clear();
+                informasiKaroselArrayList.addAll(informasiResponse.getInformasiPopuler());
 
-            ArrayList<Informasi> tempList = new ArrayList<>(informasiList);
-            Collections.sort(tempList, new Comparator<Informasi>() {
-                @Override
-                public int compare(Informasi rhs, Informasi lhs) {
-                    return lhs.getDilihat().compareTo(rhs.getDilihat());
-                }
-            });
-            int duar = tempList.size();
-            for (int i=0; i<duar-1; i++) {
-                if (i == 3) {
-                    break;
-                }
-                else {
-                    informasiKaroselArrayList.add(tempList.get(i));
-                }
+//            ArrayList<Informasi> tempList = new ArrayList<>(informasiList);
+//            Collections.sort(tempList, new Comparator<Informasi>() {
+//                @Override
+//                public int compare(Informasi rhs, Informasi lhs) {
+//                    return lhs.getDilihat().compareTo(rhs.getDilihat());
+//                }
+//            });
+//            int duar = tempList.size();
+//            for (int i=0; i<duar-1; i++) {
+//                if (i == 3) {
+//                    break;
+//                }
+//                else {
+//                    informasiKaroselArrayList.add(tempList.get(i));
+//                }
+//            }
+
+
+                timer = new Timer();
+                timer.scheduleAtFixedRate(new AutoScrollTask(), 2000, 5000);
+                position = 0;
+                end = false;
+                informasiArrayList.addAll(informasiList);
+                informasiListAdapter.notifyDataSetChanged();
+                informasiKaroselListAdapter.notifyDataSetChanged();
+                setInformasiContainerVisible();
             }
-
-            timer = new Timer();
-            timer.scheduleAtFixedRate(new AutoScrollTask(), 2000, 5000);
-            position = 0;
-            end = false;
-            informasiArrayList.addAll(informasiList);
-            informasiListAdapter.notifyDataSetChanged();
-            informasiKaroselListAdapter.notifyDataSetChanged();
-            setInformasiContainerVisible();
+            else {
+                setFailedContainerVisible();
+            }
         });
     }
     public void setFailedContainerVisible() {

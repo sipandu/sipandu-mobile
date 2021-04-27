@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.adapter.KonsultasiTengakaKesehatanAdapter;
+import com.sipanduteam.sipandu.adapter.KonsultasiTenagaKesehatanAdapter;
 import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.posyandu.Pegawai;
@@ -31,7 +31,7 @@ public class KonsultasiTelegramActivity extends AppCompatActivity {
     private Toolbar homeToolbar;
 
     private ArrayList<Pegawai> pegawaiArrayList;
-    private KonsultasiTengakaKesehatanAdapter konsultasiTengakaKesehatanAdapter;
+    private KonsultasiTenagaKesehatanAdapter konsultasiTengakaKesehatanAdapter;
     private RecyclerView konsultasiRecycler;
     private LinearLayoutManager linearLayoutManager;
     LinearLayout loadingContainer, failedContainer, konsultasiContainer;
@@ -60,7 +60,7 @@ public class KonsultasiTelegramActivity extends AppCompatActivity {
 
         pegawaiArrayList = new ArrayList<>();
         konsultasiRecycler = findViewById(R.id.konsultasi_list);
-        konsultasiTengakaKesehatanAdapter = new KonsultasiTengakaKesehatanAdapter(this, pegawaiArrayList);
+        konsultasiTengakaKesehatanAdapter = new KonsultasiTenagaKesehatanAdapter(this, pegawaiArrayList);
         linearLayoutManager = new LinearLayoutManager(this);
         konsultasiRecycler.setLayoutManager(linearLayoutManager);
         konsultasiRecycler.setAdapter(konsultasiTengakaKesehatanAdapter);

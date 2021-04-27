@@ -22,6 +22,10 @@ public class PengumumanViewModel extends ViewModel {
 
     }
 
+    public void getData(String email, int role) {
+        pengumumanResponseMutableLiveData = pengumumanRepository.getPengumuman(email, role);
+    }
+
     public LiveData<PengumumanResponse> getPengumuman() {
         return pengumumanResponseMutableLiveData;
     }

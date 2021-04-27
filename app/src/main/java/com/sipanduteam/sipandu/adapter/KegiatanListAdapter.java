@@ -20,8 +20,10 @@ import com.sipanduteam.sipandu.activity.posyandu.KegiatanDetailActivity;
 import com.sipanduteam.sipandu.model.posyandu.Kegiatan;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class KegiatanListAdapter extends RecyclerView.Adapter<KegiatanListAdapter.ViewHolder> {
@@ -51,7 +53,7 @@ public class KegiatanListAdapter extends RecyclerView.Adapter<KegiatanListAdapte
 
         switch (kegiatanArrayList.get(position).getStatus()){
             case 0:
-                holder.statusChip.setText("Belum terlaksana");
+                holder.statusChip.setText("Belum berjalan");
                 holder.statusChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.secondaryLightColorSemiTransparent)));
                 break;
             case 1:
@@ -63,7 +65,7 @@ public class KegiatanListAdapter extends RecyclerView.Adapter<KegiatanListAdapte
                 holder.statusChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.greenSemiTransparent)));
                 break;
         }
-        holder.kegiatanWaktu.setText((kegiatanArrayList.get(position).getStartAt() + " hingga " + kegiatanArrayList.get(position).getEndAt()));
+        holder.kegiatanWaktu.setText(changeDateFormat((kegiatanArrayList.get(position).getStartAt()) + " hingga " + changeDateFormat(kegiatanArrayList.get(position).getEndAt())));
     }
 
 
@@ -97,5 +99,23 @@ public class KegiatanListAdapter extends RecyclerView.Adapter<KegiatanListAdapte
                 }
             });
         }
+    }
+
+    public String changeDateFormat(String time) {
+        String inputPattern = "yyyy-MM-dd";
+        String outputPattern = "dd-MMMM-yyyy";
+        SimpleDateFormat input = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat output = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = input.parse(time);
+            str = output.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 }

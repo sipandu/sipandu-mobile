@@ -17,7 +17,10 @@ public class PosyanduViewModel extends ViewModel {
         }
         posyanduRepository = posyanduRepository.getInstance();
         posyanduUserResponseMutableLiveData = posyanduRepository.getUserPosyandu(email, role);
+    }
 
+    public void getData(String email, int role) {
+        posyanduUserResponseMutableLiveData = posyanduRepository.getUserPosyandu(email, role);
     }
 
     public LiveData<PosyanduUserResponse> getUserPosyandu() {

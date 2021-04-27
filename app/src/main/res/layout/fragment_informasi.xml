@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.home.InformasiFragment">
 
@@ -47,20 +48,34 @@
 
         <ImageView
             android:id="@+id/home_failed_icon"
-            android:padding="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="8dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_outline_warning_amber_24"
-            app:tint="#ff3d69">
+            android:layout_height="150dp"
+            android:src="@drawable/ic_error_1">
         </ImageView>
 
         <TextView
-            android:padding="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="4dp"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Ups!"
+            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+        <TextView
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textAlignment="center"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Terjadi kesalahan. Silahkan klik refresh atau coba lagi nanti"
-            android:textAppearance="?attr/textAppearanceSubtitle1" />
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary" />
 
         <Button
             android:id="@+id/informasi_refresh"
@@ -100,56 +115,72 @@
                     android:layout_height="wrap_content"
                     android:visibility="visible" />
 
-                <HorizontalScrollView
-                    android:layout_marginTop="4dp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent">
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/informasi_sort_chip_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        app:singleLine="true">
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/informasi_terbaru_chip"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@color/chip_blue_state_list"
-                            style="@style/Widget.MaterialComponents.Chip.Filter"
-                            android:text="Terbaru ke lama" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/informasi_terlama_chip"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@color/chip_blue_state_list"
-                            style="@style/Widget.MaterialComponents.Chip.Filter"
-                            android:text="Lama ke terbaru" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/informasi_terpopuler_chip"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:chipBackgroundColor="@color/chip_blue_state_list"
-                            style="@style/Widget.MaterialComponents.Chip.Filter"
-                            android:text="Terpopuler" />
-
-                    </com.google.android.material.chip.ChipGroup>
-                </HorizontalScrollView>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/informasi_list_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="4dp"
                     android:visibility="visible" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/show_all_informasi_button"
+                    app:cardElevation="2dp"
+                    android:clickable="true"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/imageView3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:src="@drawable/ic_outline_article_24"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/primaryLightColor" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="Lihat selengkapnya"
+                                    android:textAppearance="?attr/textAppearanceHeadline6"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/imageView3"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </FrameLayout>

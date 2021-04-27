@@ -9,7 +9,7 @@
     </item>
     <item
         android:id="@id/navigation_informasi"
-        android:icon="@drawable/ic_outline_feed_24"
+        android:icon="@drawable/ic_outline_article_24"
         android:title="Informasi" >
     </item>
     <item

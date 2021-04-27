@@ -18,7 +18,9 @@ public class InformasiBerandaViewModel extends ViewModel {
         }
         informasiRepository = informasiRepository.getInstance();
         informasiResponseMutableLiveData = informasiRepository.getInformasiHome();
-
+    }
+    public void getData() {
+        informasiResponseMutableLiveData = informasiRepository.getInformasiHome();
     }
 
     public LiveData<InformasiResponse> getInformasiRepository() {

@@ -29,35 +29,35 @@ public class SplashActivity extends AppCompatActivity {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(motionLayout);
 
-        int random;
-        Random rnd = new Random();
-        random = rnd.nextInt(3);
-        Log.d("random", String.valueOf(random));
-        constraintSet.clear(R.id.transition_view, ConstraintSet.BOTTOM);
-        constraintSet.clear(R.id.transition_view, ConstraintSet.END);
-
-        if (random == 0) {
-            constraintSet.connect(R.id.transition_view, ConstraintSet.BOTTOM, motionLayout.getId(), ConstraintSet.BOTTOM, 0);
-            constraintSet.connect(R.id.imageView,ConstraintSet.END, motionLayout.getId(),ConstraintSet.END,0);
-            constraintSet.applyTo(motionLayout);
-        }
-        else if (random == 1) {
-            constraintSet.connect(R.id.transition_view, ConstraintSet.TOP, motionLayout.getId(), ConstraintSet.TOP, 0);
-            constraintSet.connect(R.id.imageView,ConstraintSet.END, motionLayout.getId(),ConstraintSet.END,0);
-            constraintSet.applyTo(motionLayout);
-        }
-
-        else if (random == 2) {
-            constraintSet.connect(R.id.transition_view, ConstraintSet.TOP, motionLayout.getId(), ConstraintSet.TOP, 0);
-            constraintSet.connect(R.id.imageView,ConstraintSet.START, motionLayout.getId(),ConstraintSet.START,0);
-            constraintSet.applyTo(motionLayout);
-        }
-
-        else {
-            constraintSet.connect(R.id.transition_view, ConstraintSet.BOTTOM, motionLayout.getId(), ConstraintSet.BOTTOM, 0);
-            constraintSet.connect(R.id.imageView,ConstraintSet.START, motionLayout.getId(),ConstraintSet.START,0);
-            constraintSet.applyTo(motionLayout);
-        }
+//        int random;
+//        Random rnd = new Random();
+//        random = rnd.nextInt(3);
+//        Log.d("random", String.valueOf(random));
+//        constraintSet.clear(R.id.transition_view, ConstraintSet.BOTTOM);
+//        constraintSet.clear(R.id.transition_view, ConstraintSet.END);
+//
+//        if (random == 0) {
+//            constraintSet.connect(R.id.transition_view, ConstraintSet.BOTTOM, motionLayout.getId(), ConstraintSet.BOTTOM, 0);
+//            constraintSet.connect(R.id.imageView,ConstraintSet.END, motionLayout.getId(),ConstraintSet.END,0);
+//            constraintSet.applyTo(motionLayout);
+//        }
+//        else if (random == 1) {
+//            constraintSet.connect(R.id.transition_view, ConstraintSet.TOP, motionLayout.getId(), ConstraintSet.TOP, 0);
+//            constraintSet.connect(R.id.imageView,ConstraintSet.END, motionLayout.getId(),ConstraintSet.END,0);
+//            constraintSet.applyTo(motionLayout);
+//        }
+//
+//        else if (random == 2) {
+//            constraintSet.connect(R.id.transition_view, ConstraintSet.TOP, motionLayout.getId(), ConstraintSet.TOP, 0);
+//            constraintSet.connect(R.id.imageView,ConstraintSet.START, motionLayout.getId(),ConstraintSet.START,0);
+//            constraintSet.applyTo(motionLayout);
+//        }
+//
+//        else {
+//            constraintSet.connect(R.id.transition_view, ConstraintSet.BOTTOM, motionLayout.getId(), ConstraintSet.BOTTOM, 0);
+//            constraintSet.connect(R.id.imageView,ConstraintSet.START, motionLayout.getId(),ConstraintSet.START,0);
+//            constraintSet.applyTo(motionLayout);
+//        }
 
 
         posyanduText = findViewById(R.id.smart_posyandu_text);
@@ -76,6 +76,8 @@ public class SplashActivity extends AppCompatActivity {
         Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         Handler splashHandler = new Handler();
+
+        Handler finishHandler = new Handler();
 
 
 
@@ -105,9 +107,14 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onTransitionCompleted(MotionLayout motionLayout, int i) {
-                startActivity(loginActivity);
+                finishHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(loginActivity);
 //                finishAfterTransition();
-                finish();
+                        finish();
+                    }
+                }, 300);;
             }
 
             @Override

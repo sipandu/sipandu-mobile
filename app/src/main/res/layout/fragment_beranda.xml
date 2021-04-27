@@ -36,7 +36,7 @@
 
 
     <LinearLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:foregroundGravity="center"
         android:id="@+id/home_failed_container"
         android:padding="16dp"
@@ -48,20 +48,34 @@
 
         <ImageView
             android:id="@+id/home_failed_icon"
-            android:padding="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="8dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_outline_warning_amber_24"
-            app:tint="#ff3d69">
+            android:layout_height="150dp"
+            android:src="@drawable/ic_error_1">
         </ImageView>
 
         <TextView
-            android:padding="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="4dp"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Ups!"
+            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+        <TextView
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textAlignment="center"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Terjadi kesalahan. Silahkan klik refresh atau coba lagi nanti"
-            android:textAppearance="?attr/textAppearanceSubtitle1" />
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary" />
 
         <Button
             android:id="@+id/home_refresh"
@@ -132,7 +146,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nanti"
-                            android:layout_marginEnd="4dp"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             />
 
@@ -181,14 +194,10 @@
                 android:id="@+id/jadwal_posyandu_button"
                 style="@style/Widget.App.CardView"
                 app:cardElevation="2dp"
-                android:clickable="true"
-                android:layout_marginTop="12dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_margin="12dp"
                 app:cardCornerRadius="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -237,141 +246,102 @@
                 android:layout_marginTop="8dp">
             </androidx.recyclerview.widget.RecyclerView>
 
-            <com.google.android.material.card.MaterialCardView
-                app:cardElevation="2dp"
-                android:clickable="true"
-                android:layout_marginBottom="12dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                app:cardCornerRadius="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true">
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/pengumuman_all_button"-->
+<!--                app:cardElevation="2dp"-->
+<!--                android:clickable="true"-->
+<!--                android:layout_marginBottom="16dp"-->
+<!--                android:layout_marginStart="12dp"-->
+<!--                android:layout_marginEnd="12dp"-->
+<!--                app:cardCornerRadius="8dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:focusable="true">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="16dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:padding="16dp">-->
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content">-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Lihat selengkapnya"
-                                android:textAppearance="?attr/textAppearanceHeadline6"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+<!--                            <ImageView-->
+<!--                                android:id="@+id/imageView5"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="0dp"-->
+<!--                                android:src="@drawable/ic_outline_campaign_24"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintStart_toStartOf="parent"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:tint="@color/primaryLightColor" />-->
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="12dp"
-                android:layout_height="wrap_content">
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="8dp"-->
+<!--                                android:text="Lihat selengkapnya"-->
+<!--                                android:textAppearance="?attr/textAppearanceHeadline6"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintStart_toEndOf="@+id/imageView5"-->
+<!--                                app:layout_constraintTop_toTopOf="parent" />-->
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Informasi terkini"
-                    android:textAllCaps="true"
-                    android:textAppearance="?attr/textAppearanceSubtitle2"
-                    android:textColor="@color/primaryColor"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+<!--                            <ImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="0dp"-->
+<!--                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                app:layout_constraintTop_toTopOf="parent" />-->
 
-                <View
-                    style="@style/Divider"
-                    android:layout_marginStart="8dp"
-                    android:layout_width="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+<!--            </com.google.android.material.card.MaterialCardView>-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/home_informasi_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
-            </androidx.recyclerview.widget.RecyclerView>
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_marginStart="12dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:layout_marginEnd="12dp"-->
+<!--                android:layout_height="wrap_content">-->
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/show_all_informasi_button"
-                app:cardElevation="2dp"
-                android:clickable="true"
-                android:layout_marginBottom="12dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                app:cardCornerRadius="8dp"
-                app:cardBackgroundColor="@color/primaryLightColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true">
+<!--                <TextView-->
+<!--                    android:id="@+id/textView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="Informasi terkini"-->
+<!--                    android:textAllCaps="true"-->
+<!--                    android:textAppearance="?attr/textAppearanceSubtitle2"-->
+<!--                    android:textColor="@color/primaryColor"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+<!--                <View-->
+<!--                    style="@style/Divider"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/textView"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="16dp">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:text="Lihat selengkapnya"
-                                android:textAppearance="?attr/textAppearanceHeadline6"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                                android:textColor="@color/white"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:tint="@color/white" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/home_informasi_list"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="12dp">-->
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

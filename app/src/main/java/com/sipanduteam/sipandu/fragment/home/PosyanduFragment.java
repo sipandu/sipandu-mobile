@@ -31,14 +31,14 @@ public class PosyanduFragment extends Fragment {
     SharedPreferences userPreferences, loginPreferences;
     TextView namaPosyandu, alamatPosyandu, banjarPosyandu;
 
-    Button openPosyanduMapButton, openKonsultasiTelegramButton,
+    Button openKonsultasiTelegramButton,
             posyanduCallButton, posyanduJoinTelegramGroupButton;
+//    Button openPosyanduMapButton;
 
-    MaterialCardView  openPosyanduScheduleButton, openPosyanduLocationButton;
+    MaterialCardView  openPosyanduScheduleButton, openPosyanduLocationButton, openPosyanduMapCard;
 
     String email;
     int role;
-
     Intent posyanduCall = new Intent(Intent.ACTION_DIAL), openPosyanduLoc;
 
 
@@ -71,15 +71,17 @@ public class PosyanduFragment extends Fragment {
 
         posyanduCallButton = v.findViewById(R.id.call_posyandu_button);
         openPosyanduScheduleButton = v.findViewById(R.id.jadwal_posyandu_button);
-        openPosyanduMapButton = v.findViewById(R.id.open_posyandu_map_button);
+//        openPosyanduMapButton = v.findViewById(R.id.open_posyandu_map_button);
         openKonsultasiTelegramButton = v.findViewById(R.id.konsultasi_telegram_button);
         openPosyanduLocationButton = v.findViewById(R.id.posyandu_location_button);
         posyanduJoinTelegramGroupButton = v.findViewById(R.id.posyandu_telegram_group_button);
+        openPosyanduMapCard = v.findViewById(R.id.open_posyandu_map_card);
 
         refreshProfile = v.findViewById(R.id.posyandu_refresh);
         refreshProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                posyanduViewModel.getData(email, role);
                 getData();
             }
         });
@@ -93,13 +95,22 @@ public class PosyanduFragment extends Fragment {
 
         openKonsultasiTelegram = new Intent(getActivity(), KonsultasiTelegramActivity.class);
 
-        openPosyanduMapButton.setOnClickListener(new View.OnClickListener() {
+//        openPosyanduMapButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent openPosyanduMap = new Intent(getActivity(), PosyanduMapActivity.class);
+//                startActivity(openPosyanduMap);
+//            }
+//        });
+
+        openPosyanduMapCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent openPosyanduMap = new Intent(getActivity(), PosyanduMapActivity.class);
                 startActivity(openPosyanduMap);
             }
         });
+
         openPosyanduScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +118,8 @@ public class PosyanduFragment extends Fragment {
                 startActivity(openPosyanduSchedule);
             }
         });
+
+
         openKonsultasiTelegramButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,17 +150,19 @@ public class PosyanduFragment extends Fragment {
         setLoadingContainerVisible();
         posyanduViewModel.init(email, role);
         posyanduViewModel.getUserPosyandu().observe(getViewLifecycleOwner(), posyanduUserResponse -> {
-            namaPosyandu.setText(posyanduUserResponse.getPosyandu().getNamaPosyandu());
-            alamatPosyandu.setText(posyanduUserResponse.getPosyandu().getAlamat());
-            banjarPosyandu.setText(posyanduUserResponse.getPosyandu().getBanjar());
-            posyanduCall.setData(Uri.parse("tel:" + posyanduUserResponse.getPosyandu().getNomorTelepon()));
-            openKonsultasiTelegram.putExtra("posyandu", posyanduUserResponse.getPosyandu().getId());
-            posyanduJoinTelegramGroupButton.setText("Gabung grup telegram " + namaPosyandu.getText().toString());
-            posyanduCallButton.setText("Hubungi posyandu "
-                    + namaPosyandu.getText().toString()
-                    + " di "
-                    + posyanduUserResponse.getPosyandu().getNomorTelepon());
-            setPosyanduContainerVisible();
+            if (posyanduUserResponse != null) {
+                namaPosyandu.setText(posyanduUserResponse.getPosyandu().getNamaPosyandu());
+                alamatPosyandu.setText(posyanduUserResponse.getPosyandu().getAlamat());
+                banjarPosyandu.setText(posyanduUserResponse.getPosyandu().getBanjar());
+                posyanduCall.setData(Uri.parse("tel:" + posyanduUserResponse.getPosyandu().getNomorTelepon()));
+                openKonsultasiTelegram.putExtra("posyandu", posyanduUserResponse.getPosyandu().getId());
+                posyanduJoinTelegramGroupButton.setText("Grup telegram " + namaPosyandu.getText().toString());
+                posyanduCallButton.setText("Hubungi " + namaPosyandu.getText().toString());
+                setPosyanduContainerVisible();
+            }
+            else {
+                setFailedContainerVisible();
+            }
         });
     }
 

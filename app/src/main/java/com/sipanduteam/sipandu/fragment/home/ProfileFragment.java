@@ -71,6 +71,7 @@ public class ProfileFragment extends Fragment {
         refreshProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                profileAnakViewModel.getData(userPreferences.getString("email", "empty"));
                 getData();
             }
         });
@@ -80,7 +81,6 @@ public class ProfileFragment extends Fragment {
         userPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
         dialog = new ProgressDialog(getActivity());
         getData();
-
         return v;
     }
 
@@ -88,32 +88,37 @@ public class ProfileFragment extends Fragment {
         profileAnakViewModel.init(userPreferences.getString("email", "empty"));
         setLoadingContainerVisible();
         profileAnakViewModel.getProfileAnakRepository().observe(getViewLifecycleOwner(), anakDataResponse -> {
-            nama.setText(anakDataResponse.getAnak().getNamaAnak());
-            namaCard.setText(anakDataResponse.getAnak().getNamaAnak());
-            nik.setText(anakDataResponse.getAnak().getNik());
-            email.setText(anakDataResponse.getUser().getEmail());
-            jk.setText(anakDataResponse.getAnak().getJenisKelamin());
-            alamat.setText(anakDataResponse.getAnak().getAlamat());
-            ttl.setText(anakDataResponse.getAnak().getTempatLahir() + ", " + anakDataResponse.getAnak().getTanggalLahir());
-            noTelp.setText(anakDataResponse.getAnak().getNomorTelepon());
-            anakKe.setText(anakDataResponse.getAnak().getAnakKe());
-            ayah.setText(anakDataResponse.getAnak().getNamaAyah());
-            ibu.setText(anakDataResponse.getAnak().getNamaIbu());
-            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-            Date date = new Date();
-            try {
-                date = simpleFormat.parse(anakDataResponse.getAnak().getTanggalLahir().toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (anakDataResponse != null) {
+                nama.setText(anakDataResponse.getAnak().getNamaAnak());
+                namaCard.setText(anakDataResponse.getAnak().getNamaAnak());
+                nik.setText(anakDataResponse.getAnak().getNik());
+                email.setText(anakDataResponse.getUser().getEmail());
+                jk.setText(anakDataResponse.getAnak().getJenisKelamin());
+                alamat.setText(anakDataResponse.getAnak().getAlamat());
+                ttl.setText(anakDataResponse.getAnak().getTempatLahir() + ", " + anakDataResponse.getAnak().getTanggalLahir());
+                noTelp.setText(anakDataResponse.getAnak().getNomorTelepon());
+                anakKe.setText(anakDataResponse.getAnak().getAnakKe());
+                ayah.setText(anakDataResponse.getAnak().getNamaAyah());
+                ibu.setText(anakDataResponse.getAnak().getNamaIbu());
+                SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                Date date = new Date();
+                try {
+                    date = simpleFormat.parse(anakDataResponse.getAnak().getTanggalLahir().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Date currentTime = Calendar.getInstance().getTime();
+                Calendar startCalendar = new GregorianCalendar();
+                startCalendar.setTime(currentTime);
+                Calendar endCalendar = new GregorianCalendar();
+                endCalendar.setTime(date);
+                int diffMonth = startCalendar.get(Calendar.YEAR) - endCalendar.get(Calendar.YEAR);
+                umur.setText(diffMonth + " tahun");
+                setProfileContainerVisible();
             }
-            Date currentTime = Calendar.getInstance().getTime();
-            Calendar startCalendar = new GregorianCalendar();
-            startCalendar.setTime(currentTime);
-            Calendar endCalendar = new GregorianCalendar();
-            endCalendar.setTime(date);
-            int diffMonth = startCalendar.get(Calendar.YEAR) - endCalendar.get(Calendar.YEAR);
-            umur.setText(diffMonth + " tahun");
-            setProfileContainerVisible();
+            else {
+                setFailedContainerVisible();
+            }
         });
     }
 

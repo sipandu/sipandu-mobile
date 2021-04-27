@@ -1,6 +1,8 @@
 package com.sipanduteam.sipandu.fragment.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -59,6 +61,8 @@ public class BerandaFragment extends Fragment {
     InformasiBerandaViewModel informasiBerandaViewModel;
     PengumumanViewModel pengumumanViewModel;
 
+    SharedPreferences userPreferences;
+
     public BerandaFragment() {
         // Required empty public constructor
     }
@@ -67,9 +71,9 @@ public class BerandaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        informasiArrayList = new ArrayList<>();
+//        informasiArrayList = new ArrayList<>();
         pengumumanArrayList = new ArrayList<>();
-        informasiBerandaViewModel = ViewModelProviders.of(getActivity()).get(InformasiBerandaViewModel.class);
+//        informasiBerandaViewModel = ViewModelProviders.of(getActivity()).get(InformasiBerandaViewModel.class);
         pengumumanViewModel = ViewModelProviders.of(getActivity()).get(PengumumanViewModel.class);
     }
 
@@ -79,11 +83,16 @@ public class BerandaFragment extends Fragment {
         if (v == null) {
             v = inflater.inflate(R.layout.fragment_beranda, container, false);
 
+            userPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+            String email = userPreferences.getString("email", "empty");
+            int role = userPreferences.getInt("role", 4);
+
             refreshHome = v.findViewById(R.id.home_refresh);
             refreshHome.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                getData();
+                    pengumumanViewModel.getData(email, role);
+                    getData();
                 }
             });
             loadingContainer = v.findViewById(R.id.home_loading_container);
@@ -94,20 +103,22 @@ public class BerandaFragment extends Fragment {
             d = failedImage.getDrawable();
 
             MaterialCardView telegramBotAddCard = v.findViewById(R.id.telegram_bot_add_card);
-            MaterialCardView showAllInformasiButton = v.findViewById(R.id.show_all_informasi_button);
+//            MaterialCardView showAllInformasiButton = v.findViewById(R.id.show_all_informasi_button);
             Button dismissAddTelegramBotButton = v.findViewById(R.id.telegram_bot_add_dismiss_button);
             Button addTelegramBotButton = v.findViewById(R.id.telegram_bot_add_button);
 
-            recyclerView = v.findViewById(R.id.home_informasi_list);
+
             pengumumanRecycler = v.findViewById(R.id.home_pengumuman_list);
             pengumumanListAdapter = new PengumumanListAdapter(getContext(), pengumumanArrayList);
-            informasiListBerandaAdapter = new InformasiListBerandaAdapter(getContext(), informasiArrayList);
-            linearLayoutManager = new LinearLayoutManager(getContext());
             pengumumanLayoutManager = new LinearLayoutManager(getContext());
             pengumumanRecycler.setLayoutManager(pengumumanLayoutManager);
             pengumumanRecycler.setAdapter(pengumumanListAdapter);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(informasiListBerandaAdapter);
+//            recyclerView = v.findViewById(R.id.home_informasi_list);
+//            informasiListBerandaAdapter = new InformasiListBerandaAdapter(getContext(), informasiArrayList);
+//            linearLayoutManager = new LinearLayoutManager(getContext());
+//            recyclerView.setLayoutManager(linearLayoutManager);
+//            recyclerView.setAdapter(informasiListBerandaAdapter);
+
 
 
             dismissAddTelegramBotButton.setOnClickListener(new View.OnClickListener() {
@@ -129,27 +140,31 @@ public class BerandaFragment extends Fragment {
             });
 
 
-            showAllInformasiButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent showAllInformasi = new Intent(getActivity(), InformasiActivity.class);
-                    startActivity(showAllInformasi);
-                }
-            });
+//            showAllInformasiButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent showAllInformasi = new Intent(getActivity(), InformasiActivity.class);
+//                    startActivity(showAllInformasi);
+//                }
+//            });
+            getData();
         }
-        getData();
         return v;
     }
 
     private void getData() {
 //        informasiBerandaViewModel.init();
         setLoadingContainerVisible();
-
         pengumumanViewModel.getPengumuman().observe(getViewLifecycleOwner(), pengumumanResponse -> {
-            List<Pengumuman> pengumumanList = pengumumanResponse.getPengumuman();
-            pengumumanArrayList.addAll(pengumumanList);
-            pengumumanListAdapter.notifyDataSetChanged();
-            setHomeContainerVisible();
+            if (pengumumanResponse != null) {
+                List<Pengumuman> pengumumanList = pengumumanResponse.getPengumuman();
+                pengumumanArrayList.addAll(pengumumanList);
+                pengumumanListAdapter.notifyDataSetChanged();
+                setHomeContainerVisible();
+            }
+            else {
+                setFailedContainerVisible();
+            }
         });
 
 //        informasiBerandaViewModel.getInformasiRepository().observe(getViewLifecycleOwner(), informasiResponse -> {

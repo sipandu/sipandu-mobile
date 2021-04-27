@@ -12,6 +12,9 @@ public class InformasiResponse {
     @SerializedName("informasi")
     @Expose
     private List<Informasi> informasi = null;
+    @SerializedName("informasi_populer")
+    @Expose
+    private List<Informasi> informasiPopuler = null;
     @SerializedName("message")
     @Expose
     private String message;
@@ -38,5 +41,13 @@ public class InformasiResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public List<Informasi> getInformasiPopuler() {
+        return informasiPopuler;
+    }
+
+    public void setInformasiPopuler(List<Informasi> informasiPopuler) {
+        this.informasiPopuler = informasiPopuler;
     }
 }

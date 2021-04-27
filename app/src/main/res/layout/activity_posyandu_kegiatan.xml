@@ -49,18 +49,33 @@
         android:visibility="gone">
 
         <ImageView
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="8dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:padding="12dp"
-            android:src="@drawable/failed_drawable" />
+            android:layout_height="150dp"
+            android:src="@drawable/ic_error_1"/>
 
         <TextView
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="4dp"
+            android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="Terjadi kesalahan. Silahkan klik refresh atau coba lagi nanti"
+            android:text="Ups!"
+            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+        <TextView
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:textAlignment="center"
-            android:textAppearance="?attr/textAppearanceSubtitle1" />
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Terjadi kesalahan. Silahkan klik refresh atau coba lagi nanti"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary" />
 
         <Button
             android:id="@+id/kegiatan_refresh"
@@ -113,14 +128,14 @@
 
             <HorizontalScrollView
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:layout_width="wrap_content">
 
                 <com.google.android.material.chip.ChipGroup
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:id="@+id/kegiatan_filter_chip_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     app:singleLine="true">
 
                     <com.google.android.material.chip.Chip

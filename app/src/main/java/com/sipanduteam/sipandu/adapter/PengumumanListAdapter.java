@@ -1,6 +1,7 @@
 package com.sipanduteam.sipandu.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -14,16 +15,24 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.sipanduteam.sipandu.R;
+import com.sipanduteam.sipandu.activity.posyandu.KegiatanDetailActivity;
+import com.sipanduteam.sipandu.activity.posyandu.PengumumanDetailActivity;
 import com.sipanduteam.sipandu.model.Informasi;
+import com.sipanduteam.sipandu.model.posyandu.Kegiatan;
 import com.sipanduteam.sipandu.model.posyandu.Pengumuman;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PengumumanListAdapter extends RecyclerView.Adapter<PengumumanListAdapter.ViewHolder> {
     private Context mContext;
+    String pengumumanKey = "PENGUMUMAN_ID";
     private ArrayList<Pengumuman> pengumumanArrayList;
     private int position;
     String informasiKey = "INFORMASI_LINK", informasiTitleKey = "INFORMASI_TITLE";
@@ -50,7 +59,7 @@ public class PengumumanListAdapter extends RecyclerView.Adapter<PengumumanListAd
         //TODO pastiin url image nya nanti waktu production
         holder.progressContainer.setVisibility(View.VISIBLE);
         Picasso.get()
-                .load(pengumumanArrayList.get(position).getFoto().replaceAll("http://192.168.1.101:8000", "https://sipandu-test-web.herokuapp.com"))
+                .load(pengumumanArrayList.get(position).getFoto().replaceAll("http://192.168.1.104:1107", "https://sipandu-test-web.herokuapp.com"))
                 .into(holder.pengumumanImage, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -65,13 +74,13 @@ public class PengumumanListAdapter extends RecyclerView.Adapter<PengumumanListAd
                     }
                 });
         holder.pengumumanTitle.setText(pengumumanArrayList.get(position).getJudulPengumuman());
-        holder.pengumumanDate.setText(pengumumanArrayList.get(position).getTanggal());
+        holder.pengumumanDate.setText(changeDateFormat(pengumumanArrayList.get(position).getTanggal()));
         duar = Html.fromHtml(pengumumanArrayList.get(position).getPengumuman()).toString();
 
-        if (pengumumanArrayList.get(position).getPengumuman().length() > 80) {
+        if (duar.length() > 80) {
             holder.pengumumanSupportingText.setText(duar.substring(0, 80) + "...");
         } else {
-            holder.pengumumanSupportingText.setText(pengumumanArrayList.get(position).getPengumuman());
+            holder.pengumumanSupportingText.setText(duar.trim());
         }
     }
 
@@ -101,19 +110,32 @@ public class PengumumanListAdapter extends RecyclerView.Adapter<PengumumanListAd
                 @Override
                 public void onClick(View v) {
                     position = getAdapterPosition();
-//                    Informasi informasi = informasiArrayList.get(position);
-//
-//                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-//                    builder.setToolbarColor(mContext.getResources().getColor(R.color.primaryColor));
-//                    CustomTabsIntent customTabsIntent = builder.build();
-//                    customTabsIntent.launchUrl(mContext, Uri.parse("https://sipandu-test-web.herokuapp.com/blog/detail/" + informasi.getSlug()));
-//
-//                    Intent informasiShow = new Intent(mContext, InformasiShowActivity.class);
-//                    informasiShow.putExtra(informasiKey, informasi.getSlug());
-//                    informasiShow.putExtra(informasiTitleKey, informasi.getJudulInformasi());
-//                    mContext.startActivity(informasiShow);
+                    Pengumuman pengumuman = pengumumanArrayList.get(position);
+                    Intent pengumumanDetail = new Intent(mContext, PengumumanDetailActivity.class);
+                    Gson gson = new Gson();
+                    String pengumumanJson = gson.toJson(pengumuman);
+                    pengumumanDetail.putExtra(pengumumanKey, pengumumanJson);
+                    mContext.startActivity(pengumumanDetail);
                 }
             });
         }
+    }
+
+    public String changeDateFormat(String time) {
+        String inputPattern = "yyyy-MM-dd";
+        String outputPattern = "dd-MMMM-yyyy";
+        SimpleDateFormat input = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat output = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = input.parse(time);
+            str = output.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 }

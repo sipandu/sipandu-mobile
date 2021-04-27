@@ -47,19 +47,34 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:padding="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="8dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/failed_drawable">
+            android:layout_height="150dp"
+            android:src="@drawable/ic_error_1">
         </ImageView>
 
         <TextView
-            android:padding="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginBottom="4dp"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Ups!"
+            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+        <TextView
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textAlignment="center"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Terjadi kesalahan. Silahkan klik refresh atau coba lagi nanti"
-            android:textAppearance="?attr/textAppearanceSubtitle1" />
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary" />
 
         <Button
             android:id="@+id/profile_refresh"

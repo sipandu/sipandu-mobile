@@ -19,7 +19,10 @@ public class ProfileAnakViewModel extends ViewModel {
         }
         profileAnakRepository = profileAnakRepository.getInstance();
         anakDataResponseMutableLiveData = profileAnakRepository.getProfileAnak(anak);
+    }
 
+    public void getData(String anak) {
+        anakDataResponseMutableLiveData = profileAnakRepository.getProfileAnak(anak);
     }
 
     public LiveData<AnakDataResponse> getProfileAnakRepository() {

@@ -1,5 +1,6 @@
 package com.sipanduteam.sipandu.activity.informasi;
 
+import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -68,6 +71,9 @@ public class InformasiActivity extends AppCompatActivity implements FilterInform
     int position = 0;
     boolean end = false;
     Timer timer;
+    Chip terbaluTerlamaChip;
+
+    ChipGroup informasiSortChipGroup;
 
 //    MaterialCardView infoFilterCard;
 //    TextView infoFilterCardText;
@@ -90,34 +96,57 @@ public class InformasiActivity extends AppCompatActivity implements FilterInform
             }
         });
 
+        terbaluTerlamaChip = findViewById(R.id.informasi_terbaru_chip);
+        informasiSortChipGroup = (ChipGroup) findViewById(R.id.informasi_sort_chip_group);
+        informasiSortChipGroup.setSingleSelection(true);
+        informasiSortChipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ChipGroup group, @IdRes int checkedId) {
+                informasiArrayList.clear();
+                if (checkedId == R.id.informasi_terbaru_chip) {
+                    getData(0);
+                }
+                else if (checkedId == R.id.informasi_terlama_chip) {
+                    getData(1);
+                }
+
+                else if (checkedId == R.id.informasi_terpopuler_chip) {
+                    getData(2);
+                }
+                else {
+                    getData(0);
+                }
+            }
+        });
+
 
         loadingContainer = findViewById(R.id.informasi_loading_container);
         failedContainer = findViewById(R.id.informasi_failed_container);
         informasiScrollView = findViewById(R.id.informasi_scroll_view);
-        filterFab = findViewById(R.id.informasi_filter_fab);
+//        filterFab = findViewById(R.id.informasi_filter_fab);
 //        infoFilterCard = findViewById(R.id.sorting_info_card);
 //        infoFilterCardText = findViewById(R.id.sorting_info_card_text);
 
-        informasiScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                // the delay of the extension of the FAB is set for 12 items
-                if (scrollY > oldScrollY + 12 && filterFab.isExtended()) {
-                    filterFab.shrink();
-                }
-
-                // the delay of the extension of the FAB is set for 12 items
-                if (scrollY < oldScrollY - 12 && !filterFab.isExtended()) {
-                    filterFab.extend();
-                }
-
-                // if the nestedScrollView is at the first item of the list then the
-                // extended floating action should be in extended state
-                if (scrollY == 0) {
-                    filterFab.extend();
-                }
-            }
-        });
+//        informasiScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                // the delay of the extension of the FAB is set for 12 items
+//                if (scrollY > oldScrollY + 12 && filterFab.isExtended()) {
+//                    filterFab.shrink();
+//                }
+//
+//                // the delay of the extension of the FAB is set for 12 items
+//                if (scrollY < oldScrollY - 12 && !filterFab.isExtended()) {
+//                    filterFab.extend();
+//                }
+//
+//                // if the nestedScrollView is at the first item of the list then the
+//                // extended floating action should be in extended state
+//                if (scrollY == 0) {
+//                    filterFab.extend();
+//                }
+//            }
+//        });
 
 
         informasiArrayList = new ArrayList<>();
@@ -125,117 +154,117 @@ public class InformasiActivity extends AppCompatActivity implements FilterInform
         getData(flagFilter);
 
         recyclerView = findViewById(R.id.blog_list_view);
-        recyclerViewKarosel = findViewById(R.id.blog_karosel_view);
+//        recyclerViewKarosel = findViewById(R.id.blog_karosel_view);
         informasiListAdapter = new InformasiListAdapter(this, informasiArrayList);
-        informasiKaroselListAdapter = new InformasiKaroselListAdapter(this, informasiKaroselArrayList);
+//        informasiKaroselListAdapter = new InformasiKaroselListAdapter(this, informasiKaroselArrayList);
 //        gridLayoutManager = new GridLayoutManager(this, 2);
         linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManagerKarosel = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        linearLayoutManagerKarosel = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 //        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerViewKarosel.setLayoutManager(linearLayoutManagerKarosel);
+//        recyclerViewKarosel.setLayoutManager(linearLayoutManagerKarosel);
 
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
 //                linearLayoutManagerKarosel.getOrientation());
 //        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(recyclerViewKarosel);
+//        SnapHelper snapHelper = new LinearSnapHelper();
+//        snapHelper.attachToRecyclerView(recyclerViewKarosel);
+//
+//        filterFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FilterInformasiFragment filterInformasiFragment =
+//                        FilterInformasiFragment.newInstance();
+//                filterInformasiFragment.show(getSupportFragmentManager(),
+//                        "add_photo_dialog_fragment");
+//            }
+//        });
 
-        filterFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FilterInformasiFragment filterInformasiFragment =
-                        FilterInformasiFragment.newInstance();
-                filterInformasiFragment.show(getSupportFragmentManager(),
-                        "add_photo_dialog_fragment");
-            }
-        });
-
-        // date picker builder
-        MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-        materialDateBuilder.setTitleText("Pilih tanggal mulai");
-
-        final MaterialDatePicker startDatePicker = materialDateBuilder.build();
-        startDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
-            @Override
-            public void onPositiveButtonClick(Long selectedDate) {
-                // link: https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext
-                // user has selected a date
-                // format the date and set the text of the input box to be the selected date
-                // right now this format is hard-coded, this will change
-                ;
-                // Get the offset from our timezone and UTC.
-                TimeZone timeZoneUTC = TimeZone.getDefault();
-                // It will be negative, so that's the -1
-                int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
-
-                // Create a date format, then a date object with our offset
-                SimpleDateFormat simpleFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-                Date date = new Date(selectedDate + offsetFromUTC);
-                filterStart = simpleFormat.format(date);
-                filterStartFrom.setText(simpleFormat.format(date));
-            }
-        });
-
-
-        materialDateBuilder.setTitleText("Pilih tanggal akhir");
-        final MaterialDatePicker endDatePicker = materialDateBuilder.build();
-
-        endDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
-            @Override
-            public void onPositiveButtonClick(Long selectedDate) {
-                // link: https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext
-                // user has selected a date
-                // format the date and set the text of the input box to be the selected date
-                // right now this format is hard-coded, this will change
-                ;
-                // Get the offset from our timezone and UTC.
-                TimeZone timeZoneUTC = TimeZone.getDefault();
-                // It will be negative, so that's the -1
-                int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
-
-                // Create a date format, then a date object with our offset
-                SimpleDateFormat simpleFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-                Date date = new Date(selectedDate + offsetFromUTC);
-                filterEnd = simpleFormat.format(date);
-                filterEndFrom.setText(simpleFormat.format(date));
-            }
-        });
-
-        barangDialogView = this.getLayoutInflater().inflate(R.layout.dialog_filter_date, null);
-        filterStartFrom= barangDialogView.findViewById(R.id.start_date_button);
-        filterEndFrom = barangDialogView.findViewById(R.id.end_date_button);
-        filterStartFrom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startDatePicker.show(getSupportFragmentManager(), "DATE_START_PICKER");
-            }
-        });
-
-        filterEndFrom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                endDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
-            }
-        });
-
-        barangDialog = new MaterialAlertDialogBuilder(this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar)
-                .setTitle("Tentukan filter informasi")
-                .setView(barangDialogView)
-                .setPositiveButton("Terapkan filter", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-
-                    }
-                })
-                .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
+//        // date picker builder
+//        MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
+//        materialDateBuilder.setTitleText("Pilih tanggal mulai");
+//
+//        final MaterialDatePicker startDatePicker = materialDateBuilder.build();
+//        startDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+//            @Override
+//            public void onPositiveButtonClick(Long selectedDate) {
+//                // link: https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext
+//                // user has selected a date
+//                // format the date and set the text of the input box to be the selected date
+//                // right now this format is hard-coded, this will change
+//                ;
+//                // Get the offset from our timezone and UTC.
+//                TimeZone timeZoneUTC = TimeZone.getDefault();
+//                // It will be negative, so that's the -1
+//                int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
+//
+//                // Create a date format, then a date object with our offset
+//                SimpleDateFormat simpleFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+//                Date date = new Date(selectedDate + offsetFromUTC);
+//                filterStart = simpleFormat.format(date);
+//                filterStartFrom.setText(simpleFormat.format(date));
+//            }
+//        });
+//
+//
+//        materialDateBuilder.setTitleText("Pilih tanggal akhir");
+//        final MaterialDatePicker endDatePicker = materialDateBuilder.build();
+//
+//        endDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+//            @Override
+//            public void onPositiveButtonClick(Long selectedDate) {
+//                // link: https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext
+//                // user has selected a date
+//                // format the date and set the text of the input box to be the selected date
+//                // right now this format is hard-coded, this will change
+//                ;
+//                // Get the offset from our timezone and UTC.
+//                TimeZone timeZoneUTC = TimeZone.getDefault();
+//                // It will be negative, so that's the -1
+//                int offsetFromUTC = timeZoneUTC.getOffset(new Date().getTime()) * -1;
+//
+//                // Create a date format, then a date object with our offset
+//                SimpleDateFormat simpleFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+//                Date date = new Date(selectedDate + offsetFromUTC);
+//                filterEnd = simpleFormat.format(date);
+//                filterEndFrom.setText(simpleFormat.format(date));
+//            }
+//        });
+//
+//        barangDialogView = this.getLayoutInflater().inflate(R.layout.dialog_filter_date, null);
+//        filterStartFrom= barangDialogView.findViewById(R.id.start_date_button);
+//        filterEndFrom = barangDialogView.findViewById(R.id.end_date_button);
+//        filterStartFrom.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startDatePicker.show(getSupportFragmentManager(), "DATE_START_PICKER");
+//            }
+//        });
+//
+//        filterEndFrom.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                endDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+//            }
+//        });
+//
+//        barangDialog = new MaterialAlertDialogBuilder(this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar)
+//                .setTitle("Tentukan filter informasi")
+//                .setView(barangDialogView)
+//                .setPositiveButton("Terapkan filter", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//
+//                    }
+//                })
+//                .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.cancel();
+//                    }
+//                });
 
 //        Button informasiFilterButton = findViewById(R.id.informasi_filter_button);
 //        informasiFilterButton.setOnClickListener(new View.OnClickListener() {
@@ -271,37 +300,37 @@ public class InformasiActivity extends AppCompatActivity implements FilterInform
             public void onResponse(Call<InformasiResponse> call, Response<InformasiResponse> response) {
                 if (response.code() == 200 && response.body().getStatusCode() == 200) {
                     recyclerView.setAdapter(informasiListAdapter);
-                    recyclerViewKarosel.setAdapter(informasiKaroselListAdapter);
-                    informasiKaroselArrayList.clear();
+//                    recyclerViewKarosel.setAdapter(informasiKaroselListAdapter);
+//                    informasiKaroselArrayList.clear();
                     informasiArrayList.clear();
 
-                    ArrayList<Informasi> tempList = new ArrayList<>(response.body().getInformasi());
-                    Collections.sort(tempList, new Comparator<Informasi>() {
-                        @Override
-                        public int compare(Informasi rhs, Informasi lhs) {
-                            return lhs.getDilihat().compareTo(rhs.getDilihat());
-                        }
-                    });
+//                    ArrayList<Informasi> tempList = new ArrayList<>(response.body().getInformasi());
+//                    Collections.sort(tempList, new Comparator<Informasi>() {
+//                        @Override
+//                        public int compare(Informasi rhs, Informasi lhs) {
+//                            return lhs.getDilihat().compareTo(rhs.getDilihat());
+//                        }
+//                    });
 
-                    int duar = tempList.size();
+//                    int duar = tempList.size();
+//
+//                    for (int i=0; i<duar-1; i++) {
+//                        if (i == 3) {
+//                            break;
+//                        }
+//                        else {
+//                            informasiKaroselArrayList.add(tempList.get(i));
+//                        }
+//                    }
 
-                    for (int i=0; i<duar-1; i++) {
-                        if (i == 3) {
-                            break;
-                        }
-                        else {
-                            informasiKaroselArrayList.add(tempList.get(i));
-                        }
-                    }
-
-                    timer = new Timer();
-                    timer.scheduleAtFixedRate(new AutoScrollTask(), 2000, 5000);
-                    position = 0;
-                    end = false;
+//                    timer = new Timer();
+//                    timer.scheduleAtFixedRate(new AutoScrollTask(), 2000, 5000);
+//                    position = 0;
+//                    end = false;
 
                     informasiArrayList.addAll(response.body().getInformasi());
                     informasiListAdapter.notifyDataSetChanged();
-                    informasiKaroselListAdapter.notifyDataSetChanged();
+//                    informasiKaroselListAdapter.notifyDataSetChanged();
                     setInformasiContainerVisible();
                     if (flag == 0) {
                         Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Berhasil menampilkan informasi dari terbaru ke lama", Snackbar.LENGTH_SHORT).show();
@@ -328,21 +357,21 @@ public class InformasiActivity extends AppCompatActivity implements FilterInform
     }
 
     public void setFailedContainerVisible() {
-        filterFab.setVisibility(GONE);
+//        filterFab.setVisibility(GONE);
         loadingContainer.setVisibility(GONE);
         failedContainer.setVisibility(View.VISIBLE);
         informasiScrollView.setVisibility(GONE);
     }
 
     public void setLoadingContainerVisible() {
-        filterFab.setVisibility(GONE);
+//        filterFab.setVisibility(GONE);
         loadingContainer.setVisibility(View.VISIBLE);
         failedContainer.setVisibility(GONE);
         informasiScrollView.setVisibility(GONE);
     }
 
     public void setInformasiContainerVisible() {
-        filterFab.setVisibility(View.VISIBLE);
+//        filterFab.setVisibility(View.VISIBLE);
         loadingContainer.setVisibility(GONE);
         failedContainer.setVisibility(GONE);
         informasiScrollView.setVisibility(View.VISIBLE);
@@ -367,20 +396,20 @@ public class InformasiActivity extends AppCompatActivity implements FilterInform
         }
     }
 
-    private class AutoScrollTask extends TimerTask {
-        @Override
-        public void run() {
-            if(position == informasiKaroselArrayList.size() -1){
-                end = true;
-            } else if (position == 0) {
-                end = false;
-            }
-            if(!end){
-                position++;
-            } else {
-                position--;
-            }
-            recyclerViewKarosel.smoothScrollToPosition(position);
-        }
-    }
+//    private class AutoScrollTask extends TimerTask {
+//        @Override
+//        public void run() {
+//            if(position == informasiKaroselArrayList.size() -1){
+//                end = true;
+//            } else if (position == 0) {
+//                end = false;
+//            }
+//            if(!end){
+//                position++;
+//            } else {
+//                position--;
+//            }
+//            recyclerViewKarosel.smoothScrollToPosition(position);
+//        }
+//    }
 }

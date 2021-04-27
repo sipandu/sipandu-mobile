@@ -17,7 +17,9 @@ import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.model.posyandu.Kegiatan;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class KegiatanDetailActivity extends AppCompatActivity {
@@ -41,9 +43,7 @@ public class KegiatanDetailActivity extends AppCompatActivity {
         kegiatanTempat = findViewById(R.id.kegiatan_lokasi_text);
         kegiatanWaktu = findViewById(R.id.kegiatan_waktu_text);
         statusChip = findViewById(R.id.kegiatan_status1);
-
         homeToolbar = findViewById(R.id.home_toolbar);
-        homeToolbar.setTitle(kegiatan.getNamaKegiatan());
         setSupportActionBar(homeToolbar);
         homeToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +55,7 @@ public class KegiatanDetailActivity extends AppCompatActivity {
 
         kegiatanTitle.setText(kegiatan.getNamaKegiatan());
         kegiatanTempat.setText(kegiatan.getTempat());
-        kegiatanWaktu.setText(kegiatan.getStartAt() + " hingga " + kegiatan.getEndAt());
+        kegiatanWaktu.setText(changeDateFormat((kegiatan.getStartAt()) + " hingga " + changeDateFormat(kegiatan.getEndAt())));
         switch (kegiatan.getStatus()){
             case 0:
                 statusChip.setText("Belum terlaksana");
@@ -79,5 +79,23 @@ public class KegiatanDetailActivity extends AppCompatActivity {
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
         webView.loadData(kegiatan.getDeskripsi(), "text/html; charset=UTF-8;", null);
+    }
+
+    public String changeDateFormat(String time) {
+        String inputPattern = "yyyy-MM-dd";
+        String outputPattern = "dd-MMMM-yyyy";
+        SimpleDateFormat input = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat output = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = input.parse(time);
+            str = output.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 }

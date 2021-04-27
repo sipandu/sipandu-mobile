@@ -16,7 +16,6 @@
         <item name="titleTextColor">@color/primaryDarkColor</item>
     </style>
 
-
     <style name="Theme.Sipandu.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryColor</item>
@@ -32,7 +31,6 @@
         <!-- Customize your theme here. -->
         <item name="titleTextColor">@color/primaryDarkColor</item>
     </style>
-
 
     <style name="Theme.Sipandu.NoActionBar.TransparentNavBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -55,7 +53,6 @@
         <!-- Customize your theme here. -->
         <item name="titleTextColor">@color/primaryDarkColor</item>
     </style>
-
 
     <style name="Theme.Sipandu.NoActionBar.Login" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -80,8 +77,6 @@
         <!-- Customize your theme here. -->
         <item name="titleTextColor">@color/primaryDarkColor</item>
     </style>
-
-
 
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
@@ -111,13 +106,11 @@
         <item name="colorOnSurface">@color/primaryDarkColor</item>
     </style>
 
-
     <style name="ThemeOverlay.App.Card.red" parent="">
         <item name="colorPrimary">@color/secondaryColor</item>
         <item name="colorSurface">@color/secondaryColor</item>
         <item name="colorOnSurface">@color/secondaryDarkColor</item>
     </style>
-
 
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
@@ -134,9 +127,4 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50dp</item>
     </style>
-
-
-
-
-
 </resources>

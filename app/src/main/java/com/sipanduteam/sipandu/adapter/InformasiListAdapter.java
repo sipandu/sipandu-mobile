@@ -19,7 +19,10 @@ import com.sipanduteam.sipandu.model.Informasi;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdapter.ViewHolder> {
     private Context mContext;
@@ -45,6 +48,7 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
     @Override
     public void onBindViewHolder(@NonNull InformasiListAdapter.ViewHolder holder, int position) {
 //        holder.circularProgressIndicator.setVisibility(View.VISIBLE);
+        //TODO pastiin link untuk gambarnya sebelum production
         holder.progressContainer.setVisibility(View.VISIBLE);
                 Picasso.get()
                 .load("https://sipandu-test-web.herokuapp.com/admin/informasi-penting/get-img/" + informasiArrayList.get(position).getId())
@@ -81,15 +85,15 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
 //                    }
 //                });
         holder.informasiTitle.setText(informasiArrayList.get(position).getJudulInformasi());
-        holder.informasiDate.setText(informasiArrayList.get(position).getTanggal());
+        holder.informasiDate.setText(changeDateFormat(informasiArrayList.get(position).getTanggal()));
         holder.informasiViewCount.setText((informasiArrayList.get(position).getDilihat().toString()));
 
         duar = Html.fromHtml(informasiArrayList.get(position).getInformasi()).toString();
 
-        if (informasiArrayList.get(position).getInformasi().length() > 80) {
+        if (duar.length() > 80) {
             holder.informasiSupportingText.setText(duar.substring(0, 80) + "...");
         } else {
-            holder.informasiSupportingText.setText(informasiArrayList.get(position).getInformasi());
+            holder.informasiSupportingText.setText(duar.trim());
         }
     }
 
@@ -138,5 +142,22 @@ public class InformasiListAdapter extends RecyclerView.Adapter<InformasiListAdap
                 }
             });
         }
+    }
+    public String changeDateFormat(String time) {
+        String inputPattern = "yyyy-MM-dd";
+        String outputPattern = "dd-MMMM-yyyy";
+        SimpleDateFormat input = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat output = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = input.parse(time);
+            str = output.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 }
