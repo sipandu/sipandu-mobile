@@ -78,6 +78,11 @@ public class KonsultasiTelegramActivity extends AppCompatActivity {
                 if (response.code() == 200 && response.body().getStatusCode() == 200) {
                     pegawaiArrayList.clear();
                     pegawaiArrayList.addAll(response.body().getPegawai());
+                    for (int i=0; i<pegawaiArrayList.size(); i++) {
+                        if (pegawaiArrayList.get(i).getUsernameTelegram() == null) {
+                            pegawaiArrayList.remove(i);
+                        }
+                    }
                     konsultasiTengakaKesehatanAdapter.notifyDataSetChanged();
                     setKonsultasiContainerVisible();
                 }

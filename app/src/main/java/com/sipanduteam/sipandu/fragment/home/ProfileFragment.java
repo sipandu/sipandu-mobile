@@ -2,6 +2,7 @@ package com.sipanduteam.sipandu.fragment.home;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -12,12 +13,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.card.MaterialCardView;
 import com.sipanduteam.sipandu.R;
+import com.sipanduteam.sipandu.activity.AnggotaKeluargaActivity;
+import com.sipanduteam.sipandu.activity.DetailKeluargaActivity;
+import com.sipanduteam.sipandu.activity.LoginActivity;
 import com.sipanduteam.sipandu.viewmodel.ProfileAnakViewModel;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,14 +40,20 @@ import static android.view.View.GONE;
 
 public class ProfileFragment extends Fragment {
 
-    TextView nama, namaCard, nik, email, jk, alamat, ttl, noTelp, anakKe, ayah, ibu, umur;
+    TextView nama, namaCard, nik, email, jk, alamat, ttl, noTelp, anakKe, ayah, ibu, umur, noKK, jumlahAnggotaKeluarga;
+    ImageView profileImage;
+    MaterialCardView keluargaDetailButton;
+    LinearLayout profileImageLoading;
     View v;
-    SharedPreferences userPreferences;
+    SharedPreferences userPreferences, loginPreferences;
     private ProgressDialog dialog;
     LinearLayout loadingContainer, failedContainer;
     ScrollView profileContainer;
-    Button refreshProfile;
+    Button refreshProfile, logout;
     ProfileAnakViewModel profileAnakViewModel;
+
+    String noKKString, jumlahAnggotaKeluargaString;
+    Intent keluargaDetail;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -66,6 +81,41 @@ public class ProfileFragment extends Fragment {
         ayah = v.findViewById(R.id.profile_ayah_text_card);
         ibu = v.findViewById(R.id.profile_ibu_text_card);
         umur = v.findViewById(R.id.profile_umur_text_card);
+        profileImage = v.findViewById(R.id.profile_image);
+        profileImageLoading = v.findViewById(R.id.profile_image_loading_container);
+        noKK = v.findViewById(R.id.profile_kk_number_text_card);
+        jumlahAnggotaKeluarga = v.findViewById(R.id.profile_jumlah_anggota_keluarga_text_card);
+        keluargaDetailButton = v.findViewById(R.id.keluarga_detail_button);
+        logout = v.findViewById(R.id.logout_profile_button);
+
+        keluargaDetail = new Intent(getActivity(), DetailKeluargaActivity.class);
+
+        keluargaDetailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                keluargaDetail.putExtra("EMAIL", userPreferences.getString("email", "empty"));
+                keluargaDetail.putExtra("KK", noKKString);
+                keluargaDetail.putExtra("JUMLAH", jumlahAnggotaKeluargaString);
+                startActivity(keluargaDetail);
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginPreferences = getActivity().getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
+                if (loginPreferences.getInt("login_status", 0) != 0) {
+                    SharedPreferences.Editor editor = loginPreferences.edit();
+                    editor.putInt("login_status", 0);
+                    editor.putString("token", "empty");
+                    editor.apply();
+                }
+                Toast.makeText(getActivity(), "Logout berhasil", Toast.LENGTH_SHORT).show();
+                Intent login = new Intent(getActivity(), LoginActivity.class);
+                startActivity(login);
+                getActivity().finishAffinity();
+            }
+        });
 
         refreshProfile = v.findViewById(R.id.profile_refresh);
         refreshProfile.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +139,9 @@ public class ProfileFragment extends Fragment {
         setLoadingContainerVisible();
         profileAnakViewModel.getProfileAnakRepository().observe(getViewLifecycleOwner(), anakDataResponse -> {
             if (anakDataResponse != null) {
+
+                noKKString = anakDataResponse.getKartuKeluarga().getNoKk();
+                jumlahAnggotaKeluargaString = anakDataResponse.getTotalKeluarga().toString();
                 nama.setText(anakDataResponse.getAnak().getNamaAnak());
                 namaCard.setText(anakDataResponse.getAnak().getNamaAnak());
                 nik.setText(anakDataResponse.getAnak().getNik());
@@ -100,6 +153,23 @@ public class ProfileFragment extends Fragment {
                 anakKe.setText(anakDataResponse.getAnak().getAnakKe());
                 ayah.setText(anakDataResponse.getAnak().getNamaAyah());
                 ibu.setText(anakDataResponse.getAnak().getNamaIbu());
+                noKK.setText(anakDataResponse.getKartuKeluarga().getNoKk());
+                jumlahAnggotaKeluarga.setText(anakDataResponse.getTotalKeluarga().toString());
+                Picasso.get()
+                        .load(anakDataResponse.getProfileImg())
+                        .into(profileImage, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                profileImageLoading.setVisibility(View.GONE);
+                                profileImage.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                profileImageLoading.setVisibility(View.VISIBLE);
+                                profileImage.setVisibility(View.GONE);
+                            }
+                        });
                 SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 Date date = new Date();
                 try {

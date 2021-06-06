@@ -62,7 +62,7 @@ public class InformasiFragment extends Fragment {
     int position = 0;
     boolean end = false;
     Timer timer;
-    LinearLayout loadingContainer, failedContainer;
+    LinearLayout loadingContainer, failedContainer, emptyContainer;
     Button refreshInformasi;
     InformasiBerandaViewModel informasiBerandaViewModel;
 
@@ -110,6 +110,7 @@ public class InformasiFragment extends Fragment {
         failedContainer = view.findViewById(R.id.informasi_failed_container);
         informasiScrollView = view.findViewById(R.id.informasi_scroll_view);
         refreshInformasi = view.findViewById(R.id.informasi_refresh);
+        emptyContainer = view.findViewById(R.id.informasi_empty_container);
         MaterialCardView showAllInformasiButton = view.findViewById(R.id.show_all_informasi_button);
         recyclerView = view.findViewById(R.id.informasi_list_view);
         recyclerViewKarosel = view.findViewById(R.id.informasi_karosel_view);
@@ -152,7 +153,7 @@ public class InformasiFragment extends Fragment {
                 informasiKaroselArrayList.clear();
                 informasiArrayList.clear();
                 informasiKaroselArrayList.addAll(informasiResponse.getInformasiPopuler());
-
+                informasiArrayList.addAll(informasiList);
 //            ArrayList<Informasi> tempList = new ArrayList<>(informasiList);
 //            Collections.sort(tempList, new Comparator<Informasi>() {
 //                @Override
@@ -170,21 +171,35 @@ public class InformasiFragment extends Fragment {
 //                }
 //            }
 
+                if (informasiArrayList.size() == 0) {
+                    setEmptyContainerVisible();
+                }
 
-                timer = new Timer();
-                timer.scheduleAtFixedRate(new AutoScrollTask(), 2000, 5000);
-                position = 0;
-                end = false;
-                informasiArrayList.addAll(informasiList);
-                informasiListAdapter.notifyDataSetChanged();
-                informasiKaroselListAdapter.notifyDataSetChanged();
-                setInformasiContainerVisible();
+                else {
+                    if (informasiArrayList.size() > 1) {
+                        position = 0;
+                        end = false;
+                        timer = new Timer();
+                        timer.scheduleAtFixedRate(new AutoScrollTask(), 2000, 5000);
+                    }
+                    informasiListAdapter.notifyDataSetChanged();
+                    informasiKaroselListAdapter.notifyDataSetChanged();
+                    setInformasiContainerVisible();
+                }
             }
             else {
                 setFailedContainerVisible();
             }
         });
     }
+
+    public void setEmptyContainerVisible() {
+        loadingContainer.setVisibility(GONE);
+        failedContainer.setVisibility(GONE);
+        informasiScrollView.setVisibility(GONE);
+        emptyContainer.setVisibility(View.VISIBLE);
+    }
+
     public void setFailedContainerVisible() {
         loadingContainer.setVisibility(GONE);
         failedContainer.setVisibility(View.VISIBLE);

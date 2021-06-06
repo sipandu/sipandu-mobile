@@ -40,7 +40,7 @@ import static java.lang.Integer.valueOf;
 
 public class BerandaFragment extends Fragment {
 
-    LinearLayout loadingContainer, failedContainer;
+    LinearLayout loadingContainer, failedContainer, emptyContainer;
     ScrollView homeContainer;
     Button refreshHome;
 
@@ -86,6 +86,7 @@ public class BerandaFragment extends Fragment {
             userPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
             String email = userPreferences.getString("email", "empty");
             int role = userPreferences.getInt("role", 4);
+            int botTeleDissmissed = userPreferences.getInt("bot_tele_banner", -1);
 
             refreshHome = v.findViewById(R.id.home_refresh);
             refreshHome.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +99,7 @@ public class BerandaFragment extends Fragment {
             loadingContainer = v.findViewById(R.id.home_loading_container);
             homeContainer = v.findViewById(R.id.home_layout_container);
             failedContainer = v.findViewById(R.id.home_failed_container);
+            emptyContainer = v.findViewById(R.id.pengumuman_empty_container);
 
             failedImage = v.findViewById(R.id.home_failed_icon);
             d = failedImage.getDrawable();
@@ -119,15 +121,19 @@ public class BerandaFragment extends Fragment {
 //            recyclerView.setLayoutManager(linearLayoutManager);
 //            recyclerView.setAdapter(informasiListBerandaAdapter);
 
-
+            if (botTeleDissmissed == 1) {
+                telegramBotAddCard.setVisibility(View.GONE);
+            }
 
             dismissAddTelegramBotButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     telegramBotAddCard.setVisibility(View.GONE);
+                    SharedPreferences.Editor userPrefEditor = userPreferences.edit();
+                    userPrefEditor.putInt("bot_tele_banner", 1);
+                    userPrefEditor.apply();
                 }
             });
-
 
             addTelegramBotButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -160,7 +166,12 @@ public class BerandaFragment extends Fragment {
                 List<Pengumuman> pengumumanList = pengumumanResponse.getPengumuman();
                 pengumumanArrayList.addAll(pengumumanList);
                 pengumumanListAdapter.notifyDataSetChanged();
+                if (pengumumanList.size() == 0) {
+                    emptyContainer.setVisibility(View.VISIBLE);
+                    pengumumanRecycler.setVisibility(View.INVISIBLE);
+                }
                 setHomeContainerVisible();
+
             }
             else {
                 setFailedContainerVisible();
@@ -211,6 +222,8 @@ public class BerandaFragment extends Fragment {
             failedAnim.start();
         }
     }
+
+
 
     public void setLoadingContainerVisible() {
         loadingContainer.setVisibility(View.VISIBLE);

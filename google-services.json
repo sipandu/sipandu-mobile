@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "366116440873",
+    "project_id": "smart-posyandu-firebase",
+    "storage_bucket": "smart-posyandu-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366116440873:android:90ef0f87370d87c9a4c538",
+        "android_client_info": {
+          "package_name": "com.sipanduteam.sipandu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366116440873-enurf1lii29ob656trpplb7en6qegecf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzge5A9NIhc9MPg0svRuemVOo658btiHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366116440873-enurf1lii29ob656trpplb7en6qegecf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

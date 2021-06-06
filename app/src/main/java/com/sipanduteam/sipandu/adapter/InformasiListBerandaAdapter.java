@@ -45,7 +45,7 @@ public class InformasiListBerandaAdapter extends RecyclerView.Adapter<InformasiL
         //TODO pastiin link untuk gambarnya sebelum production
         holder.progressContainer.setVisibility(View.VISIBLE);
         Picasso.get()
-                .load(informasiArrayList.get(position).getFoto().replaceAll("http://192.168.1.104:1107", "https://sipandu-test-web.herokuapp.com"))
+                .load(informasiArrayList.get(position).getFoto().replaceAll("http://192.168.1.3:1107", "https://sipandu-test-web.herokuapp.com"))
                 .into(holder.informasiImage, new Callback() {
                     @Override
                     public void onSuccess() {

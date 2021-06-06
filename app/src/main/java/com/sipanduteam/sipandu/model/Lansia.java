@@ -13,6 +13,9 @@ public class Lansia {
     @SerializedName("id_user")
     @Expose
     private Integer idUser;
+    @SerializedName("NIK")
+    @Expose
+    private String nik;
     @SerializedName("nama_lansia")
     @Expose
     private String namaLansia;
@@ -22,21 +25,45 @@ public class Lansia {
     @SerializedName("tanggal_lahir")
     @Expose
     private String tanggalLahir;
-    @SerializedName("alamat")
-    @Expose
-    private String alamat;
-    @SerializedName("nomor_telepon")
-    @Expose
-    private String nomorTelepon;
-    @SerializedName("NIK")
-    @Expose
-    private String nik;
-    @SerializedName("status")
-    @Expose
-    private String status;
     @SerializedName("jenis_kelamin")
     @Expose
     private String jenisKelamin;
+    @SerializedName("pekerjaan")
+    @Expose
+    private String pekerjaan;
+    @SerializedName("status_perkawinan")
+    @Expose
+    private String statusPerkawinan;
+    @SerializedName("pendidikan_terakhir")
+    @Expose
+    private String pendidikanTerakhir;
+    @SerializedName("sumber_biaya_hidup")
+    @Expose
+    private String sumberBiayaHidup;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("jumlah_anak")
+    @Expose
+    private Integer jumlahAnak;
+    @SerializedName("jumlah_cucu")
+    @Expose
+    private Integer jumlahCucu;
+    @SerializedName("jumlah_cicit")
+    @Expose
+    private Integer jumlahCicit;
+    @SerializedName("jumlah_keluarga_serumah")
+    @Expose
+    private Object jumlahKeluargaSerumah;
+    @SerializedName("nomor_telepon")
+    @Expose
+    private String nomorTelepon;
+    @SerializedName("tempat_tinggal")
+    @Expose
+    private String tempatTinggal;
+    @SerializedName("alamat")
+    @Expose
+    private String alamat;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -68,6 +95,14 @@ public class Lansia {
         this.idUser = idUser;
     }
 
+    public String getNik() {
+        return nik;
+    }
+
+    public void setNik(String nik) {
+        this.nik = nik;
+    }
+
     public String getNamaLansia() {
         return namaLansia;
     }
@@ -92,28 +127,44 @@ public class Lansia {
         this.tanggalLahir = tanggalLahir;
     }
 
-    public String getAlamat() {
-        return alamat;
+    public String getJenisKelamin() {
+        return jenisKelamin;
     }
 
-    public void setAlamat(String alamat) {
-        this.alamat = alamat;
+    public void setJenisKelamin(String jenisKelamin) {
+        this.jenisKelamin = jenisKelamin;
     }
 
-    public String getNomorTelepon() {
-        return nomorTelepon;
+    public String getPekerjaan() {
+        return pekerjaan;
     }
 
-    public void setNomorTelepon(String nomorTelepon) {
-        this.nomorTelepon = nomorTelepon;
+    public void setPekerjaan(String pekerjaan) {
+        this.pekerjaan = pekerjaan;
     }
 
-    public String getNik() {
-        return nik;
+    public String getStatusPerkawinan() {
+        return statusPerkawinan;
     }
 
-    public void setNik(String nik) {
-        this.nik = nik;
+    public void setStatusPerkawinan(String statusPerkawinan) {
+        this.statusPerkawinan = statusPerkawinan;
+    }
+
+    public String getPendidikanTerakhir() {
+        return pendidikanTerakhir;
+    }
+
+    public void setPendidikanTerakhir(String pendidikanTerakhir) {
+        this.pendidikanTerakhir = pendidikanTerakhir;
+    }
+
+    public String getSumberBiayaHidup() {
+        return sumberBiayaHidup;
+    }
+
+    public void setSumberBiayaHidup(String sumberBiayaHidup) {
+        this.sumberBiayaHidup = sumberBiayaHidup;
     }
 
     public String getStatus() {
@@ -124,12 +175,60 @@ public class Lansia {
         this.status = status;
     }
 
-    public String getJenisKelamin() {
-        return jenisKelamin;
+    public Integer getJumlahAnak() {
+        return jumlahAnak;
     }
 
-    public void setJenisKelamin(String jenisKelamin) {
-        this.jenisKelamin = jenisKelamin;
+    public void setJumlahAnak(Integer jumlahAnak) {
+        this.jumlahAnak = jumlahAnak;
+    }
+
+    public Integer getJumlahCucu() {
+        return jumlahCucu;
+    }
+
+    public void setJumlahCucu(Integer jumlahCucu) {
+        this.jumlahCucu = jumlahCucu;
+    }
+
+    public Integer getJumlahCicit() {
+        return jumlahCicit;
+    }
+
+    public void setJumlahCicit(Integer jumlahCicit) {
+        this.jumlahCicit = jumlahCicit;
+    }
+
+    public Object getJumlahKeluargaSerumah() {
+        return jumlahKeluargaSerumah;
+    }
+
+    public void setJumlahKeluargaSerumah(Object jumlahKeluargaSerumah) {
+        this.jumlahKeluargaSerumah = jumlahKeluargaSerumah;
+    }
+
+    public String getNomorTelepon() {
+        return nomorTelepon;
+    }
+
+    public void setNomorTelepon(String nomorTelepon) {
+        this.nomorTelepon = nomorTelepon;
+    }
+
+    public String getTempatTinggal() {
+        return tempatTinggal;
+    }
+
+    public void setTempatTinggal(String tempatTinggal) {
+        this.tempatTinggal = tempatTinggal;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
     }
 
     public String getCreatedAt() {

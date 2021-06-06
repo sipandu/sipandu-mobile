@@ -34,21 +34,17 @@
             android:layout_width="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="2dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
                     style="@style/Widget.App.CardView.red"
@@ -84,303 +80,316 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Identitas orang tua"
+                        android:textAllCaps="true"
+                        android:textColor="@color/primaryColor"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.card.MaterialCardView
+                    <View
+                        style="@style/Divider"
+                        android:layout_marginStart="8dp"
+                        android:layout_width="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_anak_nama_ayah_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="2dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:hint="Nama ayah"
+                        app:errorEnabled="true"
+                        app:startIconDrawable="@drawable/ic_outline_person_24"
+                        app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
 
-                        <LinearLayout
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_anak_nama_ayah_field"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="16dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginBottom="4dp"
-                                    android:layout_gravity="start|center"
-                                    android:text="Identitas orang tua"
-                                    android:textAppearance="?attr/textAppearanceBody2"
-                                    android:textStyle="bold" />
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_nama_ayah_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Nama ayah*"
-                                    app:errorEnabled="true"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/reg_anak_nama_ayah_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:ems="10"
-                                        android:inputType="textPersonName" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_nama_ibu_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Nama ibu*"
-                                    app:errorEnabled="true"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/reg_anak_nama_ibu_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:ems="10"
-                                        android:inputType="textPersonName" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_notelp_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Nomor telepon*"
-                                    app:errorEnabled="true"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/reg_anak_notelp_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:ems="10"
-                                        android:inputType="phone" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_telegram_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Username telegram"
-                                    app:errorEnabled="true"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/reg_anak_telegram_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:ems="10"
-                                        android:inputType="text" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginBottom="4dp"
-                                    android:layout_gravity="end|center"
-                                    android:text="*Data wajib di isi"
-                                    android:textColor="@color/secondaryColor"
-                                    android:textAppearance="?attr/textAppearanceCaption"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_anak_nama_ibu_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="12dp"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="2dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:hint="Nama ibu"
+                        app:startIconDrawable="@drawable/ic_outline_person_24"
+                        app:errorEnabled="true"
+                        app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
 
-                        <LinearLayout
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_anak_nama_ibu_field"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="16dp">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginBottom="4dp"
-                                    android:layout_gravity="start|center"
-                                    android:text="Identitas anak"
-                                    android:textAppearance="?attr/textAppearanceBody2"
-                                    android:textStyle="bold" />
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_nik_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="KIA*"
-                                    app:errorEnabled="true"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/reg_anak_nik_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:ems="10"
-                                        android:inputType="number" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_tempat_lahir_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Tempat lahir*"
-                                    app:errorEnabled="true"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/reg_anak_tempat_lahir_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:ems="10"
-                                        android:inputType="text" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_tanggal_lahir_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Tanggal lahir (dd-mm-yyyy)*"
-                                    app:errorEnabled="true"
-                                    android:cursorVisible="false"
-                                    android:focusable="false"
-                                    android:focusableInTouchMode="false"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/reg_anak_tanggal_lahir_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:ems="10"
-                                        android:inputType="date" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_jk_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Jenis kelamin*"
-                                    app:errorEnabled="true"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                                        android:id="@+id/reg_anak_jk_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@null" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_alamat_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Alamat*"
-                                    app:errorEnabled="true"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/reg_anak_alamat_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:ems="10"
-                                        android:inputType="textPersonName" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/reg_anak_anakke_form"
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Anak ke*"
-                                    app:errorEnabled="true"
-                                    app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/reg_anak_anakke_field"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:ems="10"
-                                        android:inputType="number" />
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginBottom="4dp"
-                                    android:layout_gravity="end|center"
-                                    android:text="*Data wajib di isi"
-                                    android:textColor="@color/secondaryColor"
-                                    android:textAppearance="?attr/textAppearanceCaption"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <Button
-                        android:id="@+id/reg_anak_submit_button"
-                        style="?attr/materialButtonOutlinedStyle"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_anak_notelp_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:text="Selesai"
-                        app:strokeColor="@color/primaryColor"
-                        app:icon="@drawable/ic_baseline_check_24"
-                        android:textAlignment="center"
-                        app:iconGravity="start" />
+                        android:layout_height="wrap_content"
+                        android:hint="Nomor telepon"
+                        app:startIconDrawable="@drawable/ic_outline_call_24"
+                        app:errorEnabled="true"
+                        app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
 
-                    <Button
-                        android:id="@+id/reg_anak_backtologin"
-                        style="?attr/materialButtonOutlinedStyle"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_anak_notelp_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="phone" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_anak_telegram_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:text="Kembali ke login"
-                        app:icon="@drawable/ic_baseline_arrow_back_24"
-                        app:iconTint="@color/secondaryLightColor"
-                        android:textColor="@color/secondaryLightColor"
-                        app:rippleColor="@color/secondaryDarkColorTranslucent"
-                        app:strokeColor="@color/secondaryLightColor"
-                        android:textAlignment="center"
-                        app:iconGravity="start" />
+                        android:layout_height="wrap_content"
+                        android:hint="Username telegram"
+                        app:startIconDrawable="@drawable/ic_telegram_logo"
+                        app:helperTextEnabled="true"
+                        app:helperText="Tidak wajib untuk di isi"
+                        app:errorEnabled="true"
+                        app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_anak_telegram_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
-            </ScrollView>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Identitas anak"
+                        android:textAllCaps="true"
+                        android:textColor="@color/primaryColor"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        style="@style/Divider"
+                        android:layout_marginStart="8dp"
+                        android:layout_width="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_anak_nik_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="KIA"
+                        app:errorEnabled="true"
+                        app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_anak_nik_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/reg_anak_tempat_lahir_form"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Tempat lahir"
+                            app:errorEnabled="true"
+                            app:layout_constraintEnd_toStartOf="@+id/reg_anak_tanggal_lahir_form"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/reg_anak_tempat_lahir_field"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ems="5"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/reg_anak_tanggal_lahir_form"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:hint="Tanggal lahir"
+                            app:errorEnabled="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/reg_anak_tanggal_lahir_field"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ems="10"
+                                android:inputType="date" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/reg_anak_jk_form"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Jenis kelamin"
+                            app:errorEnabled="true"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/reg_anak_anakke_form"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/reg_anak_jk_field"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/reg_anak_anakke_form"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Anak ke"
+                            app:errorEnabled="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/reg_anak_anakke_field"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ems="5"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_anak_alamat_form"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Alamat"
+                        app:errorEnabled="true"
+                        app:layout_constraintTop_toBottomOf="@+id/app_icon_about">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reg_anak_alamat_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/reg_anak_submit_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="Selesai"
+                    android:textColor="@color/white"
+                    app:iconTint="@color/white"
+                    app:backgroundTint="@color/primaryLightColor"
+                    app:icon="@drawable/ic_baseline_check_24"
+                    android:textAlignment="center"
+                    app:iconGravity="start" />
+
+                <Button
+                    android:id="@+id/reg_anak_backtologin"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="Kembali ke login"
+                    app:icon="@drawable/ic_baseline_arrow_back_24"
+                    app:iconTint="@color/secondaryLightColor"
+                    android:textColor="@color/secondaryLightColor"
+                    app:rippleColor="@color/secondaryDarkColorTranslucent"
+                    app:strokeColor="@color/secondaryLightColor"
+                    android:textAlignment="center"
+                    app:iconGravity="start" />
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 </RelativeLayout>

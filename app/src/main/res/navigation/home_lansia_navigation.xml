@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navigation_beranda"
+    android:id="@+id/home_lansia_navigation">
+
+    <fragment
+        android:id="@+id/navigation_beranda"
+        android:name="com.sipanduteam.sipandu.fragment.home.BerandaFragment"
+        android:label="Beranda"
+        tools:layout="@layout/fragment_beranda" />
+
+    <fragment
+        android:id="@+id/navigation_informasi"
+        android:name="com.sipanduteam.sipandu.fragment.home.InformasiFragment"
+        android:label="Informasi"
+        tools:layout="@layout/fragment_informasi" />
+
+    <fragment
+        android:id="@+id/navigation_keluarga_lansia"
+        android:name="com.sipanduteam.sipandu.fragment.home.KeluargaLansiaFragment"
+        android:label="Keluargaku"
+        tools:layout="@layout/fragment_keluarga_lansia" />
+
+    <fragment
+        android:id="@+id/navigation_posyandu"
+        android:name="com.sipanduteam.sipandu.fragment.home.PosyanduFragment"
+        android:label="Posyandu"
+        tools:layout="@layout/fragment_posyandu" />
+
+    <fragment
+        android:id="@+id/navigation_lansia_profile"
+        android:name="com.sipanduteam.sipandu.fragment.home.ProfileLansiaFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile_lansia" />
+
+</navigation>

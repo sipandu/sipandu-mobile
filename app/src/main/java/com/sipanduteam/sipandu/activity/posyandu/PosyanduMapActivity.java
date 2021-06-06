@@ -39,7 +39,7 @@ public class PosyanduMapActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String request) {
-                if(request.contains("https://maps.google.com/")) {
+                if(request.contains("http://www.google.com/maps/place/")) {
                     view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(request)));
                 }
                 else {
@@ -60,6 +60,6 @@ public class PosyanduMapActivity extends AppCompatActivity {
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.loadUrl("http://192.168.1.8:8000/");
+        webView.loadUrl("https://sipandu-test-web.herokuapp.com/admin/informasi/sig-posyandu/polos");
     }
 }

@@ -74,6 +74,7 @@ public class RegisterContinueActivity extends AppCompatActivity {
     private Desa desa;
     private Posyandu posyandu;
     Bundle extras;
+    int flagCheckKK;
 
 //    AlertDialog registerCompleteDialog;
 //    View registerCompleteView;
@@ -231,8 +232,12 @@ public class RegisterContinueActivity extends AppCompatActivity {
         tempFolder = getApplicationContext().getCacheDir().getAbsolutePath();
 
         if (extras.containsKey(idKKKEY)) {
-            kartuKeluargaLayout.setEnabled(false);
+            flagCheckKK = 1;
+            kartuKeluargaLayout. setEnabled(false);
             kartuKeluargaForm.setText("Kartu keluarga sudah terdaftar pada sistem");
+        }
+        else {
+            flagCheckKK = 0;
         }
 
         retro = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
@@ -439,14 +444,27 @@ public class RegisterContinueActivity extends AppCompatActivity {
         registerSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( !(fileSelected && kabupatenSelected
-                        && kecamatanSelected && desaSelected
-                        && posyanduSelected && namaCorrect && emailCorrect
-                        && passwordCorrect && isPasswordCorrect)) {
-                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Periksa kembali data yang di inputkan", Snackbar.LENGTH_SHORT).show();
+                if(flagCheckKK == 0) {
+                    if (!(fileSelected && kabupatenSelected
+                            && kecamatanSelected && desaSelected
+                            && posyanduSelected && namaCorrect && emailCorrect
+                            && passwordCorrect && isPasswordCorrect)) {
+                        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Periksa kembali data yang di inputkan", Snackbar.LENGTH_SHORT).show();
+                    }
+                    else {
+                        register();
+                    }
                 }
                 else {
-                    register();
+                    if (!(kabupatenSelected
+                            && kecamatanSelected && desaSelected
+                            && posyanduSelected && namaCorrect && emailCorrect
+                            && passwordCorrect && isPasswordCorrect)) {
+                        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Periksa kembali data yang di inputkan", Snackbar.LENGTH_SHORT).show();
+                    }
+                    else {
+                        register();
+                    }
                 }
             }
         });

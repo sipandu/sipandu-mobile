@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
-        android:text="Tentang Sipandu 5.0"
+        android:text="Tentang Smart Posyandu 5.0"
         android:textAppearance="?attr/textAppearanceHeadline6"
         android:textColor="@color/primaryColor"
         android:textStyle="bold"
@@ -35,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/about_title"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/abouticon" />
+        app:srcCompat="@drawable/sipandu_logo" />
 
     <TextView
         android:id="@+id/nama_aplikasi"
@@ -66,7 +66,7 @@
         android:layout_marginTop="45dp"
         android:gravity="center"
         android:minLines="2"
-        android:text="Proudly presented by Sipandu 5.0 team"
+        android:text="Proudly presented by Smart Posyandu 5.0 team"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/app_icon_about"

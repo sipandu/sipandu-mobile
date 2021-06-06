@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.sipanduteam.sipandu.model.AnakDataResponse;
-import com.sipanduteam.sipandu.model.InformasiResponse;
-import com.sipanduteam.sipandu.repository.InformasiBerandaRepository;
 import com.sipanduteam.sipandu.repository.ProfileAnakRepository;
 
 public class ProfileAnakViewModel extends ViewModel {

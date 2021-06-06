@@ -65,7 +65,7 @@ public class KegiatanListAdapter extends RecyclerView.Adapter<KegiatanListAdapte
                 holder.statusChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.greenSemiTransparent)));
                 break;
         }
-        holder.kegiatanWaktu.setText(changeDateFormat((kegiatanArrayList.get(position).getStartAt()) + " hingga " + changeDateFormat(kegiatanArrayList.get(position).getEndAt())));
+        holder.kegiatanWaktu.setText(changeDateFormat((kegiatanArrayList.get(position).getStartAt())) + " hingga " + changeDateFormat(kegiatanArrayList.get(position).getEndAt()));
     }
 
 

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#007aff</color>
-    <color name="primaryLightColor">#69a8ff</color>
-    <color name="primaryDarkColor">#004fcb</color>
+<!--    <color name="primaryColor">#007aff</color>-->
+<!--    <color name="primaryLightColor">#69a8ff</color>-->
+<!--    <color name="primaryDarkColor">#004fcb</color>-->
     <color name="primaryLightColorSemiTransparent">#1F69A8FF</color>
-    <color name="secondaryColor">#ff4081</color>
-    <color name="secondaryLightColor">#ff79b0</color>
+<!--    <color name="secondaryColor">#ff4081</color>-->
+    <color name="red">#ff4081</color>
+<!--    <color name="secondaryLightColor">#ff79b0</color>-->
     <color name="secondaryLightColorSemiTransparent">#1FFF79B0</color>
-    <color name="secondaryDarkColor">#c60055</color>
+<!--    <color name="secondaryDarkColor">#c60055</color>-->R
     <color name="secondaryDarkColorTranslucent">#2FC60055</color>
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#000000</color>
+<!--    <color name="primaryTextColor">#000000</color>-->
+<!--    <color name="secondaryTextColor">#000000</color>-->
+    <color name="warning">#A9FFFF8D</color>
     <color name="dark">#121212</color>
     <color name="notThatDark">#1E1E1E</color>
     <color name="transparent">#00000000</color>
@@ -18,4 +20,14 @@
     <color name="green">#4CAF50</color>
     <color name="greenTranslucent">#2E4CAF50</color>
     <color name="greenSemiTransparent">#1F4CAF50</color>
+
+    <color name="primaryColor">#2993d5</color>
+    <color name="primaryLightColor">#6cc3ff</color>
+    <color name="primaryDarkColor">#0066a3</color>
+    <color name="secondaryColor">#3ad9d5</color>
+    <color name="secondaryLightColor">#7bffff</color>
+    <color name="secondaryDarkColor">#00a7a4</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
+
 </resources>

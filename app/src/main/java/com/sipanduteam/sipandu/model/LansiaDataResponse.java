@@ -2,6 +2,7 @@ package com.sipanduteam.sipandu.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.sipanduteam.sipandu.model.user.User;
 
 public class LansiaDataResponse {
     @SerializedName("status_code")
@@ -9,10 +10,19 @@ public class LansiaDataResponse {
     private Integer statusCode;
     @SerializedName("user")
     @Expose
-    private Object user;
+    private User user;
     @SerializedName("lansia")
     @Expose
     private Lansia lansia;
+    @SerializedName("profile_img")
+    @Expose
+    private String profileImg;
+    @SerializedName("total_keluarga")
+    @Expose
+    private Integer totalKeluarga;
+    @SerializedName("kartu_keluarga")
+    @Expose
+    private KartuKeluarga kartuKeluarga;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -22,11 +32,11 @@ public class LansiaDataResponse {
         this.statusCode = statusCode;
     }
 
-    public Object getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Object user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -36,5 +46,29 @@ public class LansiaDataResponse {
 
     public void setLansia(Lansia lansia) {
         this.lansia = lansia;
+    }
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
+
+    public Integer getTotalKeluarga() {
+        return totalKeluarga;
+    }
+
+    public void setTotalKeluarga(Integer totalKeluarga) {
+        this.totalKeluarga = totalKeluarga;
+    }
+
+    public KartuKeluarga getKartuKeluarga() {
+        return kartuKeluarga;
+    }
+
+    public void setKartuKeluarga(KartuKeluarga kartuKeluarga) {
+        this.kartuKeluarga = kartuKeluarga;
     }
 }

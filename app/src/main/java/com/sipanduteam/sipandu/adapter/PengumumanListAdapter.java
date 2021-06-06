@@ -57,9 +57,10 @@ public class PengumumanListAdapter extends RecyclerView.Adapter<PengumumanListAd
 //        holder.circularProgressIndicator.setVisibility(View.VISIBLE);
 
         //TODO pastiin url image nya nanti waktu production
+        // replaceAll("http://192.168.1.3:1107", "https://sipandu-test-web.herokuapp.com")
         holder.progressContainer.setVisibility(View.VISIBLE);
         Picasso.get()
-                .load(pengumumanArrayList.get(position).getFoto().replaceAll("http://192.168.1.104:1107", "https://sipandu-test-web.herokuapp.com"))
+                .load(pengumumanArrayList.get(position).getFoto())
                 .into(holder.pengumumanImage, new Callback() {
                     @Override
                     public void onSuccess() {

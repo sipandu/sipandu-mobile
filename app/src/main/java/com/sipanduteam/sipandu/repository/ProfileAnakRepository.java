@@ -1,5 +1,7 @@
 package com.sipanduteam.sipandu.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.sipanduteam.sipandu.api.InterfaceApi;
@@ -32,6 +34,7 @@ public class ProfileAnakRepository {
         anakDataResponseCall.enqueue(new Callback<AnakDataResponse>() {
             @Override
             public void onResponse(Call<AnakDataResponse> call, Response<AnakDataResponse> response) {
+                Log.d("aduh", String.valueOf(response.code()));
                 if (response.code() == 200 && response.body().getStatusCode() == 200) {
                     anakDataResponseMutableLiveData.setValue(response.body());
                 }
@@ -42,6 +45,8 @@ public class ProfileAnakRepository {
 
             @Override
             public void onFailure(Call<AnakDataResponse> call, Throwable t) {
+                Log.d("aduhlagi", t.toString());
+                Log.d("aduh", "masuk sini");
                 anakDataResponseMutableLiveData.setValue(null);
             }
         });

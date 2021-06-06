@@ -35,7 +35,7 @@ public class PosyanduFragment extends Fragment {
             posyanduCallButton, posyanduJoinTelegramGroupButton;
 //    Button openPosyanduMapButton;
 
-    MaterialCardView  openPosyanduScheduleButton, openPosyanduLocationButton, openPosyanduMapCard;
+    MaterialCardView  openPosyanduScheduleButton, openPosyanduLocationButton, openPosyanduMapCard, addPosyanduBot;
 
     String email;
     int role;
@@ -76,6 +76,7 @@ public class PosyanduFragment extends Fragment {
         openPosyanduLocationButton = v.findViewById(R.id.posyandu_location_button);
         posyanduJoinTelegramGroupButton = v.findViewById(R.id.posyandu_telegram_group_button);
         openPosyanduMapCard = v.findViewById(R.id.open_posyandu_map_card);
+        addPosyanduBot = v.findViewById(R.id.posyandu_telegram_bot_button);
 
         refreshProfile = v.findViewById(R.id.posyandu_refresh);
         refreshProfile.setOnClickListener(new View.OnClickListener() {
@@ -123,9 +124,24 @@ public class PosyanduFragment extends Fragment {
         openKonsultasiTelegramButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(openKonsultasiTelegram);
+//
+                String url = "http://t.me/FireRex_bot";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
+
+        addPosyanduBot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://t.me/FireRex_bot";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
         openPosyanduLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,6 +174,9 @@ public class PosyanduFragment extends Fragment {
                 openKonsultasiTelegram.putExtra("posyandu", posyanduUserResponse.getPosyandu().getId());
                 posyanduJoinTelegramGroupButton.setText("Grup telegram " + namaPosyandu.getText().toString());
                 posyanduCallButton.setText("Hubungi " + namaPosyandu.getText().toString());
+                if (posyanduUserResponse.getPosyandu().getTelegramGroupInvite() == null) {
+                    posyanduJoinTelegramGroupButton.setVisibility(GONE);
+                }
                 setPosyanduContainerVisible();
             }
             else {

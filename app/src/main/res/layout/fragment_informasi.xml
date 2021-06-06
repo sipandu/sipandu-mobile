@@ -8,6 +8,35 @@
     tools:context=".fragment.home.InformasiFragment">
 
     <LinearLayout
+        android:animateLayoutChanges="true"
+        android:id="@+id/informasi_empty_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_empty_list"
+            app:tint="@color/primaryColor">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/kegiatan_empty_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="Tidak ada informasi"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+    </LinearLayout>
+
+    <LinearLayout
         android:foregroundGravity="center"
         android:id="@+id/informasi_loading_container"
         android:padding="16dp"
@@ -163,6 +192,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
+                                    android:textSize="18sp"
                                     android:text="Lihat selengkapnya"
                                     android:textAppearance="?attr/textAppearanceHeadline6"
                                     app:layout_constraintBottom_toBottomOf="parent"

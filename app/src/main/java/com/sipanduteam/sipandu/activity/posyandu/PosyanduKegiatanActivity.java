@@ -136,50 +136,49 @@ public class PosyanduKegiatanActivity extends AppCompatActivity {
         });
     }
 
-
     public void getData(String email, int role) {
-            setLoadingContainerVisible();
-            InterfaceApi getData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
-            Call<KegiatanPosyanduResponse> kegiatanPosyanduResponseCall = getData.kegiatanPosyanduData(email, role);
-            kegiatanPosyanduResponseCall.enqueue(new Callback<KegiatanPosyanduResponse>() {
-                @Override
-                public void onResponse(Call<KegiatanPosyanduResponse> call, Response<KegiatanPosyanduResponse> response) {
-                    if (response.code() == 200 && response.body().getStatusCode() == 200) {
-                        kegiatanArrayList.clear();
-                        kegiatanArrayList.addAll(response.body().getKegiatan());
-                        kegiatanArrayListFilter.addAll(response.body().getKegiatan());
-                        kegiatanListAdapter.notifyDataSetChanged();
-                        setInformasiContainerVisible();
-                    }
-                    else {
-                        setFailedContainerVisible();
-                        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
-                    }
+        setLoadingContainerVisible();
+        InterfaceApi getData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
+        Call<KegiatanPosyanduResponse> kegiatanPosyanduResponseCall = getData.kegiatanPosyanduData(email, role);
+        kegiatanPosyanduResponseCall.enqueue(new Callback<KegiatanPosyanduResponse>() {
+            @Override
+            public void onResponse(Call<KegiatanPosyanduResponse> call, Response<KegiatanPosyanduResponse> response) {
+                if (response.code() == 200 && response.body().getStatusCode() == 200) {
+                    kegiatanArrayList.clear();
+                    kegiatanArrayList.addAll(response.body().getKegiatan());
+                    kegiatanArrayListFilter.addAll(response.body().getKegiatan());
+                    kegiatanListAdapter.notifyDataSetChanged();
+                    setInformasiContainerVisible();
                 }
-
-                @Override
-                public void onFailure(Call<KegiatanPosyanduResponse> call, Throwable t) {
+                else {
                     setFailedContainerVisible();
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
                 }
-            });
-        }
+            }
 
-        public void setFailedContainerVisible() {
-            loadingContainer.setVisibility(GONE);
-            failedContainer.setVisibility(View.VISIBLE);
-            kegiatanContainer.setVisibility(GONE);
-        }
+            @Override
+            public void onFailure(Call<KegiatanPosyanduResponse> call, Throwable t) {
+                setFailedContainerVisible();
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-        public void setLoadingContainerVisible() {
-            loadingContainer.setVisibility(View.VISIBLE);
-            failedContainer.setVisibility(GONE);
-            kegiatanContainer.setVisibility(GONE);
-        }
+    public void setFailedContainerVisible() {
+        loadingContainer.setVisibility(GONE);
+        failedContainer.setVisibility(View.VISIBLE);
+        kegiatanContainer.setVisibility(GONE);
+    }
 
-        public void setInformasiContainerVisible() {
-            loadingContainer.setVisibility(GONE);
-            failedContainer.setVisibility(GONE);
-            kegiatanContainer.setVisibility(View.VISIBLE);
+    public void setLoadingContainerVisible() {
+        loadingContainer.setVisibility(View.VISIBLE);
+        failedContainer.setVisibility(GONE);
+        kegiatanContainer.setVisibility(GONE);
+    }
+
+    public void setInformasiContainerVisible() {
+        loadingContainer.setVisibility(GONE);
+        failedContainer.setVisibility(GONE);
+        kegiatanContainer.setVisibility(View.VISIBLE);
     }
 }

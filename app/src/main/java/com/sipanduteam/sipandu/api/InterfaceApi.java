@@ -2,7 +2,19 @@ package com.sipanduteam.sipandu.api;
 
 import com.sipanduteam.sipandu.model.AnakDataResponse;
 import com.sipanduteam.sipandu.model.GenericApiResponse;
+import com.sipanduteam.sipandu.model.IbuDataResponse;
 import com.sipanduteam.sipandu.model.InformasiResponse;
+import com.sipanduteam.sipandu.model.KeluargaDataResponse;
+import com.sipanduteam.sipandu.model.KeluargakuAnakResponse;
+import com.sipanduteam.sipandu.model.KeluargakuIbuResponse;
+import com.sipanduteam.sipandu.model.KeluargakuLansiaResponse;
+import com.sipanduteam.sipandu.model.KesehatanAnakResponse;
+import com.sipanduteam.sipandu.model.KesehatanIbuResponse;
+import com.sipanduteam.sipandu.model.LansiaDataResponse;
+import com.sipanduteam.sipandu.model.imunisasi.ImunisasiDataResponse;
+import com.sipanduteam.sipandu.model.pemeriksaan.RiwayatPemeriksaanAnakDataResponse;
+import com.sipanduteam.sipandu.model.pemeriksaan.RiwayatPemeriksaanIbuDataResponse;
+import com.sipanduteam.sipandu.model.pemeriksaan.RiwayatPemeriksaanLansiaDataResponse;
 import com.sipanduteam.sipandu.model.posyandu.KegiatanPosyanduResponse;
 import com.sipanduteam.sipandu.model.posyandu.PegawaiResponse;
 import com.sipanduteam.sipandu.model.posyandu.PengumumanResponse;
@@ -11,6 +23,7 @@ import com.sipanduteam.sipandu.model.register.RegistDataPosyanduResponse;
 import com.sipanduteam.sipandu.model.register.RegisterResponse;
 import com.sipanduteam.sipandu.model.user.UserLoginResponse;
 import com.sipanduteam.sipandu.model.user.UserRegisterFirstResponse;
+import com.sipanduteam.sipandu.model.vitamin.VitaminDataResponse;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -33,7 +46,10 @@ public interface InterfaceApi {
             @Field("password") String password
     );
 
-    //register stuff
+    /* auth end here */
+
+
+    /* register start here */
 
     @FormUrlEncoded
     @POST("register")
@@ -152,6 +168,9 @@ public interface InterfaceApi {
             @Field("email") String email
     );
 
+    /* register end here */
+
+
     //informasi stuff
     @GET("get-informasi-home")
     Call<InformasiResponse> getInformasiHome();
@@ -162,8 +181,10 @@ public interface InterfaceApi {
             @Field("flag") int flag
     );
 
+    /* informasi end here */
 
-    //posyandu  stuff
+
+    //posyandu  start here
 
     @FormUrlEncoded
     @POST("get-posyandu-kegiatan")
@@ -186,8 +207,6 @@ public interface InterfaceApi {
     );
 
 
-
-    // anak stuff
     @FormUrlEncoded
     @POST("get-posyandu-bolong")
     Call<PosyanduUserResponse> posyanduUserData(
@@ -195,13 +214,127 @@ public interface InterfaceApi {
             @Field("role") int role
     );
 
+    /* posyandu end here */
 
-    // anak stuff
+
+    /* anak start here */
+
     @FormUrlEncoded
     @POST("user/get-user-anak")
     Call<AnakDataResponse> anakData(
             @Field("email") String email
     );
 
+    @FormUrlEncoded
+    @POST("kesehatan/get-history-vitamin-anak")
+    Call<VitaminDataResponse> getVitaminHistory(
+            @Field("email") String email
+    );
+
+    /*
+    Flag for history pemeriksaan anak
+    0 -> get pemeriksaan
+    1 -> get konsultasi
+     */
+    @FormUrlEncoded
+    @POST("kesehatan/get-history-pemeriksaan-anak")
+    Call<RiwayatPemeriksaanAnakDataResponse> getPemeriksaanAnakHistory(
+            @Field("email") String email,
+            @Field("flag") int flag
+    );
+
+    @FormUrlEncoded
+    @POST("kesehatan/get-history-imunisasi-anak")
+    Call<ImunisasiDataResponse> getImunisasiHistory(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("kesehatan/get-keluargaku-anak")
+    Call<KeluargakuAnakResponse> getKeluargakuAnak(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("kesehatan/get-kesehatan-anak")
+    Call<KesehatanAnakResponse> getKesehatanAnak(
+            @Field("email") String email
+    );
+
+    /* anak end here */
+
+    /* ibu start here */
+
+    @FormUrlEncoded
+    @POST("user/get-user-ibu")
+    Call<IbuDataResponse> ibuData(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("kesehatan/get-keluargaku-ibu")
+    Call<KeluargakuIbuResponse> getKeluargakuIbu(
+            @Field("email") String email
+    );
+
+    /*
+        Flag for history pemeriksaan ibu
+        0 -> get pemeriksaan
+        1 -> get konsultasi
+    */
+    @FormUrlEncoded
+    @POST("kesehatan/get-history-pemeriksaan-ibu")
+    Call<RiwayatPemeriksaanIbuDataResponse> getPemeriksaanIbuHistory(
+            @Field("email") String email,
+            @Field("flag") int flag
+    );
+
+    @FormUrlEncoded
+    @POST("kesehatan/get-kesehatan-ibu")
+    Call<KesehatanIbuResponse> getKesehatanIbu(
+            @Field("email") String email
+    );
+
+    /* ibu end here */
+
+
+    /* lansia start here */
+
+    @FormUrlEncoded
+    @POST("user/get-user-lansia")
+    Call<LansiaDataResponse> lansiaData(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("kesehatan/get-keluargaku-lansia")
+    Call<KeluargakuLansiaResponse> getKeluargakuLansia(
+            @Field("email") String email
+    );
+
+    /*
+        Flag for history pemeriksaan lansia
+        0 -> get pemeriksaan
+        1 -> get konsultasi
+    */
+    @FormUrlEncoded
+    @POST("kesehatan/get-history-pemeriksaan-lansia")
+    Call<RiwayatPemeriksaanLansiaDataResponse> getPemeriksaanLansiaHistory(
+            @Field("email") String email,
+            @Field("flag") int flag
+    );
+
+    /* lansia end hhere */
+
+
+    /* keluarga start here */
+
+    @FormUrlEncoded
+    @POST("user/get-user-keluarga")
+    Call<KeluargaDataResponse> keluargaData(
+            @Field("email") String email
+    );
+
+    /* keluarga end here */
 
 }

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences loginPreferences, userPreferences;
     private String token;
     private Dialog dialog;
-    private int loginStatus;
+    private int loginStatus, role;
 //    VideoView loginBg;
     boolean doubleBack = false;
 
@@ -55,8 +56,16 @@ public class LoginActivity extends AppCompatActivity {
 //        Window w = getWindow();
 //        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE  | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+//        Window window = getWindow();
+//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
+
+//        Window w = getWindow();
+//        w.setFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         //inflate everything
         loginButton = findViewById(R.id.login_button);
@@ -74,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         loginPreferences = getSharedPreferences("login_preferences", Context.MODE_PRIVATE);
         userPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         loginStatus = loginPreferences.getInt("login_status", 0);
+        role = userPreferences.getInt("role", 4);
 
 
 //        loginBg = (VideoView) findViewById(R.id.login_bg_video);
@@ -113,8 +123,19 @@ public class LoginActivity extends AppCompatActivity {
 //        loginBg.start();
 
         if (loginStatus == 1) { //if logged in, proceed to app
-            Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(homeActivity);
+            Intent homeActivity;
+            if (role == 0) {
+                homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(homeActivity);
+            }
+            else if (role == 1) {
+                homeActivity = new Intent(getApplicationContext(), HomeIbuActivity.class);
+                startActivity(homeActivity);
+            }
+            else if (role == 2) {
+                homeActivity = new Intent(getApplicationContext(), HomeLansiaActivity.class);
+                startActivity(homeActivity);
+            }
             finish();
         }
 
@@ -122,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Selamat datang di Posyandu 5.0! Silahkan login terlebih dahulu", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Selamat datang di Smart Posyandu! Silahkan login terlebih dahulu", Snackbar.LENGTH_SHORT).show();
             }
         }, 1000);
 
@@ -184,48 +205,69 @@ public class LoginActivity extends AppCompatActivity {
                 if (dialog.isShowing()){
                     dialog.dismiss();
                 }
-                // TODO implement cek semisal pass/email salah
-                int roleUser = Integer.parseInt(response.body().getUser().getRole());
-                Log.d("verif", response.body().getUser().getIsVerified());
-                if(Integer.parseInt(response.body().getUser().getIsVerified()) == 0) {
-                    Intent notVerified = new Intent(getApplicationContext(), WaitForVerifiedActivity.class);
-                    startActivity(notVerified);
-                }
-                else {
-                    Log.d("masuksini", "masuk sini");
-                    if(response.body().getFlagComplete() == 0) {
-                        if(roleUser == 0) {
-                            Intent registerDataAnak = new Intent(getApplicationContext(), RegisterDataAnakActivity.class);
-                            registerDataAnak.putExtra("EMAILUSER", response.body().getUser().getEmail());
-                            startActivity(registerDataAnak);
-                        }
-                        else if (roleUser == 1) {
-                            Intent registerDataIbu = new Intent(getApplicationContext(), RegisterDataIbuActivity.class);
-                            registerDataIbu.putExtra("EMAILUSER", response.body().getUser().getEmail());
-                            startActivity(registerDataIbu);
-                        }
-                        else if (roleUser == 2) {
-                            Intent registerDataLansia = new Intent(getApplicationContext(), RegisterDataLansiaActivity.class);
-                            registerDataLansia.putExtra("EMAILUSER", response.body().getUser().getEmail());
-                            startActivity(registerDataLansia);
-                        }
+
+                if (response.code() == 200 && response.body().getStatusCode() == 200) {
+                    // TODO implement cek semisal pass/email salah
+                    int roleUser = Integer.parseInt(response.body().getUser().getRole());
+                    Log.d("verif", response.body().getUser().getIsVerified());
+                    if(Integer.parseInt(response.body().getUser().getIsVerified()) == 0) {
+                        Intent notVerified = new Intent(getApplicationContext(), WaitForVerifiedActivity.class);
+                        startActivity(notVerified);
                     }
                     else {
-                        SharedPreferences.Editor loginPrefEditor = loginPreferences.edit();
-                        SharedPreferences.Editor userPrefEditor = userPreferences.edit();
-                        loginPrefEditor.putInt("login_status", 1);
-                        loginPrefEditor.putString("token", response.body().getAccessToken());
-                        loginPrefEditor.apply();
+                        Log.d("masuksini", "masuk sini");
+                        if(response.body().getFlagComplete() == 0) {
+                            if(roleUser == 0) {
+                                Intent registerDataAnak = new Intent(getApplicationContext(), RegisterDataAnakActivity.class);
+                                registerDataAnak.putExtra("EMAILUSER", response.body().getUser().getEmail());
+                                startActivity(registerDataAnak);
+                            }
+                            else if (roleUser == 1) {
+                                Intent registerDataIbu = new Intent(getApplicationContext(), RegisterDataIbuActivity.class);
+                                registerDataIbu.putExtra("EMAILUSER", response.body().getUser().getEmail());
+                                startActivity(registerDataIbu);
+                            }
+                            else if (roleUser == 2) {
+                                Intent registerDataLansia = new Intent(getApplicationContext(), RegisterDataLansiaActivity.class);
+                                registerDataLansia.putExtra("EMAILUSER", response.body().getUser().getEmail());
+                                startActivity(registerDataLansia);
+                            }
+                        }
+                        else {
+                            SharedPreferences.Editor loginPrefEditor = loginPreferences.edit();
+                            SharedPreferences.Editor userPrefEditor = userPreferences.edit();
+                            loginPrefEditor.putInt("login_status", 1);
+                            loginPrefEditor.putString("token", response.body().getAccessToken());
+                            loginPrefEditor.apply();
 
-                        userPrefEditor.putString("email", response.body().getUser().getEmail());
-                        userPrefEditor.putString("nama_user", response.body().getNama());
-                        userPrefEditor.putInt("role", roleUser);
-                        userPrefEditor.apply();
+                            userPrefEditor.putString("email", response.body().getUser().getEmail());
+                            userPrefEditor.putInt("posyandu", response.body().getPosyandu());
+                            userPrefEditor.putString("nama_user", response.body().getNama());
+                            userPrefEditor.putInt("bot_tele_banner", 0);
+                            userPrefEditor.putInt("role", roleUser);
+                            userPrefEditor.apply();
 
-                        Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(homeActivity);
-                        finish();
+                            Intent homeActivity;
+
+                            if (roleUser == 0) {
+                                homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(homeActivity);
+                            }
+                            else if (roleUser == 1) {
+                                homeActivity = new Intent(getApplicationContext(), HomeIbuActivity.class);
+                                startActivity(homeActivity);
+                            }
+                            else if (roleUser == 2) {
+                                homeActivity = new Intent(getApplicationContext(), HomeLansiaActivity.class);
+                                startActivity(homeActivity);
+                            }
+                            finish();
+                        }
                     }
+                }
+
+                else {
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Login gagal, silahkan cek email dan password atau coba lagi nanti", Snackbar.LENGTH_SHORT).show();
                 }
             }
 
@@ -234,7 +276,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (dialog.isShowing()){
                     dialog.dismiss();
                 }
-                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Something went duar meledak yey api nya meledak", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
             }
         });
     }

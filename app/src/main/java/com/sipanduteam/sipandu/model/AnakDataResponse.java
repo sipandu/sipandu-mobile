@@ -14,6 +14,15 @@ public class AnakDataResponse {
     @SerializedName("anak")
     @Expose
     private Anak anak;
+    @SerializedName("profile_img")
+    @Expose
+    private String profileImg;
+    @SerializedName("total_keluarga")
+    @Expose
+    private Integer totalKeluarga;
+    @SerializedName("kartu_keluarga")
+    @Expose
+    private KartuKeluarga kartuKeluarga;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -37,5 +46,29 @@ public class AnakDataResponse {
 
     public void setAnak(Anak anak) {
         this.anak = anak;
+    }
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
+
+    public Integer getTotalKeluarga() {
+        return totalKeluarga;
+    }
+
+    public void setTotalKeluarga(Integer totalKeluarga) {
+        this.totalKeluarga = totalKeluarga;
+    }
+
+    public KartuKeluarga getKartuKeluarga() {
+        return kartuKeluarga;
+    }
+
+    public void setKartuKeluarga(KartuKeluarga kartuKeluarga) {
+        this.kartuKeluarga = kartuKeluarga;
     }
 }

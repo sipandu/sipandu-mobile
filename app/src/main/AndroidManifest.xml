@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,8 +17,48 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sipandu"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.posyandu.PengumumanDetailActivity"
+        <activity android:name=".activity.bumil.KesehatanIbuActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar"></activity>
+        <activity
+            android:name=".activity.lansia.DetailRiwayatPemeriksaanLansiaActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.lansia.RiwayatPemeriksaanLansiaActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.bumil.DetailRiwayatPemeriksaanIbuActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.bumil.RiwayatPemeriksaanIbuActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.anak.DetailRiwayatPemeriksaanAnakActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.anak.RiwayatPemeriksaanAnakActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.anak.RiwayatImunisasiAnakActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.DetailKeluargaActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.anak.RiwayatVitaminAnakActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.anak.KesehatanAnakActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.HomeLansiaActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.HomeIbuActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity android:name=".activity.anak.EditProfileAnakActivity" />
+        <activity
+            android:name=".activity.posyandu.PengumumanDetailActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.posyandu.KegiatanDetailActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
@@ -51,7 +92,6 @@
         <activity
             android:name=".activity.informasi.InformasiActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
-        <activity android:name=".activity.anak.RiwayatKunjunganAnakActivity" />
         <activity
             android:name=".activity.posyandu.PosyanduKegiatanActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
@@ -91,8 +131,22 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sipandu.NoActionBar" />
+            android:theme="@style/Theme.Sipandu.NoActionBar.Login" />
         <activity android:name=".MainActivity" />
+
+        <service
+            android:name=".service.FirebaseMessaging"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_posyandu" />
     </application>
 
 </manifest>

@@ -279,6 +279,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
+                                    android:textSize="18sp"
                                     android:text="Lihat kegiatan posyandu"
                                     android:textAppearance="?attr/textAppearanceHeadline6"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -292,7 +293,6 @@
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
-
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -340,6 +340,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
+                                    android:textSize="18sp"
                                     android:text="Lihat lokasi posyandu"
                                     android:textAppearance="?attr/textAppearanceHeadline6"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -512,6 +513,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Peta persebaran posyandu"
+                            android:textSize="18sp"
                             android:textAppearance="?attr/textAppearanceHeadline6"
                             android:layout_marginStart="8dp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -559,6 +561,21 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
+                android:id="@+id/posyandu_telegram_group_button"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconSize="22dp"
+                android:text="Gabung grup Telegram posyandu"
+                app:icon="@drawable/ic_telegram_logo"
+                app:strokeColor="@color/primaryColor" />
+
+            <Button
                 android:id="@+id/call_posyandu_button"
                 android:layout_width="match_parent"
                 app:backgroundTint="@color/green"
@@ -566,6 +583,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
                 android:text="Hubungi Posyandu"
                 app:icon="@drawable/ic_baseline_call_24"
                 app:iconGravity="textStart"
@@ -573,21 +591,6 @@
                 app:rippleColor="@color/greenTranslucent"
                 app:iconTint="@color/white"
                 android:textColor="@color/white"/>
-
-            <Button
-                android:id="@+id/posyandu_telegram_group_button"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="12dp"
-                app:iconGravity="textStart"
-                app:iconPadding="8dp"
-                app:iconSize="22dp"
-                android:text="Gabung grup Telegram posyandu"
-                app:icon="@drawable/ic_telegram_logo"
-                app:strokeColor="@color/primaryColor" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -653,6 +656,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:textSize="18sp"
                             android:text="Bot telegram Smart Posyandu"
                             android:textAppearance="?attr/textAppearanceHeadline6"
                             app:layout_constraintBottom_toBottomOf="parent"

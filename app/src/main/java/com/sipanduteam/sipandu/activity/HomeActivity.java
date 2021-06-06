@@ -28,6 +28,7 @@ import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.posyandu.PosyanduMapActivity;
 import com.sipanduteam.sipandu.fragment.home.*;
 import com.sipanduteam.sipandu.viewmodel.InformasiBerandaViewModel;
+import com.sipanduteam.sipandu.viewmodel.KeluargakuAnakViewModel;
 import com.sipanduteam.sipandu.viewmodel.PengumumanViewModel;
 import com.sipanduteam.sipandu.viewmodel.PosyanduViewModel;
 import com.sipanduteam.sipandu.viewmodel.ProfileAnakViewModel;
@@ -46,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     ProfileAnakViewModel profileAnakViewModel;
     PosyanduViewModel posyanduViewModel;
     PengumumanViewModel pengumumanViewModel;
+    KeluargakuAnakViewModel keluargakuAnakViewModel;
 
 //    private Fragment berandaFragment = new BerandaFragment();
 //    private Fragment keluargaFragment;
@@ -121,6 +123,7 @@ public class HomeActivity extends AppCompatActivity {
         profileAnakViewModel = ViewModelProviders.of(this).get(ProfileAnakViewModel.class);
         posyanduViewModel = ViewModelProviders.of(this).get(PosyanduViewModel.class);
         pengumumanViewModel = ViewModelProviders.of(this).get(PengumumanViewModel.class);
+        keluargakuAnakViewModel = ViewModelProviders.of(this).get(KeluargakuAnakViewModel.class);
         pengumumanViewModel.init(email, role);
 
 

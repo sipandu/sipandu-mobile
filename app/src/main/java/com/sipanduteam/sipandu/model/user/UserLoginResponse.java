@@ -25,6 +25,9 @@ public class UserLoginResponse {
     @SerializedName("nama")
     @Expose
     private String nama;
+    @SerializedName("posyandu")
+    @Expose
+    private Integer posyandu;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -80,5 +83,13 @@ public class UserLoginResponse {
 
     public void setNama(String nama) {
         this.nama = nama;
+    }
+
+    public Integer getPosyandu() {
+        return posyandu;
+    }
+
+    public void setPosyandu(Integer posyandu) {
+        this.posyandu = posyandu;
     }
 }
