@@ -38,7 +38,7 @@ public class KesehatanIbuActivity extends AppCompatActivity {
     private Chip lingkarLengan, tinggiRahim, beratBadan, denyutNadi, tekananDarah, detakJantungBayi;
     private AnyChartView grafikBeranBadan;
     LinearLayout loadingContainer, failedContainer, pemeriksaanContainer, pemeriksaanEmptyContainer;
-    private MaterialCardView riwayatAlergi, penyakitBawaanIbuHamil;
+    private MaterialCardView riwayatAlergi, penyakitBawaanIbuHamil, grafikBeratBadanIbu;
 
     SharedPreferences userPreferences;
 
@@ -61,6 +61,8 @@ public class KesehatanIbuActivity extends AppCompatActivity {
         loadingContainer = findViewById(R.id.kesehatan_anak_loading_container);
         failedContainer = findViewById(R.id.kesehatan_anak_failed_container);
         pemeriksaanContainer = findViewById(R.id.kesehatan_anak_container);
+
+        grafikBeratBadanIbu = findViewById(R.id.grafik_berat_badan_tinggi_badan);
 
         penyakitBawaanIbuHamil = findViewById(R.id.penyakit_bawaan_ibu_hamil);
         penyakitBawaanIbuHamil.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +125,16 @@ public class KesehatanIbuActivity extends AppCompatActivity {
                         tekananDarah.setText("Tekanan darah: " + response.body().getRiwayatPemeriksaanIbu().get(0).getTekananDarah() + " mmHg");
                         detakJantungBayi.setText("Detak jantung bayi: " + response.body().getRiwayatPemeriksaanIbu().get(0).getDetakJantungBayi() + " BPM");
                     }
+
+                    grafikBeratBadanIbu.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent grafikActivity = new Intent(getApplicationContext(), GrafikBeratBadanIbuActivity.class);
+                            grafikActivity.putExtra("ID", response.body().getIdIbu());
+                            startActivity(grafikActivity);
+                        }
+                    });
+
                     setKeluargaContainerVisible();
                 }
                 else {

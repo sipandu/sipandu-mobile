@@ -34,6 +34,9 @@ public class KesehatanIbuResponse {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("id_ibu")
+    @Expose
+    private Integer idIbu;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -105,5 +108,13 @@ public class KesehatanIbuResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Integer getIdIbu() {
+        return idIbu;
+    }
+
+    public void setIdIbu(Integer idIbu) {
+        this.idIbu = idIbu;
     }
 }

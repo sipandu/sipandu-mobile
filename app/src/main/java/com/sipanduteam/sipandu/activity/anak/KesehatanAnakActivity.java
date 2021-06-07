@@ -16,6 +16,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
+import com.sipanduteam.sipandu.activity.bumil.GrafikBeratBadanIbuActivity;
 import com.sipanduteam.sipandu.activity.lansia.AlergiActivity;
 import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
@@ -37,8 +38,8 @@ public class KesehatanAnakActivity extends AppCompatActivity {
     private Chip tinggiBadan, lingkarKepala, beratBadan, imt;
     private AnyChartView grafikBeranBadan;
     LinearLayout loadingContainer, failedContainer, pemeriksaanContainer, pemeriksaanEmptyContainer;
-    private MaterialCardView riwayatAlergi;
-
+    private MaterialCardView riwayatAlergi, grafikBeratBadanTinggi, grafikBeratBadanUmur, grafikTinggiUmur, grafikLingkarKepalaUmur;
+    Intent grafikActivity;
     SharedPreferences userPreferences;
 
     @Override
@@ -60,6 +61,11 @@ public class KesehatanAnakActivity extends AppCompatActivity {
         loadingContainer = findViewById(R.id.kesehatan_anak_loading_container);
         failedContainer = findViewById(R.id.kesehatan_anak_failed_container);
         pemeriksaanContainer = findViewById(R.id.kesehatan_anak_container);
+
+        grafikBeratBadanTinggi = findViewById(R.id.grafik_berat_badan_tinggi_badan);
+        grafikBeratBadanUmur = findViewById(R.id.grafik_berat_badan_umur);
+        grafikTinggiUmur = findViewById(R.id.grafik_tinggi_badan_umur);
+        grafikLingkarKepalaUmur = findViewById(R.id.grafik_lingkar_kepala_umur);
 
         riwayatAlergi = findViewById(R.id.riwayat_alergi_anak);
         riwayatAlergi.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +113,37 @@ public class KesehatanAnakActivity extends AppCompatActivity {
                     jumlahImunisasi.setText(response.body().getJumlahImunisasi().toString() + " kali");
                     jumlahKonsultasi.setText(response.body().getJumlahKonsultasi().toString() + " kali");
 
+                    grafikActivity = new Intent(getApplicationContext(), GrafikAnakActivity.class);
+                    grafikActivity.putExtra("ID", response.body().getIdAnak());
+
+                    grafikBeratBadanTinggi.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                           startGrafikActivity(0);
+                        }
+                    });
+
+                    grafikBeratBadanUmur.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startGrafikActivity(1);
+                        }
+                    });
+
+                    grafikTinggiUmur.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startGrafikActivity(2);
+                        }
+                    });
+
+                    grafikLingkarKepalaUmur.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startGrafikActivity(3);
+                        }
+                    });
+
                     setKeluargaContainerVisible();
                 }
                 else {
@@ -121,6 +158,11 @@ public class KesehatanAnakActivity extends AppCompatActivity {
                 Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void startGrafikActivity(int flag) {
+        grafikActivity.putExtra("FLAG", flag);
+        startActivity(grafikActivity);
     }
 
 

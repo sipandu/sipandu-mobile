@@ -17,12 +17,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sipandu"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.lansia.MasalahKesehatanLansiaActivity"
+        <activity android:name=".activity.anak.GrafikAnakActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar"></activity>
-        <activity android:name=".activity.lansia.PenyakitBawaanLansiaActivity"
-            android:theme="@style/Theme.Sipandu.NoActionBar"/>
-        <activity android:name=".activity.lansia.AlergiActivity"
-            android:theme="@style/Theme.Sipandu.NoActionBar"/>
+        <activity
+            android:name=".activity.bumil.GrafikBeratBadanIbuActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.lansia.MasalahKesehatanLansiaActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.lansia.PenyakitBawaanLansiaActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
+        <activity
+            android:name=".activity.lansia.AlergiActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.lansia.KesehatanLansiaActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />
