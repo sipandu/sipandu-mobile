@@ -1,5 +1,6 @@
 package com.sipanduteam.sipandu.api;
 
+import com.sipanduteam.sipandu.model.AlergiDataResponse;
 import com.sipanduteam.sipandu.model.AnakDataResponse;
 import com.sipanduteam.sipandu.model.GenericApiResponse;
 import com.sipanduteam.sipandu.model.IbuDataResponse;
@@ -10,7 +11,11 @@ import com.sipanduteam.sipandu.model.KeluargakuIbuResponse;
 import com.sipanduteam.sipandu.model.KeluargakuLansiaResponse;
 import com.sipanduteam.sipandu.model.KesehatanAnakResponse;
 import com.sipanduteam.sipandu.model.KesehatanIbuResponse;
+import com.sipanduteam.sipandu.model.KesehatanLansiaResponse;
 import com.sipanduteam.sipandu.model.LansiaDataResponse;
+import com.sipanduteam.sipandu.model.MasalahKesehatanLansia;
+import com.sipanduteam.sipandu.model.MasalahKesehatanLansiaDataResponse;
+import com.sipanduteam.sipandu.model.PenyakitBawaanDataResponse;
 import com.sipanduteam.sipandu.model.imunisasi.ImunisasiDataResponse;
 import com.sipanduteam.sipandu.model.pemeriksaan.RiwayatPemeriksaanAnakDataResponse;
 import com.sipanduteam.sipandu.model.pemeriksaan.RiwayatPemeriksaanIbuDataResponse;
@@ -324,7 +329,37 @@ public interface InterfaceApi {
             @Field("flag") int flag
     );
 
-    /* lansia end hhere */
+    @FormUrlEncoded
+    @POST("kesehatan/get-masalah-kesehatan-lansia")
+    Call<MasalahKesehatanLansiaDataResponse> getMasalahKesehatanLansia(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("kesehatan/get-kesehatan-lansia")
+    Call<KesehatanLansiaResponse> getKesehatanLansia(
+            @Field("email") String email
+    );
+
+    /* lansia end here */
+
+
+    /* for all user here */
+
+    @FormUrlEncoded
+    @POST("kesehatan/get-alergi")
+    Call<AlergiDataResponse> getAlergi(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("kesehatan/get-penyakit-bawaan")
+    Call<PenyakitBawaanDataResponse> getPenyakitBawaan(
+            @Field("email") String email
+    );
+
+
+    /* for all user end here */
 
 
     /* keluarga start here */

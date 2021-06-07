@@ -371,13 +371,41 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Grafik kesehatan"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="@color/primaryColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/grafik_berat_badan_tinggi_badan"
                 app:cardElevation="2dp"
-                android:layout_marginTop="4dp"
+                android:layout_margin="8dp"
                 android:clickable="true"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
                 app:cardCornerRadius="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -426,10 +454,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/grafik_berat_badan_umur"
                 app:cardElevation="2dp"
-                android:layout_marginTop="4dp"
                 android:clickable="true"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_margin="8dp"
                 app:cardCornerRadius="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -477,10 +503,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/grafik_tinggi_badan_umur"
                 app:cardElevation="2dp"
-                android:layout_marginTop="4dp"
                 android:clickable="true"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_margin="8dp"
                 app:cardCornerRadius="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -528,11 +552,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/grafik_lingkar_kepala_umur"
                 app:cardElevation="2dp"
-                android:layout_marginTop="4dp"
                 android:clickable="true"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="8dp"
+                android:layout_margin="8dp"
                 app:cardCornerRadius="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -577,6 +598,132 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Masalah kesehatan"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    android:textColor="@color/primaryColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    style="@style/Divider"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/riwayat_alergi_ibu_hamil"
+                app:cardElevation="2dp"
+                android:layout_marginTop="4dp"
+                android:clickable="true"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Data alergi ibu hamil"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/penyakit_bawaan_ibu_hamil"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Riwayat penyakit bawaan ibu hamil"
+                                android:textAppearance="?attr/textAppearanceHeadline6"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

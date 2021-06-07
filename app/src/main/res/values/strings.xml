@@ -4,4 +4,5 @@
     <string name="version_string">Pre pre pre alpha</string>
     <string name="server_fail">Ups! Terjadi kesalahan, silahkan coba lagi nanti</string>
     <string name="data_not_set_string">Tidak tersedia/belum di tambahkan</string>
+    <string name="bot_username">https://t.me/sipandu_bot</string>
 </resources>

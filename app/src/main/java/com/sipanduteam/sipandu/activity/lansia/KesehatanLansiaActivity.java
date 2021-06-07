@@ -1,4 +1,4 @@
-package com.sipanduteam.sipandu.activity.bumil;
+package com.sipanduteam.sipandu.activity.lansia;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,12 +16,10 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
-import com.sipanduteam.sipandu.activity.lansia.AlergiActivity;
-import com.sipanduteam.sipandu.activity.lansia.PenyakitBawaanLansiaActivity;
 import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
-import com.sipanduteam.sipandu.model.KesehatanAnakResponse;
 import com.sipanduteam.sipandu.model.KesehatanIbuResponse;
+import com.sipanduteam.sipandu.model.KesehatanLansiaResponse;
 import com.sipanduteam.sipandu.util.ChangeDateFormat;
 
 import retrofit2.Call;
@@ -30,22 +28,21 @@ import retrofit2.Response;
 
 import static android.view.View.GONE;
 
-public class KesehatanIbuActivity extends AppCompatActivity {
+public class KesehatanLansiaActivity extends AppCompatActivity {
 
     private Toolbar homeToolbar;
     private ChangeDateFormat changeDateFormat;
     private TextView jumlahPemeriksaaan, jumlahVitamin, jumlahImunisasi, jumlahKonsultasi;
-    private Chip lingkarLengan, tinggiRahim, beratBadan, denyutNadi, tekananDarah, detakJantungBayi;
-    private AnyChartView grafikBeranBadan;
+    private Chip beratBadan, suhuTubuh, tinggiLutut, tinggiBadan, denyutNadi, tekananDarah;
     LinearLayout loadingContainer, failedContainer, pemeriksaanContainer, pemeriksaanEmptyContainer;
-    private MaterialCardView riwayatAlergi, penyakitBawaanIbuHamil;
+    private MaterialCardView masalahKesehatanLansia, riwayatAlergi, penyakitBawaanLansia;
 
     SharedPreferences userPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kesehatan_ibu);
+        setContentView(R.layout.activity_kesehatan_lansia);
 
         homeToolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(homeToolbar);
@@ -58,12 +55,12 @@ public class KesehatanIbuActivity extends AppCompatActivity {
 
         userPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
 
-        loadingContainer = findViewById(R.id.kesehatan_anak_loading_container);
-        failedContainer = findViewById(R.id.kesehatan_anak_failed_container);
-        pemeriksaanContainer = findViewById(R.id.kesehatan_anak_container);
+        loadingContainer = findViewById(R.id.kesehatan_lansia_loading_container);
+        failedContainer = findViewById(R.id.kesehatan_lansia_failed_container);
+        pemeriksaanContainer = findViewById(R.id.kesehatan_lansia_container);
 
-        penyakitBawaanIbuHamil = findViewById(R.id.penyakit_bawaan_ibu_hamil);
-        penyakitBawaanIbuHamil.setOnClickListener(new View.OnClickListener() {
+        penyakitBawaanLansia = findViewById(R.id.penyakit_bawaan_lansia);
+        penyakitBawaanLansia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent penyakitBawaan = new Intent(getApplicationContext(), PenyakitBawaanLansiaActivity.class);
@@ -71,7 +68,7 @@ public class KesehatanIbuActivity extends AppCompatActivity {
             }
         });
 
-        riwayatAlergi = findViewById(R.id.riwayat_alergi_ibu_hamil);
+        riwayatAlergi = findViewById(R.id.riwayat_alergi);
         riwayatAlergi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,16 +77,25 @@ public class KesehatanIbuActivity extends AppCompatActivity {
             }
         });
 
-        lingkarLengan = findViewById(R.id.lingkar_lengan_chip);
-        tinggiRahim = findViewById(R.id.tinggi_rahim_chip);
-        beratBadan = findViewById(R.id.berat_badan_chip);
-        denyutNadi = findViewById(R.id.denyut_nadi_chip);
-        tekananDarah = findViewById(R.id.tekanan_darah_chip);
-        detakJantungBayi = findViewById(R.id.detak_jantung_bayi_chip);
-        jumlahPemeriksaaan = findViewById(R.id.jumlah_pemeriksaan_anak_text);
-        jumlahVitamin = findViewById(R.id.jumlah_pemberian_vitamin_anak_text);
-        jumlahImunisasi = findViewById(R.id.jumlah_pemberian_imunisasi_anak_text);
-        jumlahKonsultasi = findViewById(R.id.jumlah_konsultasi_anak_text);
+        masalahKesehatanLansia = findViewById(R.id.masalah_kesehatan_lansia);
+        masalahKesehatanLansia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent masalahKesehatan = new Intent(getApplicationContext(), MasalahKesehatanLansiaActivity.class);
+                startActivity(masalahKesehatan);
+            }
+        });
+
+        beratBadan = findViewById(R.id.berat_badan_lansia_chip);
+        suhuTubuh = findViewById(R.id.suhu_tubuh_lansia_chip);
+        tinggiLutut = findViewById(R.id.tinggi_lutut_lansia_chip);
+        tinggiBadan = findViewById(R.id.tinggi_badan_lansia_chip);
+        denyutNadi = findViewById(R.id.denyut_nadi_lansia_chip);
+        tekananDarah = findViewById(R.id.tekanan_darah_lansia_chip);
+        jumlahPemeriksaaan = findViewById(R.id.jumlah_pemeriksaan_lansia_text);
+        jumlahVitamin = findViewById(R.id.jumlah_pemberian_vitamin_lansia_text);
+        jumlahImunisasi = findViewById(R.id.jumlah_pemberian_imunisasi_lansia_text);
+        jumlahKonsultasi = findViewById(R.id.jumlah_konsultasi_lansia_text);
         getData(userPreferences.getString("email", "empty"));
     }
 
@@ -97,31 +103,31 @@ public class KesehatanIbuActivity extends AppCompatActivity {
         setLoadingContainerVisible();
         InterfaceApi getData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
         // use flag 0 to get history pemeriksaan, use flag 1 tu get history konsultasi
-        Call<KesehatanIbuResponse> kesehatanIbuResponseCall = getData.getKesehatanIbu(email);
-        kesehatanIbuResponseCall.enqueue(new Callback<KesehatanIbuResponse>() {
+        Call<KesehatanLansiaResponse> kesehatanLansiaResponseCall = getData.getKesehatanLansia(email);
+        kesehatanLansiaResponseCall.enqueue(new Callback<KesehatanLansiaResponse>() {
             @Override
-            public void onResponse(Call<KesehatanIbuResponse> call, Response<KesehatanIbuResponse> response) {
+            public void onResponse(Call<KesehatanLansiaResponse> call, Response<KesehatanLansiaResponse> response) {
                 if (response.code() == 200 && response.body().getStatusCode() == 200) {
                     jumlahPemeriksaaan.setText(response.body().getJumlahPemeriksaan().toString() +" kali");
                     jumlahVitamin.setText(response.body().getJumlahVitamin().toString() + " kali");
                     jumlahImunisasi.setText(response.body().getJumlahImunisasi().toString() + " kali");
                     jumlahKonsultasi.setText(response.body().getJumlahKonsultasi().toString() + " kali");
 
-                    if (response.body().getRiwayatPemeriksaanIbu().size() == 0) {
+                    if (response.body().getRiwayatPemeriksaanLansia().size() == 0) {
                         beratBadan.setText("Berat badan: " + "belum ada pemeriksaan");
-                        lingkarLengan.setText("Lingkar lengan: " + "belum ada pemeriksaan");
-                        tinggiRahim.setText("Tinggi rahim: " + "belum ada pemeriksaan");
+                        suhuTubuh.setText("Suhu tubuh: " + "belum ada pemeriksaan");
+                        tinggiLutut.setText("Tinggi lutut: " + "belum ada pemeriksaan");
+                        tinggiBadan.setText("Tinggi badan: " + "belum ada pemeriksaan");
                         denyutNadi.setText("Denyut nadi: " + "belum ada pemeriksaan");
                         tekananDarah.setText("Tekanan darah: " + "belum ada pemeriksaan");
-                        detakJantungBayi.setText("Detak jantung bayi: " + "belum ada pemeriksaan");
                     }
                     else {
-                        beratBadan.setText("Berat badan: " + response.body().getRiwayatPemeriksaanIbu().get(0).getBeratBadan().toString() + " kg");
-                        lingkarLengan.setText("Lingkar lengan: " + response.body().getRiwayatPemeriksaanIbu().get(0).getLingkarLengan() + " cm");
-                        tinggiRahim.setText("Tinggi rahim: " + response.body().getRiwayatPemeriksaanIbu().get(0).getTinggiRahim() + " cm");
-                        denyutNadi.setText("Denyut nadi: " + response.body().getRiwayatPemeriksaanIbu().get(0).getDenyutNadiIbu() + " BPM");
-                        tekananDarah.setText("Tekanan darah: " + response.body().getRiwayatPemeriksaanIbu().get(0).getTekananDarah() + " mmHg");
-                        detakJantungBayi.setText("Detak jantung bayi: " + response.body().getRiwayatPemeriksaanIbu().get(0).getDetakJantungBayi() + " BPM");
+                        beratBadan.setText("Berat badan: " + response.body().getRiwayatPemeriksaanLansia().get(0).getBeratBadan().toString() + " kg");
+                        suhuTubuh.setText("Suhu tubuh: " + response.body().getRiwayatPemeriksaanLansia().get(0).getSuhuTubuh() + "c");
+                        tinggiLutut.setText("Tinggi lutut: " + response.body().getRiwayatPemeriksaanLansia().get(0).getTinggiLutut() + " cm");
+                        tinggiBadan.setText("Tinggi badan: " + response.body().getRiwayatPemeriksaanLansia().get(0).getTinggiBadan() + " cm");
+                        denyutNadi.setText("Denyut nadi: " + response.body().getRiwayatPemeriksaanLansia().get(0).getDenyutNadi() + " BPM");
+                        tekananDarah.setText("Tekanan darah: " + response.body().getRiwayatPemeriksaanLansia().get(0).getTekananDarah() + " mmHg");
                     }
                     setKeluargaContainerVisible();
                 }
@@ -132,7 +138,7 @@ public class KesehatanIbuActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<KesehatanIbuResponse> call, Throwable t) {
+            public void onFailure(Call<KesehatanLansiaResponse> call, Throwable t) {
                 setFailedContainerVisible();
                 Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.server_fail, Snackbar.LENGTH_SHORT).show();
             }

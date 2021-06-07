@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anychart.AnyChartView;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
+import com.sipanduteam.sipandu.activity.lansia.AlergiActivity;
 import com.sipanduteam.sipandu.api.InterfaceApi;
 import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.model.KesehatanAnakResponse;
@@ -34,6 +37,7 @@ public class KesehatanAnakActivity extends AppCompatActivity {
     private Chip tinggiBadan, lingkarKepala, beratBadan, imt;
     private AnyChartView grafikBeranBadan;
     LinearLayout loadingContainer, failedContainer, pemeriksaanContainer, pemeriksaanEmptyContainer;
+    private MaterialCardView riwayatAlergi;
 
     SharedPreferences userPreferences;
 
@@ -56,6 +60,15 @@ public class KesehatanAnakActivity extends AppCompatActivity {
         loadingContainer = findViewById(R.id.kesehatan_anak_loading_container);
         failedContainer = findViewById(R.id.kesehatan_anak_failed_container);
         pemeriksaanContainer = findViewById(R.id.kesehatan_anak_container);
+
+        riwayatAlergi = findViewById(R.id.riwayat_alergi_anak);
+        riwayatAlergi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent riwayatAlergiActivity = new Intent(getApplicationContext(), AlergiActivity.class);
+                startActivity(riwayatAlergiActivity);
+            }
+        });
 
         tinggiBadan = findViewById(R.id.tinggi_badan_anak_chip);
         lingkarKepala = findViewById(R.id.lingkar_kepala_anak_chip);

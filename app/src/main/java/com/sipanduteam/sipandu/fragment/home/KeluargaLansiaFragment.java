@@ -23,6 +23,7 @@ import com.sipanduteam.sipandu.activity.anak.KesehatanAnakActivity;
 import com.sipanduteam.sipandu.activity.anak.RiwayatImunisasiAnakActivity;
 import com.sipanduteam.sipandu.activity.anak.RiwayatVitaminAnakActivity;
 import com.sipanduteam.sipandu.activity.bumil.RiwayatPemeriksaanIbuActivity;
+import com.sipanduteam.sipandu.activity.lansia.KesehatanLansiaActivity;
 import com.sipanduteam.sipandu.activity.lansia.RiwayatPemeriksaanLansiaActivity;
 import com.sipanduteam.sipandu.util.ChangeDateFormat;
 import com.sipanduteam.sipandu.viewmodel.KeluargakuIbuViewModel;
@@ -85,8 +86,8 @@ public class KeluargaLansiaFragment extends Fragment {
         kesehatanLansiaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent kesehatanAnak = new Intent(getActivity(), KesehatanAnakActivity.class);
-                startActivity(kesehatanAnak);
+                Intent kesehatanLansia = new Intent(getActivity(), KesehatanLansiaActivity.class);
+                startActivity(kesehatanLansia);
             }
         });
 
