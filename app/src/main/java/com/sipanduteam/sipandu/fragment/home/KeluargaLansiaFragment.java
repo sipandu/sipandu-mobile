@@ -3,8 +3,10 @@ package com.sipanduteam.sipandu.fragment.home;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -36,7 +38,7 @@ public class KeluargaLansiaFragment extends Fragment {
 
     View v;
     TextView namaLansia, pemeriksaanTerakhir;
-    Chip imtLansia;
+    Chip imtLansia, statusChip;
     SharedPreferences userPreferences;
     LinearLayout loadingContainer, failedContainer;
     ScrollView keluargakuContainer;
@@ -74,6 +76,7 @@ public class KeluargaLansiaFragment extends Fragment {
         kesehatanLansiaButton = v.findViewById(R.id.ibu_kesehatan_button);
         refreshKeluargaku = v.findViewById(R.id.keluargaku_refresh);
         imtLansia = v.findViewById(R.id.keluarga_lansia_imt_chip);
+        statusChip = v.findViewById(R.id.keluarga_lansia_status_chip);
 
         refreshKeluargaku.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +139,25 @@ public class KeluargaLansiaFragment extends Fragment {
                 else {
                     pemeriksaanTerakhir.setText(changeDateFormat.changeDateFormat(keluargakuLansiaResponse.getPemeriksaanLansiaTerakhir()));
                     imtLansia.setText("IMT: " + keluargakuLansiaResponse.getImt());
+                }
+                if (keluargakuLansiaResponse.getStatusLansia() != null) {
+                    if (keluargakuLansiaResponse.getStatusLansia().equals("Lansia")) {
+                        statusChip.setText("Status lansia: Lansia");
+                        statusChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.primaryLightColorSemiTransparent)));
+                    }
+
+                    else if (keluargakuLansiaResponse.getStatusLansia().equals("Lansia Beresiko")) {
+                        statusChip.setText("Status lansia: Lansia beresiko");
+                        statusChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.secondaryLightColorSemiTransparent)));
+                    }
+
+                    else if (keluargakuLansiaResponse.getStatusLansia().equals("Pra Lansia")) {
+                        statusChip.setText("Status lansia: Pra-lansia");
+                        statusChip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.greenSemiTransparent)));
+                    }
+                }
+                else {
+                    statusChip.setText("Status lansia tidak tersedia");
                 }
                 setKeluargakuContainerVisible();
             } else {

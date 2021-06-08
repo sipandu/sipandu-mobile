@@ -3,6 +3,7 @@ package com.sipanduteam.sipandu.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,6 +17,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -26,7 +28,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.sipanduteam.sipandu.R;
 import com.sipanduteam.sipandu.activity.posyandu.PosyanduMapActivity;
+import com.sipanduteam.sipandu.api.InterfaceApi;
+import com.sipanduteam.sipandu.api.RetrofitClient;
 import com.sipanduteam.sipandu.fragment.home.*;
+import com.sipanduteam.sipandu.model.GenericApiResponse;
+import com.sipanduteam.sipandu.model.GenericApiWithFlagResponse;
 import com.sipanduteam.sipandu.viewmodel.InformasiBerandaViewModel;
 import com.sipanduteam.sipandu.viewmodel.KeluargakuAnakViewModel;
 import com.sipanduteam.sipandu.viewmodel.PengumumanViewModel;
@@ -36,12 +42,20 @@ import com.sipanduteam.sipandu.viewmodel.ProfileAnakViewModel;
 import java.util.Calendar;
 import java.util.Date;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.view.View.GONE;
+
 
 public class HomeActivity extends AppCompatActivity {
 
     private Toolbar homeToolbar;
     boolean doubleBack = false;
     BottomNavigationView bottomNavigationView;
+
+    MenuItem notificationItem;
 
     InformasiBerandaViewModel informasiBerandaViewModel;
     ProfileAnakViewModel profileAnakViewModel;
@@ -169,13 +183,42 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+//        getNotificationCount(email);
     }
+
+//    public void getNotificationCount(String email) {
+//        InterfaceApi getData = RetrofitClient.buildRetrofit().create(InterfaceApi.class);
+//        Call<GenericApiWithFlagResponse> genericApiWithFlagResponseCall = getData.getUnreadNotifkasiCount(email);
+//        genericApiWithFlagResponseCall.enqueue(new Callback<GenericApiWithFlagResponse>() {
+//            @Override
+//            public void onResponse(Call<GenericApiWithFlagResponse> call, Response<GenericApiWithFlagResponse> response) {
+//                if (response.code() == 200 && response.body().getStatusCode() == 200) {
+//                    if (response.body().getFlag() == 1) {
+//                        notificationItem.setIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_baseline_notifications_24));
+//                        notificationItem.setIconTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.red)));
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GenericApiWithFlagResponse> call, Throwable t) {
+//                //
+//            }
+//        });
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.home_toolbar, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        notificationItem = menu.findItem(R.id.home_app_bar_notification);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

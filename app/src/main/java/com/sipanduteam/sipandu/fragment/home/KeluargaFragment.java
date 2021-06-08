@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.sipanduteam.sipandu.R;
+import com.sipanduteam.sipandu.activity.KesehatanKeluargaActivity;
 import com.sipanduteam.sipandu.activity.anak.KesehatanAnakActivity;
 import com.sipanduteam.sipandu.activity.anak.RiwayatImunisasiAnakActivity;
 import com.sipanduteam.sipandu.activity.anak.RiwayatPemeriksaanAnakActivity;
@@ -46,7 +47,7 @@ public class KeluargaFragment extends Fragment {
     SharedPreferences userPreferences;
     LinearLayout loadingContainer, failedContainer;
     ScrollView keluargakuContainer;
-    Button refreshKeluargaku, kesehatanAnakButton;
+    Button refreshKeluargaku, kesehatanAnakButton, kesehatanKeluargaButton;
     MaterialCardView riwayatVitamin, riwayatImunisasi, riwayatPemeriksaan;
     KeluargakuAnakViewModel keluargakuAnakViewModel;
     ChangeDateFormat changeDateFormat = new ChangeDateFormat();
@@ -78,6 +79,15 @@ public class KeluargaFragment extends Fragment {
         statusGizi = v.findViewById(R.id.keluarga_anak_status_gizi_chip);
         kesehatanAnakButton = v.findViewById(R.id.anak_kesehatan_button);
         refreshKeluargaku = v.findViewById(R.id.keluargaku_refresh);
+        kesehatanKeluargaButton = v.findViewById(R.id.keluarga_kesehatan_button);
+
+        kesehatanKeluargaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent kesehatanKeluarga = new Intent(getActivity(), KesehatanKeluargaActivity.class);
+                startActivity(kesehatanKeluarga);
+            }
+        });
 
         refreshKeluargaku.setOnClickListener(new View.OnClickListener() {
             @Override

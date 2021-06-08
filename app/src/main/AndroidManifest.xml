@@ -17,8 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sipandu"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.anak.GrafikAnakActivity"
+        <activity android:name=".activity.KesehatanKeluargaActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar"></activity>
+        <activity
+            android:name=".activity.anak.GrafikAnakActivity"
+            android:theme="@style/Theme.Sipandu.NoActionBar" />
         <activity
             android:name=".activity.bumil.GrafikBeratBadanIbuActivity"
             android:theme="@style/Theme.Sipandu.NoActionBar" />

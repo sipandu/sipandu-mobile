@@ -1,11 +1,13 @@
 package com.sipanduteam.sipandu.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.browser.customtabs.CustomTabsIntent;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -177,10 +179,16 @@ public class LoginActivity extends AppCompatActivity {
         forgotPassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent forgotPassActivity = new Intent(getApplicationContext(), ForgotpassActivity.class);
-                startActivity(forgotPassActivity);
+                launchForgotPass();
             }
         });
+    }
+
+    public void launchForgotPass() {
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.setToolbarColor(getResources().getColor(R.color.primaryColor));
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(this, Uri.parse("https://sipandu-test-web.herokuapp.com/login/user/reset/password"));
     }
 
     @Override

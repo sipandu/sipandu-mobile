@@ -38,6 +38,7 @@ public class KesehatanLansiaActivity extends AppCompatActivity {
     private MaterialCardView masalahKesehatanLansia, riwayatAlergi, penyakitBawaanLansia;
 
     SharedPreferences userPreferences;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,14 @@ public class KesehatanLansiaActivity extends AppCompatActivity {
         });
 
         userPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+
+        Intent intent = getIntent();
+
+        if (intent.hasExtra("EMAIL")) {
+            email = intent.getExtras().getString("EMAIL");
+        } else {
+            email = userPreferences.getString("email", "empty");
+        }
 
         loadingContainer = findViewById(R.id.kesehatan_lansia_loading_container);
         failedContainer = findViewById(R.id.kesehatan_lansia_failed_container);
@@ -96,7 +105,7 @@ public class KesehatanLansiaActivity extends AppCompatActivity {
         jumlahVitamin = findViewById(R.id.jumlah_pemberian_vitamin_lansia_text);
         jumlahImunisasi = findViewById(R.id.jumlah_pemberian_imunisasi_lansia_text);
         jumlahKonsultasi = findViewById(R.id.jumlah_konsultasi_lansia_text);
-        getData(userPreferences.getString("email", "empty"));
+        getData(email);
     }
 
     public void getData(String email) {

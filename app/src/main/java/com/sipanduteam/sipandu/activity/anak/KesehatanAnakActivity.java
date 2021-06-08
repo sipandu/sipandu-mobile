@@ -41,6 +41,7 @@ public class KesehatanAnakActivity extends AppCompatActivity {
     private MaterialCardView riwayatAlergi, grafikBeratBadanTinggi, grafikBeratBadanUmur, grafikTinggiUmur, grafikLingkarKepalaUmur;
     Intent grafikActivity;
     SharedPreferences userPreferences;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,13 @@ public class KesehatanAnakActivity extends AppCompatActivity {
         });
 
         userPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        Intent intent = getIntent();
+
+        if (intent.hasExtra("EMAIL")) {
+            email = intent.getExtras().getString("EMAIL");
+        } else {
+            email = userPreferences.getString("email", "empty");
+        }
 
         loadingContainer = findViewById(R.id.kesehatan_anak_loading_container);
         failedContainer = findViewById(R.id.kesehatan_anak_failed_container);
@@ -84,7 +92,7 @@ public class KesehatanAnakActivity extends AppCompatActivity {
         jumlahVitamin = findViewById(R.id.jumlah_pemberian_vitamin_anak_text);
         jumlahImunisasi = findViewById(R.id.jumlah_pemberian_imunisasi_anak_text);
         jumlahKonsultasi = findViewById(R.id.jumlah_konsultasi_anak_text);
-        getData(userPreferences.getString("email", "empty"));
+        getData(email);
     }
 
     public void getData(String email) {

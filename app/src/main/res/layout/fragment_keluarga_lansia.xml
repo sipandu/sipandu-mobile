@@ -216,14 +216,30 @@
                                 </LinearLayout>
                             </LinearLayout>
 
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/keluarga_lansia_imt_chip"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:clickable="false"
-                                android:focusable="false"
-                                android:layout_marginTop="4dp"
-                                android:text="Usia kehamilan" />
+                            <com.google.android.material.chip.ChipGroup
+                                android:id="@+id/kegiatan_filter_chip_group"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/keluarga_lansia_imt_chip"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:clickable="false"
+                                    android:focusable="false"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Usia kehamilan" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/keluarga_lansia_status_chip"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:clickable="false"
+                                    android:focusable="false"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Usia kehamilan" />
+
+                            </com.google.android.material.chip.ChipGroup>
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>

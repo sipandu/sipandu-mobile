@@ -19,6 +19,9 @@ public class KeluargakuLansiaResponse {
     @SerializedName("imt")
     @Expose
     private Double imt;
+    @SerializedName("status_lansia")
+    @Expose
+    private String statusLansia;
     @SerializedName("message")
     @Expose
     private String message;
@@ -69,5 +72,13 @@ public class KeluargakuLansiaResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getStatusLansia() {
+        return statusLansia;
+    }
+
+    public void setStatusLansia(String statusLansia) {
+        this.statusLansia = statusLansia;
     }
 }

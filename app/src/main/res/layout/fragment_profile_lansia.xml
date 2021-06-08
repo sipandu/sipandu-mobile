@@ -216,20 +216,20 @@
                         android:layout_marginTop="8dp"
                         style="@style/Divider"/>
 
-                    <Button
-                        android:id="@+id/edit_profile_button"
-                        app:icon="@drawable/ic_baseline_keyboard_arrow_right_24"
-                        app:iconTint="@color/primaryLightColor"
-                        app:iconGravity="end"
-                        android:textAlignment="viewStart"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textColor="@color/primaryLightColor"
-                        android:text="Edit profile" />
+<!--                    <Button-->
+<!--                        android:id="@+id/edit_profile_button"-->
+<!--                        app:icon="@drawable/ic_baseline_keyboard_arrow_right_24"-->
+<!--                        app:iconTint="@color/primaryLightColor"-->
+<!--                        app:iconGravity="end"-->
+<!--                        android:textAlignment="viewStart"-->
+<!--                        style="@style/Widget.MaterialComponents.Button.TextButton"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:textColor="@color/primaryLightColor"-->
+<!--                        android:text="Edit profile" />-->
 
-                    <View
-                        style="@style/Divider"/>
+<!--                    <View-->
+<!--                        style="@style/Divider"/>-->
 
                     <Button
                         android:id="@+id/logout_profile_button"

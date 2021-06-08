@@ -16,9 +16,11 @@ import com.sipanduteam.sipandu.R;
 
 import java.util.Random;
 
+import com.sipanduteam.sipandu.BuildConfig;
+
 public class SplashActivity extends AppCompatActivity {
 
-    TextView posyanduText;
+    TextView posyanduText, versionText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,9 @@ public class SplashActivity extends AppCompatActivity {
 
 
         posyanduText = findViewById(R.id.smart_posyandu_text);
+        versionText = findViewById(R.id.sipandu_text);
+        versionText.setText(getResources().getString(R.string.app_name) + " v" + BuildConfig.VERSION_NAME);
+
 
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(

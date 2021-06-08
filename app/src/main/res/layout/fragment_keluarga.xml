@@ -518,7 +518,7 @@
                             style="@style/Divider"/>
 
                         <Button
-                            android:id="@+id/keluarga_anak_kesehatan_button"
+                            android:id="@+id/keluarga_kesehatan_button"
                             app:icon="@drawable/ic_baseline_keyboard_arrow_right_24"
                             app:iconTint="@color/primaryLightColor"
                             app:iconGravity="end"
@@ -527,37 +527,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/primaryLightColor"
-                            android:text="Lihat kesehatan anak" />
-
-                        <View
-                            style="@style/Divider"/>
-
-                        <Button
-                            android:id="@+id/keluarga_ibu_kesehatan_button"
-                            app:icon="@drawable/ic_baseline_keyboard_arrow_right_24"
-                            app:iconGravity="end"
-                            android:textAlignment="viewStart"
-                            app:iconTint="@color/primaryLightColor"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/primaryLightColor"
-                            android:text="Lihat kesehatan ibu hamil" />
-
-                        <View
-                            style="@style/Divider"/>
-
-                        <Button
-                            android:id="@+id/keluarga_lansia_kesehatan_button"
-                            app:icon="@drawable/ic_baseline_keyboard_arrow_right_24"
-                            app:iconGravity="end"
-                            android:textAlignment="viewStart"
-                            app:iconTint="@color/primaryLightColor"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/primaryLightColor"
-                            android:text="Lihat kesehatan lansia" />
+                            android:text="Lihat kesehatan keluarga" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

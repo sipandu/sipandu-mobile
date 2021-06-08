@@ -106,9 +106,9 @@
     </style>
 
     <style name="ThemeOverlay.App.Card.red" parent="">
-        <item name="colorPrimary">@color/secondaryColor</item>
-        <item name="colorSurface">@color/secondaryColor</item>
-        <item name="colorOnSurface">@color/secondaryDarkColor</item>
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorSurface">@color/red</item>
+        <item name="colorOnSurface">@color/red</item>
     </style>
 
     <style name="Divider">

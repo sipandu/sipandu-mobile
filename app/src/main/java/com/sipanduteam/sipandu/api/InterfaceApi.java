@@ -3,6 +3,7 @@ package com.sipanduteam.sipandu.api;
 import com.sipanduteam.sipandu.model.AlergiDataResponse;
 import com.sipanduteam.sipandu.model.AnakDataResponse;
 import com.sipanduteam.sipandu.model.GenericApiResponse;
+import com.sipanduteam.sipandu.model.GenericApiWithFlagResponse;
 import com.sipanduteam.sipandu.model.IbuDataResponse;
 import com.sipanduteam.sipandu.model.InformasiResponse;
 import com.sipanduteam.sipandu.model.KeluargaDataResponse;
@@ -15,6 +16,7 @@ import com.sipanduteam.sipandu.model.KesehatanLansiaResponse;
 import com.sipanduteam.sipandu.model.LansiaDataResponse;
 import com.sipanduteam.sipandu.model.MasalahKesehatanLansia;
 import com.sipanduteam.sipandu.model.MasalahKesehatanLansiaDataResponse;
+import com.sipanduteam.sipandu.model.NotifikasiDataResponse;
 import com.sipanduteam.sipandu.model.PenyakitBawaanDataResponse;
 import com.sipanduteam.sipandu.model.imunisasi.ImunisasiDataResponse;
 import com.sipanduteam.sipandu.model.pemeriksaan.RiwayatPemeriksaanAnakDataResponse;
@@ -142,7 +144,17 @@ public interface InterfaceApi {
             @Field("no_tlpn") String noTelp,
             @Field("anak_ke") int anakKe,
             @Field("alamat") String alamat,
-            @Field("email") String email
+            @Field("email") String email,
+            @Field("nojkn") String nojkn,
+            @Field("masaberlakujkn") String masaberlakujkn,
+            @Field("pekerjaan_ayah") String pekerjaan_ayah,
+            @Field("pekerjaan_ibu") String pekerjaan_ibu,
+            @Field("pendidikan_ayah") String pendidikan_ayah,
+            @Field("pendidikan_ibu") String pendidikan_ibu,
+            @Field("tanggungan") String tanggungan,
+            @Field("rujukan") String rujukan,
+            @Field("agama") String agama,
+            @Field("goldar") String goldar
     );
 
 
@@ -372,4 +384,22 @@ public interface InterfaceApi {
 
     /* keluarga end here */
 
+    /* other shit */
+    @FormUrlEncoded
+    @POST("get-notifikasi")
+    Call<NotifikasiDataResponse> getNotifikasi(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("read-notifikasi")
+    Call<GenericApiResponse> readNotifikasi(
+            @Field("email") String email
+    );
+
+    @FormUrlEncoded
+    @POST("get-unread-notifikasi")
+    Call<GenericApiWithFlagResponse> getUnreadNotifkasiCount(
+            @Field("email") String email
+    );
 }
